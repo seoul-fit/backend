@@ -1,0 +1,67 @@
+name: "✨ Feature"
+description: "새로운 기능 추가"
+labels: [ "✨ feat" ]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 새로운 기능 요청
+        프로젝트에 추가하고 싶은 기능을 상세히 설명해주세요.
+  - type: textarea
+    attributes:
+      label: 📄 설명
+      description: 새로운 기능에 대한 설명을 작성해 주세요.
+      placeholder: "자세히 적을수록 좋습니다! 이 기능이 필요한 이유와 어떤 문제를 해결하는지 설명해주세요."
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: ✅ 작업할 내용
+      description: 할 일을 체크박스 형태로 작성해주세요.
+      value: |
+        - [ ] 기능 1
+        - [ ] 기능 2
+        - [ ] 기능 3
+      placeholder: "최대한 세분화 해서 적어주세요!"
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: 🔄 우선순위
+      description: 이 기능의 우선순위를 선택해주세요.
+      options:
+        - 낮음 (Low)
+        - 중간 (Medium)
+        - 높음 (High)
+        - 긴급 (Urgent)
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: 📌 관련 영역
+      description: 이 기능이 영향을 미치는 영역을 선택해주세요.
+      options:
+        - 프론트엔드
+        - 백엔드
+        - 데이터베이스
+        - API
+        - 인증/보안
+        - UI/UX
+        - 기타
+      multiple: true
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 🎨 UI/UX 설명
+      description: UI/UX 관련 설명이나 와이어프레임이 있다면 작성해주세요.
+      placeholder: "스크린샷, 디자인 파일 링크, 또는 간단한 스케치를 첨부해주세요."
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: 🙋🏻 참고 자료
+      description: 참고 자료가 있다면 작성해 주세요.
+      placeholder: "관련 문서, 유사 기능 사례, 기술 문서 등을 링크해주세요."
+    validations:
+      required: false
