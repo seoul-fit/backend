@@ -1,5 +1,6 @@
 package com.seoulfit.backend.infra;
 
+import com.seoulfit.backend.domain.OAuthProvider;
 import com.seoulfit.backend.domain.User;
 import com.seoulfit.backend.domain.UserStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +14,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
     Optional<User> findByEmailAndStatus(String email, UserStatus status);
+
+    // OAuth 관련 메서드
+    Optional<User> findByOauthProviderAndOauthId(OAuthProvider oauthProvider, String oauthId);
+
+    Optional<User> findByOauthProviderAndOauthIdAndStatus(OAuthProvider oauthProvider, String oauthId, UserStatus status);
 
     boolean existsByEmail(String email);
 
