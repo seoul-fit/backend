@@ -1,5 +1,6 @@
 package com.seoulfit.backend.domain;
 
+import com.seoulfit.backend.user.domain.InterestCategory;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

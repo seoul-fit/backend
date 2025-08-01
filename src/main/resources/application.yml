@@ -72,14 +72,58 @@ seoul-api:
     culture:
       base-url: http://openapi.seoul.go.kr:8088/666e634468776c7339314668766844/json/culturalEventInfo
 
+# UrbanPing 확장 설정 (오픈소스 기여자를 위한 설정)
+urbanping:
+  # 공공 API 설정
+  api:
+    seoul:
+      base-url: http://openapi.seoul.go.kr:8088
+      api-key: ${SEOUL_API_KEY:666e634468776c7339314668766844}
+      timeout: 10
+      retry-attempts: 3
+  
+  # 트리거 설정 (개발자가 쉽게 수정할 수 있도록 외부화)
+  trigger:
+    temperature:
+      high-threshold: 35.0
+      low-threshold: 0.0
+    bike:
+      shortage-threshold: 10
+      full-threshold: 95
+      location-radius: 2000
+    air-quality:
+      bad-levels: ["나쁨", "매우나쁨"]
+    congestion:
+      high-levels: ["붐빔", "매우붐빔"]
+  
+  # 스케줄러 설정
+  scheduler:
+    realtime-interval: 300000 # 5분 (밀리초)
+    cultural-interval: 1800000 # 30분 (밀리초)
+    enabled: true
+
 logging:
   level:
     com.seoulfit.backend: DEBUG
     org.springframework.web.client: DEBUG
-
-
+    # 트리거 시스템 로깅
+    com.seoulfit.backend.trigger: INFO
+    com.seoulfit.backend.scheduler: INFO
+    com.seoulfit.backend.external: INFO
 
 jwt:
   secret: ${JWT_SECRET:your-very-secure-secret-key-that-is-at-least-256-bits-long}
   access-token-validity-in-seconds: 1800  # 30분
   refresh-token-validity-in-seconds: 1209600  # 2주
+
+# Actuator 설정 (시스템 모니터링용)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,scheduledtasks,beans
+  endpoint:
+    health:
+      show-details: always
+    scheduledtasks:
+      enabled: true

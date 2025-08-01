@@ -1,8 +1,8 @@
 package com.seoulfit.backend.application.service;
 
 import com.seoulfit.backend.domain.Facility;
-import com.seoulfit.backend.domain.InterestCategory;
 import com.seoulfit.backend.infra.FacilityRepository;
+import com.seoulfit.backend.user.domain.InterestCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,7 +1,7 @@
 package com.seoulfit.backend.presentation;
 
-import com.seoulfit.backend.application.exception.OAuthUserAlreadyExistsException;
-import com.seoulfit.backend.application.exception.OAuthUserNotFoundException;
+import com.seoulfit.backend.user.domain.exception.OAuthUserAlreadyExistsException;
+import com.seoulfit.backend.user.domain.exception.OAuthUserNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;

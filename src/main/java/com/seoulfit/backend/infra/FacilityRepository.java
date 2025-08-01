@@ -1,7 +1,7 @@
 package com.seoulfit.backend.infra;
 
 import com.seoulfit.backend.domain.Facility;
-import com.seoulfit.backend.domain.InterestCategory;
+import com.seoulfit.backend.user.domain.InterestCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -3,7 +3,7 @@ package com.seoulfit.backend.presentation;
 import com.seoulfit.backend.application.service.FacilityService;
 import com.seoulfit.backend.domain.CongestionLevel;
 import com.seoulfit.backend.domain.Facility;
-import com.seoulfit.backend.domain.InterestCategory;
+import com.seoulfit.backend.user.domain.InterestCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
