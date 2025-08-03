@@ -1,7 +1,7 @@
 package com.seoulfit.backend.user.infrastructure.security;
 
 import com.seoulfit.backend.user.infrastructure.jwt.JwtTokenProvider;
-import com.seoulfit.backend.infra.UserRepository;
+import com.seoulfit.backend.tmp.infra.UserRepository;
 import com.seoulfit.backend.user.domain.User;
 import com.seoulfit.backend.user.domain.UserStatus;
 import jakarta.servlet.FilterChain;

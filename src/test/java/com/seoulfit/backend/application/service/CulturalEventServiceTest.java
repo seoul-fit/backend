@@ -1,7 +1,9 @@
 package com.seoulfit.backend.application.service;
 
-import com.seoulfit.backend.domain.CulturalEvent;
-import com.seoulfit.backend.infra.CulturalEventRepository;
+import com.seoulfit.backend.tmp.domain.CulturalEvent;
+import com.seoulfit.backend.tmp.infra.CulturalEventRepository;
+import com.seoulfit.backend.tmp.application.service.CulturalEventService;
+import com.seoulfit.backend.tmp.application.service.SeoulCulturalApiService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
