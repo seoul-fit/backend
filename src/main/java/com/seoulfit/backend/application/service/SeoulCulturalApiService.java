@@ -1,7 +1,6 @@
 package com.seoulfit.backend.application.service;
 
-import com.seoulfit.backend.application.service.dto.SeoulApiResponse;
-import lombok.RequiredArgsConstructor;
+import com.seoulfit.backend.presentation.culture.dtos.response.SeoulApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,8 +18,11 @@ public class SeoulCulturalApiService {
 
     private final RestClient seoulApiRestClient;
 
-    @Value("${seoul-api.v1.culture.base-url}")
+    @Value("${seoul-api.base-url}")
     private String baseUrl;
+
+    @Value("${seoul-api.v1.culture.service-name[0]}")
+    private String serviceName;
 
     private static final int MAX_ROWS_PER_REQUEST = 1000;
 
@@ -36,29 +38,29 @@ public class SeoulCulturalApiService {
     }
 
     /**
-     * 조건부 문화행사 조회
+     * 조건부 문화행사 관련 API 호출
+     *
      * @param startIndex 시작 인덱스
-     * @param endIndex 종료 인덱스
-     * @param codeName 분류 (선택)
-     * @param title 공연/행사명 (선택)
-     * @param date 날짜 (선택)
+     * @param endIndex   종료 인덱스
+     * @param codeName   분류 (선택)
+     * @param title      공연/행사명 (선택)
+     * @param date       날짜 (선택)
      */
-    public SeoulApiResponse fetchCulturalEvents(int startIndex, int endIndex, 
-                                              String codeName, String title, LocalDate date) {
+    private SeoulApiResponse fetchCulturalEvents(int startIndex, int endIndex,
+                                                 String codeName, String title, LocalDate date) {
         try {
             String url = buildApiUrl(startIndex, endIndex, codeName, title, date);
-            log.info("Calling Seoul Cultural API: {}", url);
 
             SeoulApiResponse response = seoulApiRestClient.get()
                     .uri(url)
                     .retrieve()
                     .onStatus(HttpStatusCode::is4xxClientError, (request, clientResponse) -> {
-                        log.error("Client error calling Seoul API: {} - {}", 
+                        log.error("Client error calling Seoul API: {} - {}",
                                 clientResponse.getStatusCode(), clientResponse.getStatusText());
                         throw new RestClientException("Seoul API client error: " + clientResponse.getStatusCode());
                     })
                     .onStatus(HttpStatusCode::is5xxServerError, (request, serverResponse) -> {
-                        log.error("Server error calling Seoul API: {} - {}", 
+                        log.error("Server error calling Seoul API: {} - {}",
                                 serverResponse.getStatusCode(), serverResponse.getStatusText());
                         throw new RestClientException("Seoul API server error: " + serverResponse.getStatusCode());
                     })
@@ -66,16 +68,16 @@ public class SeoulCulturalApiService {
 
             if (response != null && response.getCulturalEventInfo() != null) {
                 int totalCount = response.getCulturalEventInfo().getListTotalCount();
-                int rowCount = response.getCulturalEventInfo().getRow() != null ? 
-                              response.getCulturalEventInfo().getRow().size() : 0;
-                
+                int rowCount = response.getCulturalEventInfo().getRow() != null ?
+                        response.getCulturalEventInfo().getRow().size() : 0;
+
                 log.info("Successfully fetched {} cultural events (total: {})", rowCount, totalCount);
-                
+
                 // API 응답 상태 확인
                 if (response.getCulturalEventInfo().getResult() != null) {
                     String resultCode = response.getCulturalEventInfo().getResult().getCode();
                     String resultMessage = response.getCulturalEventInfo().getResult().getMessage();
-                    
+
                     if (!"INFO-000".equals(resultCode)) {
                         log.warn("Seoul API returned non-success code: {} - {}", resultCode, resultMessage);
                     }
@@ -85,7 +87,7 @@ public class SeoulCulturalApiService {
             }
 
             return response;
-            
+
         } catch (RestClientException e) {
             log.error("RestClient error fetching cultural events from Seoul API", e);
             throw new RuntimeException("Failed to fetch cultural events: " + e.getMessage(), e);
@@ -96,12 +98,12 @@ public class SeoulCulturalApiService {
     }
 
     /**
-     * 전체 문화행사 조회 (페이징 처리)
+     * 전체 문화행사 조회
      */
     public SeoulApiResponse fetchAllCulturalEvents() {
         try {
             // 먼저 총 개수를 확인
-            SeoulApiResponse firstResponse = fetchCulturalEvents(1, 100);
+            SeoulApiResponse firstResponse = fetchCulturalEvents(1, 1000);
             if (firstResponse == null || firstResponse.getCulturalEventInfo() == null)
                 throw new RuntimeException("Failed to get total count from Seoul API");
 
@@ -113,10 +115,8 @@ public class SeoulCulturalApiService {
                 return firstResponse;
             }
 
-            // 전체 데이터를 가져오기 (최대 1000개씩)
-            int fetchCount = Math.min(totalCount, MAX_ROWS_PER_REQUEST);
-            return fetchCulturalEvents(1, fetchCount);
-            
+            return firstResponse;
+
         } catch (Exception e) {
             log.error("Error fetching all cultural events", e);
             throw new RuntimeException("Failed to fetch all cultural events", e);
@@ -153,12 +153,13 @@ public class SeoulCulturalApiService {
     private String buildApiUrl(int startIndex, int endIndex, String codeName, String title, LocalDate date) {
         StringBuilder urlBuilder = new StringBuilder();
         urlBuilder.append(baseUrl)
-                  .append("/").append(startIndex)
-                  .append("/").append(endIndex);
+                .append("/").append(serviceName)
+                .append("/").append(startIndex)
+                .append("/").append(endIndex);
 
         // 쿼리 파라미터 추가
         boolean hasParams = false;
-        
+
         if (codeName != null && !codeName.trim().isEmpty()) {
             urlBuilder.append(hasParams ? "&" : "?").append("CODENAME=").append(codeName.trim());
             hasParams = true;
@@ -171,8 +172,8 @@ public class SeoulCulturalApiService {
 
         if (date != null) {
             urlBuilder.append(hasParams ? "&" : "?")
-                     .append("DATE=")
-                     .append(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                    .append("DATE=")
+                    .append(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         }
 
         return urlBuilder.toString();
@@ -184,15 +185,15 @@ public class SeoulCulturalApiService {
     public boolean isApiHealthy() {
         try {
             SeoulApiResponse response = fetchCulturalEvents(1, 1);
-            
-            boolean isHealthy = response != null && 
-                               response.getCulturalEventInfo() != null && 
-                               response.getCulturalEventInfo().getResult() != null &&
-                               "INFO-000".equals(response.getCulturalEventInfo().getResult().getCode());
-            
+
+            boolean isHealthy = response != null &&
+                    response.getCulturalEventInfo() != null &&
+                    response.getCulturalEventInfo().getResult() != null &&
+                    "INFO-000".equals(response.getCulturalEventInfo().getResult().getCode());
+
             log.info("Seoul Cultural API health check result: {}", isHealthy ? "HEALTHY" : "UNHEALTHY");
             return isHealthy;
-            
+
         } catch (Exception e) {
             log.warn("Seoul Cultural API health check failed", e);
             return false;

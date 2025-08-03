@@ -1,4 +1,4 @@
-package com.seoulfit.backend.domain;
+package com.seoulfit.backend.domain.enums;
 
 import lombok.Getter;
 

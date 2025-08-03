@@ -1,4 +1,4 @@
-package com.seoulfit.backend.presentation;
+package com.seoulfit.backend.presentation.culture;
 
 import com.seoulfit.backend.application.service.CulturalEventService;
 import com.seoulfit.backend.application.service.SeoulCulturalApiService;
@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-@Tag(name = "문화생활 정보 관련 API", description = "CulturalEventController.class")
+@Tag(name = "서울시 문화행사 정보 관련 API", description = "CulturalEventController.class")
 @RestController
 @RequestMapping("/api/v1/cultural-events")
 @RequiredArgsConstructor
@@ -28,7 +28,7 @@ public class CulturalEventController {
     @PostMapping("/sync")
     public ResponseEntity<Map<String, Object>> syncCulturalEvents() {
         try {
-            int syncedCount = culturalEventService.syncCulturalEventsFromApi();
+            int syncedCount = culturalEventService.saveCultureEvents();
             
             return ResponseEntity.ok(Map.of(
                     "success", true,

@@ -1,4 +1,4 @@
-package com.seoulfit.backend.application.service.dto;
+package com.seoulfit.backend.presentation.culture.dtos.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

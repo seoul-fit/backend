@@ -1,8 +1,10 @@
 package com.seoulfit.backend.application.service;
 
-import com.seoulfit.backend.application.service.dto.SeoulApiResponse;
+import com.seoulfit.backend.infra.mapper.CulturalEventMapper;
+import com.seoulfit.backend.presentation.culture.dtos.response.SeoulApiResponse;
 import com.seoulfit.backend.domain.CulturalEvent;
 import com.seoulfit.backend.infra.CulturalEventRepository;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,22 +22,27 @@ import java.util.Objects;
 @Transactional(readOnly = true)
 @Slf4j
 public class CulturalEventService {
-
+    private final EntityManager entityManager;
     private final CulturalEventRepository culturalEventRepository;
+    private final CulturalEventMapper culturalEventMapper;
+
     private final SeoulCulturalApiService seoulCulturalApiService;
 
     @Transactional
-    public int syncCulturalEventsFromApi() {
+    public int saveCultureEvents() {
         try {
             log.info("Starting cultural events synchronization from Seoul API");
             
             // API 상태 확인
-            if (!seoulCulturalApiService.isApiHealthy()) {
+            if (!seoulCulturalApiService.isApiHealthy())
                 log.warn("Seoul API health check failed, but proceeding with sync attempt");
-            }
-            
+
+            // truncate
+            entityManager.createNativeQuery("TRUNCATE TABLE CULTURAL_EVENTS").executeUpdate();
+
+            // call api
             SeoulApiResponse response = seoulCulturalApiService.fetchAllCulturalEvents();
-            
+
             if (response == null || !response.isValid()) {
                 log.warn("Invalid response received from Seoul API");
                 return 0;
@@ -53,50 +60,12 @@ public class CulturalEventService {
                 return 0;
             }
 
-            List<SeoulApiResponse.CulturalEventData> eventDataList = response.getCulturalEventInfo().getRow();
-            int savedCount = 0;
-            int updatedCount = 0;
-            int skippedCount = 0;
+            List<SeoulApiResponse.CulturalEventData> data = response.getCulturalEventInfo().getRow();
 
-            for (SeoulApiResponse.CulturalEventData eventData : eventDataList) {
-                try {
-                    // 데이터 유효성 검증
-                    if (!eventData.isValid()) {
-                        log.debug("Skipping invalid event data: {}", eventData.getTitle());
-                        skippedCount++;
-                        continue;
-                    }
-                    
-                    String externalId = generateExternalId(eventData);
-                    
-                    if (culturalEventRepository.existsByExternalId(externalId)) {
-                        // 기존 데이터 업데이트 (필요시)
-                        CulturalEvent existingEvent = culturalEventRepository.findByExternalId(externalId)
-                                .orElse(null);
-                        if (existingEvent != null) {
-                            // 향후 업데이트 로직 추가 가능
-                            updatedCount++;
-                        }
-                    } else {
-                        // 새 데이터 저장
-                        CulturalEvent newEvent = convertToEntity(eventData, externalId);
-                        if (newEvent != null) {
-                            culturalEventRepository.save(newEvent);
-                            savedCount++;
-                        } else {
-                            skippedCount++;
-                        }
-                    }
-                } catch (Exception e) {
-                    log.error("Error processing cultural event: {} - {}", 
-                             eventData.getTitle(), e.getMessage());
-                    skippedCount++;
-                }
-            }
+            List<CulturalEvent> culturalEvents = culturalEventMapper.mapToEntity(data);
+            culturalEventRepository.saveAll(culturalEvents);
 
-            log.info("Cultural events sync completed. Saved: {}, Updated: {}, Skipped: {}", 
-                    savedCount, updatedCount, skippedCount);
-            return savedCount + updatedCount;
+            return response.getCulturalEventInfo().getRow().size();
             
         } catch (Exception e) {
             log.error("Error during cultural events synchronization", e);
