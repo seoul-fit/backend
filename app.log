@@ -1,0 +1,62 @@
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :resolveMainClassName UP-TO-DATE
+
+> Task :bootRun
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.4)
+
+2025-08-01T11:49:12.735+09:00  INFO 3945 --- [seoul-fit-backend] [           main] c.seoulfit.backend.BackendApplication    : Starting BackendApplication using Java 21.0.8 with PID 3945 (/mnt/c/Users/gmavs/dev/backend/build/classes/java/main started by lsh in /mnt/c/Users/gmavs/dev/backend)
+2025-08-01T11:49:12.740+09:00 DEBUG 3945 --- [seoul-fit-backend] [           main] c.seoulfit.backend.BackendApplication    : Running with Spring Boot v3.5.4, Spring v6.2.9
+2025-08-01T11:49:12.741+09:00  INFO 3945 --- [seoul-fit-backend] [           main] c.seoulfit.backend.BackendApplication    : No active profile set, falling back to 1 default profile: "default"
+2025-08-01T11:49:17.450+09:00  INFO 3945 --- [seoul-fit-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-08-01T11:49:17.935+09:00  INFO 3945 --- [seoul-fit-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 453 ms. Found 4 JPA repository interfaces.
+2025-08-01T11:49:20.307+09:00  INFO 3945 --- [seoul-fit-backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-08-01T11:49:20.350+09:00  INFO 3945 --- [seoul-fit-backend] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-08-01T11:49:20.351+09:00  INFO 3945 --- [seoul-fit-backend] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.43]
+2025-08-01T11:49:20.491+09:00  INFO 3945 --- [seoul-fit-backend] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-08-01T11:49:20.491+09:00  INFO 3945 --- [seoul-fit-backend] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 7606 ms
+2025-08-01T11:49:21.002+09:00  INFO 3945 --- [seoul-fit-backend] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-08-01T11:49:21.482+09:00  INFO 3945 --- [seoul-fit-backend] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.22.Final
+2025-08-01T11:49:21.726+09:00  INFO 3945 --- [seoul-fit-backend] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-08-01T11:49:23.574+09:00  INFO 3945 --- [seoul-fit-backend] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-08-01T11:49:23.790+09:00  INFO 3945 --- [seoul-fit-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-08-01T11:49:24.935+09:00  INFO 3945 --- [seoul-fit-backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:seoul_fit user=HKJIN
+2025-08-01T11:49:24.943+09:00  INFO 3945 --- [seoul-fit-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-08-01T11:49:25.252+09:00  INFO 3945 --- [seoul-fit-backend] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-08-01T11:49:30.961+09:00  INFO 3945 --- [seoul-fit-backend] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-08-01T11:49:31.224+09:00  INFO 3945 --- [seoul-fit-backend] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-08-01T11:49:32.298+09:00  INFO 3945 --- [seoul-fit-backend] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-08-01T11:49:34.318+09:00 DEBUG 3945 --- [seoul-fit-backend] [           main] c.s.b.a.s.JwtAuthenticationFilter        : Filter 'jwtAuthenticationFilter' configured for use
+2025-08-01T11:49:38.488+09:00  INFO 3945 --- [seoul-fit-backend] [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:seoul_fit'
+2025-08-01T11:49:38.709+09:00  INFO 3945 --- [seoul-fit-backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-08-01T11:49:38.734+09:00  INFO 3945 --- [seoul-fit-backend] [           main] c.seoulfit.backend.BackendApplication    : Started BackendApplication in 28.076 seconds (process running for 28.972)
+2025-08-01T11:49:56.261+09:00  INFO 3945 --- [seoul-fit-backend] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-08-01T11:49:56.262+09:00  INFO 3945 --- [seoul-fit-backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-08-01T11:49:56.262+09:00  INFO 3945 --- [seoul-fit-backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2025-08-01T11:50:06.556+09:00  INFO 3945 --- [seoul-fit-backend] [nio-8080-exec-2] c.s.b.a.service.OAuthSignUpService       : OAuth 회원가입 시작: provider=KAKAO, oauthUserId=test123
+2025-08-01T11:50:07.304+09:00  INFO 3945 --- [seoul-fit-backend] [nio-8080-exec-2] c.s.b.a.service.OAuthSignUpService       : 사용자 관심사 저장 완료: userId=1, interestCount=3
+2025-08-01T11:50:08.175+09:00  INFO 3945 --- [seoul-fit-backend] [nio-8080-exec-2] c.s.b.a.service.OAuthSignUpService       : OAuth 회원가입 완료: userId=1, nickname=테스트사용자
+2025-08-01T11:50:15.161+09:00  INFO 3945 --- [seoul-fit-backend] [nio-8080-exec-4] c.s.b.a.service.OAuthSignUpService       : OAuth 회원가입 시작: provider=KAKAO, oauthUserId=test123
+2025-08-01T11:50:15.177+09:00  WARN 3945 --- [seoul-fit-backend] [nio-8080-exec-4] c.s.b.p.GlobalExceptionHandler           : OAuthUserAlreadyExistsException: 이미 가입된 OAuth 사용자입니다.
+2025-08-01T11:50:22.257+09:00  INFO 3945 --- [seoul-fit-backend] [nio-8080-exec-6] c.s.b.a.service.OAuthSignUpService       : OAuth 회원가입 시작: provider=KAKAO, oauthUserId=newuser456
+2025-08-01T11:50:22.262+09:00  INFO 3945 --- [seoul-fit-backend] [nio-8080-exec-6] c.s.b.a.service.OAuthSignUpService       : 사용자 관심사 저장 완료: userId=2, interestCount=3
+2025-08-01T11:50:22.263+09:00  INFO 3945 --- [seoul-fit-backend] [nio-8080-exec-6] c.s.b.a.service.OAuthSignUpService       : OAuth 회원가입 완료: userId=2, nickname=새로운사용자
+2025-08-01T11:50:28.573+09:00  INFO 3945 --- [seoul-fit-backend] [nio-8080-exec-8] c.s.b.a.service.OAuthLoginService        : OAuth 사용자 확인: provider=KAKAO, oauthUserId=newuser456
+2025-08-01T11:50:35.323+09:00  INFO 3945 --- [seoul-fit-backend] [io-8080-exec-10] c.s.b.a.service.OAuthLoginService        : OAuth 로그인 시작: provider=KAKAO, oauthUserId=newuser456
+2025-08-01T11:50:35.325+09:00  INFO 3945 --- [seoul-fit-backend] [io-8080-exec-10] c.s.b.a.service.OAuthLoginService        : OAuth 로그인 완료: userId=2, nickname=새로운사용자
