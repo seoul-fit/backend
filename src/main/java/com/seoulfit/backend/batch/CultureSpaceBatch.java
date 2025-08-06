@@ -1,6 +1,6 @@
 package com.seoulfit.backend.batch;
 
-import com.seoulfit.backend.tmp.application.service.impl.CulturalSpaceServiceImpl;
+import com.seoulfit.backend.culture.application.service.CulturalSpaceService;
 import com.seoulfit.backend.culture.adapter.in.web.dto.response.SeoulCulturalSpaceApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @ConditionalOnProperty(name = "seoul-fit.scheduler.enabled", havingValue = "true", matchIfMissing = true)
 public class CultureSpaceBatch {
-    private final CulturalSpaceServiceImpl culturalSpaceService;
+    private final CulturalSpaceService culturalSpaceService;
 
     /**
      * 매일 오전 6시 30분에 문화공간 데이터 동기화

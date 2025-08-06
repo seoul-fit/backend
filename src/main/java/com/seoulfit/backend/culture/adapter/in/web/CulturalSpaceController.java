@@ -1,6 +1,6 @@
 package com.seoulfit.backend.culture.adapter.in.web;
 
-import com.seoulfit.backend.tmp.application.service.impl.CulturalSpaceServiceImpl;
+import com.seoulfit.backend.culture.application.service.CulturalSpaceService;
 import com.seoulfit.backend.culture.adapter.in.web.dto.response.SeoulCulturalSpaceApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,7 +18,7 @@ import java.util.Map;
 @Slf4j
 public class CulturalSpaceController {
     
-    private final CulturalSpaceServiceImpl culturalSpaceService;
+    private final CulturalSpaceService culturalSpaceService;
 
     @Operation(summary = "문화 공간 정보 관련 API", description = "문화 공간 정보를 가져온다.")
     @GetMapping("/fetch")
