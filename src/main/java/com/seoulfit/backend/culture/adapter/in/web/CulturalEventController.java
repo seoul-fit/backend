@@ -1,7 +1,7 @@
 package com.seoulfit.backend.culture.adapter.in.web;
 
-import com.seoulfit.backend.tmp.application.service.CulturalEventService;
-import com.seoulfit.backend.tmp.application.service.SeoulCulturalApiService;
+import com.seoulfit.backend.culture.application.service.CulturalEventService;
+import com.seoulfit.backend.culture.application.service.SeoulCulturalApiService;
 import com.seoulfit.backend.culture.domain.CulturalEvent;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

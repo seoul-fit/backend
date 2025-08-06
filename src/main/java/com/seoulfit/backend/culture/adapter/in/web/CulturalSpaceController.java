@@ -1,7 +1,7 @@
 package com.seoulfit.backend.culture.adapter.in.web;
 
 import com.seoulfit.backend.tmp.application.service.impl.CulturalSpaceServiceImpl;
-import com.seoulfit.backend.tmp.presentation.culture.dtos.response.SeoulCulturalSpaceApiResponse;
+import com.seoulfit.backend.culture.adapter.in.web.dto.response.SeoulCulturalSpaceApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

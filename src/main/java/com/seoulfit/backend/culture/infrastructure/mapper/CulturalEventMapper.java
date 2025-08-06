@@ -1,7 +1,7 @@
 package com.seoulfit.backend.culture.infrastructure.mapper;
 
 import com.seoulfit.backend.culture.domain.CulturalEvent;
-import com.seoulfit.backend.tmp.presentation.culture.dtos.response.SeoulApiResponse;
+import com.seoulfit.backend.culture.adapter.in.web.dto.response.SeoulApiResponse;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;

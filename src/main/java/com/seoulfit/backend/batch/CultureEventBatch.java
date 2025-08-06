@@ -1,6 +1,6 @@
 package com.seoulfit.backend.batch;
 
-import com.seoulfit.backend.tmp.application.service.CulturalEventService;
+import com.seoulfit.backend.culture.application.service.CulturalEventService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

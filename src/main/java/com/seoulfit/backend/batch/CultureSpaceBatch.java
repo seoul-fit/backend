@@ -1,7 +1,7 @@
 package com.seoulfit.backend.batch;
 
 import com.seoulfit.backend.tmp.application.service.impl.CulturalSpaceServiceImpl;
-import com.seoulfit.backend.tmp.presentation.culture.dtos.response.SeoulCulturalSpaceApiResponse;
+import com.seoulfit.backend.culture.adapter.in.web.dto.response.SeoulCulturalSpaceApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

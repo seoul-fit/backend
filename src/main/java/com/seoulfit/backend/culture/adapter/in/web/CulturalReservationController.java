@@ -1,6 +1,6 @@
 package com.seoulfit.backend.culture.adapter.in.web;
 
-import com.seoulfit.backend.tmp.presentation.culture.dtos.response.SeoulReservationApiResponse;
+import com.seoulfit.backend.culture.adapter.in.web.dto.response.SeoulReservationApiResponse;
 import com.seoulfit.backend.tmp.application.service.impl.CulturalReservationServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
