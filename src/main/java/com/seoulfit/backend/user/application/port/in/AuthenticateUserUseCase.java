@@ -8,6 +8,7 @@ import com.seoulfit.backend.user.domain.AuthProvider;
  * <p>
  * 헥사고날 아키텍처의 입력 포트
  * 사용자 인증과 관련된 모든 비즈니스 로직을 정의
+ * Authorization Code Flow를 지원하도록 업데이트
  *
  * @author UrbanPing Team
  * @since 1.0.0
@@ -15,28 +16,20 @@ import com.seoulfit.backend.user.domain.AuthProvider;
 public interface AuthenticateUserUseCase {
 
     /**
-     * 일반 로그인
-     *
-     * @param command 로그인 명령
-     * @return 토큰 결과
-     */
-    TokenResult login(LoginCommand command);
-
-    /**
-     * 일반 회원가입
-     *
-     * @param command 회원가입 명령
-     * @return 토큰 결과
-     */
-    TokenResult signUp(SignUpCommand command);
-
-    /**
-     * OAuth 로그인
+     * OAuth 로그인 (Authorization Code Flow)
      *
      * @param command OAuth 로그인 명령
      * @return 토큰 결과
      */
     TokenResult oauthLogin(OAuthLoginCommand command);
+
+    /**
+     * OAuth 권한부여 승인코드 기반 로그인
+     *
+     * @param command OAuth 권한부여 명령
+     * @return 토큰 결과
+     */
+    TokenResult oauthLoginWithAuthorizationCode(OAuthAuthorizationCommand command);
 
     /**
      * OAuth 회원가입
