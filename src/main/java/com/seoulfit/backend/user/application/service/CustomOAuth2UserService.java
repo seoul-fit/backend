@@ -1,6 +1,6 @@
 package com.seoulfit.backend.user.application.service;
 
-import com.seoulfit.backend.tmp.infra.UserRepository;
+import com.seoulfit.backend.user.adapter.out.persistence.UserRepository;
 import com.seoulfit.backend.user.domain.AuthProvider;
 import com.seoulfit.backend.user.domain.User;
 import com.seoulfit.backend.user.domain.UserStatus;

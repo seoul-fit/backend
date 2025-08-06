@@ -1,9 +1,9 @@
 package com.seoulfit.backend.tmp.application.service;
 
-import com.seoulfit.backend.tmp.infra.mapper.CulturalEventMapper;
+import com.seoulfit.backend.culture.infrastructure.mapper.CulturalEventMapper;
 import com.seoulfit.backend.tmp.presentation.culture.dtos.response.SeoulApiResponse;
-import com.seoulfit.backend.tmp.domain.CulturalEvent;
-import com.seoulfit.backend.tmp.infra.CulturalEventRepository;
+import com.seoulfit.backend.culture.domain.CulturalEvent;
+import com.seoulfit.backend.culture.adapter.out.CulturalEventRepository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,8 +1,8 @@
 package com.seoulfit.backend.tmp.application.service.impl;
 
-import com.seoulfit.backend.tmp.domain.CulturalSpace;
-import com.seoulfit.backend.tmp.infra.CulturalSpaceRepository;
-import com.seoulfit.backend.tmp.infra.mapper.CulturalSpaceMapper;
+import com.seoulfit.backend.culture.domain.CulturalSpace;
+import com.seoulfit.backend.culture.adapter.out.CulturalSpaceRepository;
+import com.seoulfit.backend.culture.infrastructure.mapper.CulturalSpaceMapper;
 import com.seoulfit.backend.tmp.presentation.culture.dtos.response.SeoulCulturalSpaceApiResponse;
 import com.seoulfit.backend.shared.utils.RestClientUtils;
 import jakarta.persistence.EntityManager;
