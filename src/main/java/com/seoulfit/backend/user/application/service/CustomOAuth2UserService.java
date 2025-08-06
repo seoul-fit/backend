@@ -47,7 +47,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         // 기존 사용자 조회 또는 신규 생성
         User user = userRepository.findByOauthProviderAndOauthUserIdAndStatus(
-                        provider, userInfo.getOauthId(), UserStatus.ACTIVE)
+                        provider, userInfo.getOAuthId(), UserStatus.ACTIVE)
                 .orElseGet(() -> createNewUser(userInfo));
 
         return new CustomUserDetails(user, oAuth2User.getAttributes());
@@ -66,7 +66,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 userInfo.getProvider(),
                 uniqueNickname,
                 userInfo.getEmail(),
-                userInfo.getOauthId(),
+                userInfo.getOAuthId(),
                 userInfo.getProfileImageUrl()
         );
 

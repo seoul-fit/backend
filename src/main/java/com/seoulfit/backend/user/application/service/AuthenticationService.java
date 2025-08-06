@@ -8,11 +8,13 @@ import com.seoulfit.backend.user.domain.User;
 import com.seoulfit.backend.user.domain.UserStatus;
 import com.seoulfit.backend.user.domain.exception.OAuthUserAlreadyExistsException;
 import com.seoulfit.backend.user.domain.exception.OAuthUserNotFoundException;
+import com.seoulfit.backend.user.infrastructure.dto.OAuthTokenResponse;
+import com.seoulfit.backend.user.infrastructure.dto.OAuthUserInfo;
 import com.seoulfit.backend.user.infrastructure.jwt.JwtTokenProvider;
+import com.seoulfit.backend.user.infrastructure.oauth.OAuthClient;
+import com.seoulfit.backend.user.infrastructure.oauth.OAuthClientFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
  * <p>
  * 헥사고날 아키텍처의 애플리케이션 서비스
  * 모든 인증 관련 비즈니스 로직을 통합 관리
+ * Authorization Code Flow를 지원하도록 업데이트
  *
  * @author UrbanPing Team
  * @since 1.0.0
@@ -32,57 +35,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthenticationService implements AuthenticateUserUseCase {
 
     private final UserPort userPort;
-    private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
-
-    @Override
-    @Transactional
-    public TokenResult signUp(SignUpCommand command) {
-        log.info("일반 회원가입 시작: email={}", command.getEmail());
-
-        // 이메일 중복 확인
-        if (userPort.existsByEmail(command.getEmail())) {
-            throw new IllegalArgumentException("이미 존재하는 이메일입니다: " + command.getEmail());
-        }
-
-        // 사용자 생성
-        User user = User.builder()
-                .email(command.getEmail())
-                .password(passwordEncoder.encode(command.getPassword()))
-                .nickname(command.getNickname())
-                .status(UserStatus.ACTIVE)
-                .build();
-
-        User savedUser = userPort.save(user);
-        log.info("일반 회원가입 완료: userId={}", savedUser.getId());
-
-        // 토큰 생성
-        return createTokenResult(savedUser);
-    }
-
-    @Override
-    public TokenResult login(LoginCommand command) {
-        log.info("일반 로그인 시도: email={}", command.getEmail());
-
-        User user = userPort.findByEmail(command.getEmail())
-                .orElseThrow(() -> new BadCredentialsException("잘못된 이메일 또는 비밀번호입니다."));
-
-        if (!passwordEncoder.matches(command.getPassword(), user.getPassword())) {
-            throw new BadCredentialsException("잘못된 이메일 또는 비밀번호입니다.");
-        }
-
-        if (user.getStatus() != UserStatus.ACTIVE) {
-            throw new IllegalStateException("비활성화된 계정입니다.");
-        }
-
-        log.info("일반 로그인 성공: userId={}", user.getId());
-        return createTokenResult(user);
-    }
+    private final OAuthClientFactory oAuthClientFactory;
 
     @Override
     @Transactional
     public TokenResult oauthSignUp(OAuthSignUpCommand command) {
-        log.info("OAuth 회원가입 시작: provider={}, oauthUserId={}", 
+        log.info("OAuth 회원가입 시작: provider={}, oauthUserId={}",
                 command.getProvider(), command.getOauthUserId());
 
         // OAuth 사용자 중복 확인
@@ -112,7 +71,55 @@ public class AuthenticationService implements AuthenticateUserUseCase {
 
     @Override
     public TokenResult oauthLogin(OAuthLoginCommand command) {
-        log.info("OAuth 로그인 시도: provider={}, oauthUserId={}", 
+        // 새로운 Authorization Code Flow 방식 우선 처리
+        if (command.getAuthorizationCode() != null && command.getRedirectUri() != null) {
+            return oauthLoginWithAuthorizationCode(
+                    OAuthAuthorizationCommand.of(command.getProvider(), command.getAuthorizationCode(), command.getRedirectUri())
+            );
+        }
+
+        // 기존 방식 (deprecated)
+        return oauthLoginLegacy(command);
+    }
+
+    @Override
+    @Transactional
+    public TokenResult oauthLoginWithAuthorizationCode(OAuthAuthorizationCommand command) {
+        log.info("OAuth Authorization Code 로그인 시작: provider={}", command.getProvider());
+
+        try {
+            // 1. OAuth 클라이언트 가져오기
+            OAuthClient oAuthClient = oAuthClientFactory.getClient(command.getProvider());
+
+            // 2. Authorization Code를 Access Token으로 교환
+            OAuthTokenResponse tokenResponse = oAuthClient.exchangeCodeForToken(
+                    command.getAuthorizationCode(), 
+                    command.getRedirectUri()
+            );
+
+            // 3. Access Token으로 사용자 정보 조회
+            OAuthUserInfo userInfo = oAuthClient.getUserInfo(tokenResponse.getAccessToken());
+
+            // 4. 사용자 조회 또는 생성
+            User user = findOrCreateUser(userInfo);
+
+            log.info("OAuth Authorization Code 로그인 성공: userId={}, provider={}", 
+                    user.getId(), command.getProvider());
+
+            return createTokenResult(user);
+
+        } catch (Exception e) {
+            log.error("OAuth Authorization Code 로그인 실패: provider={}", command.getProvider(), e);
+            throw new RuntimeException("OAuth 로그인에 실패했습니다.", e);
+        }
+    }
+
+    /**
+     * 기존 방식의 OAuth 로그인 (deprecated)
+     */
+    @Deprecated
+    private TokenResult oauthLoginLegacy(OAuthLoginCommand command) {
+        log.info("OAuth 로그인 시도 (기존 방식): provider={}, oauthUserId={}",
                 command.getProvider(), command.getOauthUserId());
 
         User user = userPort.findByProviderAndOauthUserId(command.getProvider(), command.getOauthUserId())
@@ -122,8 +129,31 @@ public class AuthenticationService implements AuthenticateUserUseCase {
             throw new IllegalStateException("비활성화된 계정입니다.");
         }
 
-        log.info("OAuth 로그인 성공: userId={}, provider={}", user.getId(), command.getProvider());
+        log.info("OAuth 로그인 성공 (기존 방식): userId={}, provider={}", user.getId(), command.getProvider());
         return createTokenResult(user);
+    }
+
+    /**
+     * 사용자 조회 또는 생성
+     */
+    @Transactional
+    protected User findOrCreateUser(OAuthUserInfo userInfo) {
+        // 기존 사용자 조회
+        return userPort.findByProviderAndOauthUserId(userInfo.getProvider(), userInfo.getOAuthId())
+                .orElseGet(() -> {
+                    log.info("새로운 OAuth 사용자 생성: provider={}, oauthId={}", 
+                            userInfo.getProvider(), userInfo.getOAuthId());
+
+                    // 새 사용자 생성
+                    User newUser = User.builder()
+                            .email(userInfo.getEmail())
+                            .nickname(userInfo.getNickname())
+                            .profileImageUrl(userInfo.getProfileImageUrl())
+                            .status(UserStatus.ACTIVE)
+                            .build();
+
+                    return userPort.save(newUser);
+                });
     }
 
     @Override
@@ -153,34 +183,10 @@ public class AuthenticationService implements AuthenticateUserUseCase {
 
     @Override
     public OAuthUserCheckResult checkOAuthUser(OAuthUserCheckCommand command) {
-        log.info("OAuth 사용자 확인: provider={}, oauthUserId={}", 
+        log.info("OAuth 사용자 확인: provider={}, oauthUserId={}",
                 command.getProvider(), command.getOauthUserId());
 
         return userPort.findByProviderAndOauthUserId(command.getProvider(), command.getOauthUserId())
-                .map(user -> OAuthUserCheckResult.builder()
-                        .exists(true)
-                        .userId(user.getId())
-                        .email(user.getEmail())
-                        .nickname(user.getNickname())
-                        .profileImageUrl(user.getProfileImageUrl())
-                        .interests(user.getInterestCategories())
-                        .build())
-                .orElse(OAuthUserCheckResult.builder()
-                        .exists(false)
-                        .build());
-    }
-
-    /**
-     * OAuth 사용자 존재 여부 확인 (레거시 메서드)
-     *
-     * @param provider    OAuth 제공자
-     * @param oauthUserId OAuth 사용자 ID
-     * @return 사용자 확인 결과
-     */
-    public OAuthUserCheckResult checkOAuthUser(AuthProvider provider, String oauthUserId) {
-        log.info("OAuth 사용자 확인: provider={}, oauthUserId={}", provider, oauthUserId);
-
-        return userPort.findByProviderAndOauthUserId(provider, oauthUserId)
                 .map(user -> OAuthUserCheckResult.builder()
                         .exists(true)
                         .userId(user.getId())
