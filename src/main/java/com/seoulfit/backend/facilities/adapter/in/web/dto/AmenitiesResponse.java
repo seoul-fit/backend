@@ -1,4 +1,4 @@
-package com.seoulfit.backend.amenities.adapter.in.web.dto;
+package com.seoulfit.backend.facilities.adapter.in.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

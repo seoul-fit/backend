@@ -12,14 +12,15 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Slf4j
 @ConditionalOnProperty(name = "seoul-fit.scheduler.enabled", havingValue = "true", matchIfMissing = true)
-public class CultureSpaceBatch {
+public class CultureSpaceBatch implements BatchService{
     private final CulturalSpaceService culturalSpaceService;
 
     /**
      * 매일 오전 6시 30분에 문화공간 데이터 동기화
      */
     @Scheduled(cron = "${seoul-fit.scheduler.culture.request.cron[1]}")
-    public void syncCulturalEventsDaily() {
+    @Override
+    public void dailyBatch() {
         log.info("Starting scheduled cultural space synchronization");
 
         try {
@@ -29,4 +30,6 @@ public class CultureSpaceBatch {
             log.error("Error during scheduled cultural space synchronization", e);
         }
     }
+
+
 }

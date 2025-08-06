@@ -11,17 +11,17 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Slf4j
 @ConditionalOnProperty(name = "seoul-fit.scheduler.enabled", havingValue = "true", matchIfMissing = true)
-public class CultureEventBatch {
-
+public class CultureEventBatch implements BatchService {
     private final CulturalEventService culturalEventService;
 
     /**
      * 매일 오전 6시에 문화행사 데이터 동기화
      */
     @Scheduled(cron = "${seoul-fit.scheduler.culture.request.cron[0]}")
-    public void syncCulturalEventsDaily() {
+    @Override
+    public void dailyBatch() {
         log.info("Starting scheduled cultural events synchronization");
-        
+
         try {
             int syncedCount = culturalEventService.saveCultureEvents();
             log.info("Scheduled cultural events sync completed successfully. Synced count: {}", syncedCount);
@@ -29,4 +29,5 @@ public class CultureEventBatch {
             log.error("Error during scheduled cultural events synchronization", e);
         }
     }
+
 }
