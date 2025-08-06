@@ -5,12 +5,17 @@ import com.seoulfit.backend.notification.application.port.in.dto.CreateNotificat
 import com.seoulfit.backend.notification.application.port.in.dto.NotificationHistoryQuery;
 import com.seoulfit.backend.notification.application.port.in.dto.NotificationHistoryResult;
 import com.seoulfit.backend.notification.application.port.out.NotificationHistoryPort;
+import com.seoulfit.backend.notification.application.port.out.NotificationSenderPort;
 import com.seoulfit.backend.notification.domain.NotificationHistory;
+import com.seoulfit.backend.user.domain.NotificationSetting;
+import com.seoulfit.backend.user.infrastructure.NotificationSettingRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 알림 서비스
@@ -27,6 +32,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class NotificationService implements ManageNotificationUseCase {
 
     private final NotificationHistoryPort notificationHistoryPort;
+    private final NotificationSenderPort notificationSenderPort;
+    private final NotificationSettingRepository notificationSettingRepository;
 
     @Override
     @Transactional
@@ -44,7 +51,89 @@ public class NotificationService implements ManageNotificationUseCase {
         log.info("알림 생성 완료: userId={}, type={}, title={}",
                 command.userId(), command.getNotificationType(), command.title());
 
+        // 실제 알림 발송
+        sendNotificationAsync(savedNotification, command.priority() != null ? command.priority() : 50);
+
         return NotificationHistoryResult.from(savedNotification);
+    }
+    
+    /**
+     * 알림을 비동기적으로 발송합니다.
+     * 
+     * @param notification 알림 정보
+     * @param priority 우선순위
+     */
+    private void sendNotificationAsync(NotificationHistory notification, int priority) {
+        // 비동기 처리를 위해 별도 스레드에서 실행
+        // 실제 프로덕션에서는 @Async나 메시지 큐를 사용
+        new Thread(() -> {
+            try {
+                sendNotification(notification, priority);
+            } catch (Exception e) {
+                log.error("알림 발송 중 오류 발생: notificationId={}", notification.getId(), e);
+            }
+        }).start();
+    }
+    
+    /**
+     * 사용자 설정에 따라 알림을 발송합니다.
+     * 
+     * @param notification 알림 정보
+     * @param priority 우선순위
+     */
+    private void sendNotification(NotificationHistory notification, int priority) {
+        List<NotificationSetting> settings = notificationSettingRepository
+                .findByUserIdAndNotificationTypeAndIsActive(
+                        notification.getUserId(), 
+                        notification.getNotificationType(), 
+                        true
+                );
+        
+        if (settings.isEmpty()) {
+            // 기본 설정 확인
+            List<NotificationSetting> defaultSettings = notificationSettingRepository
+                    .findByUserIdAndNotificationTypeIsNullAndIsActive(notification.getUserId(), true);
+            settings = defaultSettings;
+        }
+        
+        for (NotificationSetting setting : settings) {
+            if (!setting.canReceiveNotification(priority)) {
+                log.debug("알림 수신 조건 미충족: settingId={}, priority={}", setting.getId(), priority);
+                continue;
+            }
+            
+            // 푸시 알림 발송
+            if (setting.getPushEnabled() && setting.getDeviceToken() != null) {
+                boolean success = notificationSenderPort.sendPushNotification(
+                        notification, setting.getDeviceToken());
+                log.info("푸시 알림 발송 {}: notificationId={}, userId={}", 
+                        success ? "성공" : "실패", notification.getId(), notification.getUserId());
+            }
+            
+            // 웹훅 발송
+            if (setting.getWebhookEnabled() && setting.getWebhookUrl() != null) {
+                boolean success = notificationSenderPort.sendWebhook(
+                        notification, setting.getWebhookUrl());
+                log.info("웹훅 발송 {}: notificationId={}, userId={}", 
+                        success ? "성공" : "실패", notification.getId(), notification.getUserId());
+            }
+            
+            // 이메일 발송
+            if (setting.getEmailEnabled() && setting.getEmail() != null) {
+                boolean success = notificationSenderPort.sendEmailNotification(
+                        notification, setting.getEmail());
+                log.info("이메일 발송 {}: notificationId={}, userId={}", 
+                        success ? "성공" : "실패", notification.getId(), notification.getUserId());
+            }
+            
+            // SMS 발송
+            if (setting.getSmsEnabled() && setting.getPhoneNumber() != null) {
+                boolean success = notificationSenderPort.sendSmsNotification(
+                        notification, setting.getPhoneNumber());
+                log.info("SMS 발송 {}: notificationId={}, userId={}", 
+                        success ? "성공" : "실패", notification.getId(), notification.getUserId());
+            }
+        }
     }
 
     @Override

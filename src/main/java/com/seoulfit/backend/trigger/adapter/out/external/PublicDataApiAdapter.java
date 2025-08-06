@@ -1,10 +1,11 @@
 package com.seoulfit.backend.trigger.adapter.out.external;
 
+import com.seoulfit.backend.external.PublicDataApiClient;
 import com.seoulfit.backend.trigger.application.port.out.PublicDataPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,21 +24,22 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class PublicDataApiAdapter implements PublicDataPort {
 
-    private final WebClient webClient;
+    private final PublicDataApiClient publicDataApiClient;
 
     @Override
     public Map<String, Object> getCityData(String location) {
         try {
-            // TODO: 실제 서울시 실시간 도시 데이터 API 호출 구현
             log.info("서울시 실시간 도시 데이터 조회: location={}", location);
             
-            Map<String, Object> mockData = new HashMap<>();
-            mockData.put("location", location);
-            mockData.put("temperature", 25.5);
-            mockData.put("humidity", 60);
-            mockData.put("congestionLevel", "보통");
+            Mono<Map<String, Object>> cityDataMono = publicDataApiClient.getCityData(location);
+            Map<String, Object> cityData = cityDataMono.block();
             
-            return mockData;
+            if (cityData != null && !cityData.isEmpty()) {
+                return cityData;
+            } else {
+                log.warn("서울시 도시 데이터가 비어있음: location={}", location);
+                return new HashMap<>();
+            }
         } catch (Exception e) {
             log.error("서울시 도시 데이터 조회 실패: location={}, error={}", location, e.getMessage());
             return new HashMap<>();
@@ -47,15 +49,18 @@ public class PublicDataApiAdapter implements PublicDataPort {
     @Override
     public Map<String, Object> getBikeShareData() {
         try {
-            // TODO: 실제 따릉이 현황 API 호출 구현
             log.info("따릉이 현황 데이터 조회");
             
-            Map<String, Object> mockData = new HashMap<>();
-            mockData.put("totalStations", 2000);
-            mockData.put("availableBikes", 15000);
-            mockData.put("emptyStations", 50);
+            // 따릉이 데이터는 많은 데이터를 가져오므로 페이징 처리
+            Mono<Map<String, Object>> bikeDataMono = publicDataApiClient.getBikeData(1, 1000);
+            Map<String, Object> bikeData = bikeDataMono.block();
             
-            return mockData;
+            if (bikeData != null && !bikeData.isEmpty()) {
+                return bikeData;
+            } else {
+                log.warn("따릉이 현황 데이터가 비어있음");
+                return new HashMap<>();
+            }
         } catch (Exception e) {
             log.error("따릉이 현황 데이터 조회 실패: error={}", e.getMessage());
             return new HashMap<>();
@@ -65,16 +70,17 @@ public class PublicDataApiAdapter implements PublicDataPort {
     @Override
     public Map<String, Object> getAirQualityData() {
         try {
-            // TODO: 실제 대기환경 현황 API 호출 구현
             log.info("실시간 대기환경 데이터 조회");
             
-            Map<String, Object> mockData = new HashMap<>();
-            mockData.put("pm10", 45);
-            mockData.put("pm25", 25);
-            mockData.put("o3", 0.05);
-            mockData.put("grade", "보통");
+            Mono<Map<String, Object>> airQualityDataMono = publicDataApiClient.getAirQualityData(1, 25);
+            Map<String, Object> airQualityData = airQualityDataMono.block();
             
-            return mockData;
+            if (airQualityData != null && !airQualityData.isEmpty()) {
+                return airQualityData;
+            } else {
+                log.warn("대기환경 데이터가 비어있음");
+                return new HashMap<>();
+            }
         } catch (Exception e) {
             log.error("대기환경 데이터 조회 실패: error={}", e.getMessage());
             return new HashMap<>();
@@ -84,15 +90,19 @@ public class PublicDataApiAdapter implements PublicDataPort {
     @Override
     public Map<String, Object> getRainfallData() {
         try {
-            // TODO: 실제 강수량 정보 API 호출 구현
             log.info("강수량 데이터 조회");
             
-            Map<String, Object> mockData = new HashMap<>();
-            mockData.put("rainfall10min", 0.0);
-            mockData.put("rainfallHour", 0.0);
-            mockData.put("rainfallDay", 5.2);
+            // 강수량 정보는 일반 API를 사용하여 조회 (서비스명: rainInfo)
+            Mono<Map<String, Object>> rainfallDataMono = publicDataApiClient.callApi(
+                    "rainInfo", 1, 100, null, java.time.Duration.ofMinutes(5));
+            Map<String, Object> rainfallData = rainfallDataMono.block();
             
-            return mockData;
+            if (rainfallData != null && !rainfallData.isEmpty()) {
+                return rainfallData;
+            } else {
+                log.warn("강수량 데이터가 비어있음");
+                return new HashMap<>();
+            }
         } catch (Exception e) {
             log.error("강수량 데이터 조회 실패: error={}", e.getMessage());
             return new HashMap<>();
@@ -102,15 +112,17 @@ public class PublicDataApiAdapter implements PublicDataPort {
     @Override
     public Map<String, Object> getCulturalEventData() {
         try {
-            // TODO: 실제 문화행사 정보 API 호출 구현
             log.info("문화행사 데이터 조회");
             
-            Map<String, Object> mockData = new HashMap<>();
-            mockData.put("totalEvents", 150);
-            mockData.put("todayEvents", 12);
-            mockData.put("weekendEvents", 45);
+            Mono<Map<String, Object>> culturalDataMono = publicDataApiClient.getCulturalEventData(1, 200);
+            Map<String, Object> culturalData = culturalDataMono.block();
             
-            return mockData;
+            if (culturalData != null && !culturalData.isEmpty()) {
+                return culturalData;
+            } else {
+                log.warn("문화행사 데이터가 비어있음");
+                return new HashMap<>();
+            }
         } catch (Exception e) {
             log.error("문화행사 데이터 조회 실패: error={}", e.getMessage());
             return new HashMap<>();
