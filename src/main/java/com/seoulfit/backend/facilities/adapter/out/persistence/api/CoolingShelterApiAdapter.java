@@ -1,7 +1,7 @@
-package com.seoulfit.backend.facilities.adapter.out.persistence;
+package com.seoulfit.backend.facilities.adapter.out.persistence.api;
 
-import com.seoulfit.backend.facilities.adapter.in.web.dto.AmenitiesResponse;
-import com.seoulfit.backend.facilities.application.port.out.LoadAmenitiesPort;
+import com.seoulfit.backend.facilities.adapter.in.web.dto.response.AmenitiesResponse;
+import com.seoulfit.backend.facilities.application.port.out.LoadCoolingShelterPort;
 import com.seoulfit.backend.facilities.domain.CoolingShelter;
 import com.seoulfit.backend.shared.utils.RestClientUtils;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -20,7 +19,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class AmenitiesApiAdapter implements LoadAmenitiesPort {
+public class CoolingShelterApiAdapter implements LoadCoolingShelterPort {
     
     @Value("${seoul-api.base-url}")
     private String baseUrl;
@@ -36,13 +35,8 @@ public class AmenitiesApiAdapter implements LoadAmenitiesPort {
 
         try {
             AmenitiesResponse response = restClientUtils.callGetApi(url, AmenitiesResponse.class);
+            log.info("Amenities response Size: {}", response.getTbGtnHwcwP().getListTotalCount());
             
-            if (response == null || response.getTbGtnHwcwP() == null || 
-                response.getTbGtnHwcwP().getRow() == null) {
-                log.warn("Received empty response from Seoul Amenities API");
-                return Collections.emptyList();
-            }
-
             List<CoolingShelter> coolingShelterList = response.getTbGtnHwcwP().getRow().stream()
                 .map(this::mapToCoolingShelter)
                 .toList();
@@ -71,8 +65,8 @@ public class AmenitiesApiAdapter implements LoadAmenitiesPort {
                 .areaSquareMeters(row.getAreaSquareMeters())
                 .usePersonNumber(row.getUsePersonNumber())
                 .remark(row.getRemark())
-                .longitude(BigDecimal.valueOf(Long.parseLong(row.getLongitude())))
-                .latitude(BigDecimal.valueOf(Long.parseLong(row.getLatitude())))
+                .longitude(row.getLongitude())
+                .latitude(row.getLatitude())
                 .mapCoordX(row.getMapCoordX())
                 .mapCoordY(row.getMapCoordY())
                 .build();

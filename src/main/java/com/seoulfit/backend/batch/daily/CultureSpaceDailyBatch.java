@@ -1,5 +1,6 @@
-package com.seoulfit.backend.batch;
+package com.seoulfit.backend.batch.daily;
 
+import com.seoulfit.backend.batch.BatchService;
 import com.seoulfit.backend.culture.application.service.CulturalSpaceService;
 import com.seoulfit.backend.culture.adapter.in.web.dto.response.SeoulCulturalSpaceApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Slf4j
 @ConditionalOnProperty(name = "seoul-fit.scheduler.enabled", havingValue = "true", matchIfMissing = true)
-public class CultureSpaceBatch implements BatchService{
+public class CultureSpaceDailyBatch implements BatchService {
     private final CulturalSpaceService culturalSpaceService;
 
     /**

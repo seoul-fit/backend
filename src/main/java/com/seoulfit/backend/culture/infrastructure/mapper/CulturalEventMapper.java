@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class CulturalEventMapper {
@@ -38,7 +39,7 @@ public class CulturalEventMapper {
                     .longitude(parseCoordinate(data.getLongitude()))
                     .isFree(data.getIsFree())
                     .homepageAddr(data.getHomepageAddr())
-                    .externalId(LocalDateTime.now().toString() + data.getCodeName())
+                    .externalId(UUID.randomUUID().toString())
                     .build();
 
             entityList.add(build);

@@ -45,7 +45,7 @@ public class CoolingShelter {
     private String lotNumberAddress;
 
     @Column(name = "area_square_meters")
-    private Double areaSquareMeters;
+    private String areaSquareMeters;
 
     @Column(name = "use_person_number")
     private Integer usePersonNumber;
@@ -76,7 +76,7 @@ public class CoolingShelter {
     @Builder
     public CoolingShelter(String year, String areaCode, String facilityType1, String facilityType2,
                           String facilityName, String detailedAddress, String lotNumberAddress,
-                          Double areaSquareMeters, Integer usePersonNumber,
+                          String areaSquareMeters, Integer usePersonNumber,
                           String remark, BigDecimal longitude, BigDecimal latitude,
                           Double mapCoordX, Double mapCoordY) {
         this.year = year;

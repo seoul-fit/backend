@@ -52,7 +52,7 @@ public class CulturalSpaceService {
             log.info("No cultural events data received from API");
             return null;
         }
-        entityManager.createNativeQuery("TRUNCATE TABLE CULTURAL_SPACES").executeUpdate();
+        entityManager.createNativeQuery("TRUNCATE TABLE cultural_spaces").executeUpdate();
 
         List<SeoulCulturalSpaceApiResponse.CulturalSpaceData> data = response.getCulturalSpaceInfo().getRow();
 

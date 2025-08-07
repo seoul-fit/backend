@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 무더위 쉼터 데이터 로드 포트
  */
-public interface LoadAmenitiesPort {
+public interface LoadCoolingShelterPort {
     
     /**
      * 외부 API 에서 무더위 쉼터  데이터 조회

@@ -1,4 +1,4 @@
-package com.seoulfit.backend.facilities.adapter.in.web.dto;
+package com.seoulfit.backend.facilities.adapter.in.web.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -13,6 +14,8 @@ import java.util.List;
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AmenitiesResponse {
+
+    @JsonProperty("TbGtnHwcwP")
     private TbGtnHwcwP tbGtnHwcwP;
 
     @Getter
@@ -77,7 +80,7 @@ public class AmenitiesResponse {
         private String lotNumberAddress;
 
         @JsonProperty("R_AREA_SQR")
-        private Double areaSquareMeters;
+        private String areaSquareMeters;
 
         @JsonProperty("USE_PRNB")
         private Integer usePersonNumber;
@@ -86,10 +89,10 @@ public class AmenitiesResponse {
         private String remark;
 
         @JsonProperty("LON")
-        private String longitude;
+        private BigDecimal longitude;
 
         @JsonProperty("LAT")
-        private String latitude;
+        private BigDecimal latitude;
 
         @JsonProperty("MAP_COORD_X")
         private Double mapCoordX;

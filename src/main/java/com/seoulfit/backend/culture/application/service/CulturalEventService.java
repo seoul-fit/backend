@@ -38,7 +38,7 @@ public class CulturalEventService {
                 log.warn("Seoul API health check failed, but proceeding with sync attempt");
 
             // truncate
-            entityManager.createNativeQuery("TRUNCATE TABLE CULTURAL_EVENTS").executeUpdate();
+            entityManager.createNativeQuery("TRUNCATE TABLE cultural_events").executeUpdate();
 
             // call api
             SeoulApiResponse response = seoulCulturalApiService.fetchAllCulturalEvents();

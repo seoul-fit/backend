@@ -8,15 +8,15 @@ import java.util.List;
 /**
  * 무더위 쉼터 조회 유스케이스
  */
-public interface GetCoolingShelterUseCase {
+public interface CommandCoolingShelterUseCase {
     
     /**
-     * 편의시설 목록 조회
+     * 무더위 쉼터 리스트 저장
      */
-    List<CoolingShelter> getAmenities(GetAmenitiesQuery query);
+    List<CoolingShelter> saveCoolingShelter(GetAmenitiesQuery query);
     
     /**
-     * 특정 위치 주변 편의시설 조회
+     * 특정 위치 주변 무더위 쉼터 조회
      */
     List<CoolingShelter> getAmenitiesNearby(BigDecimal latitude, BigDecimal longitude, double radiusKm);
     

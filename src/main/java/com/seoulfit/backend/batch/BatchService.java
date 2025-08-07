@@ -1,7 +1,9 @@
 package com.seoulfit.backend.batch;
 
 public interface BatchService {
-    void dailyBatch();
+    default void dailyBatch() {}
+
+    default void realTimeBatch() {}
 
     default void weeklyBatch() {}
 

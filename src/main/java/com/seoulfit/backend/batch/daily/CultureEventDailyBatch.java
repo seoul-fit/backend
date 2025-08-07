@@ -1,5 +1,6 @@
-package com.seoulfit.backend.batch;
+package com.seoulfit.backend.batch.daily;
 
+import com.seoulfit.backend.batch.BatchService;
 import com.seoulfit.backend.culture.application.service.CulturalEventService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Slf4j
 @ConditionalOnProperty(name = "seoul-fit.scheduler.enabled", havingValue = "true", matchIfMissing = true)
-public class CultureEventBatch implements BatchService {
+public class CultureEventDailyBatch implements BatchService {
     private final CulturalEventService culturalEventService;
 
     /**

@@ -1,4 +1,4 @@
-package com.seoulfit.backend.facilities.adapter.in.web.dto;
+package com.seoulfit.backend.facilities.adapter.in.web.dto.response;
 
 import com.seoulfit.backend.facilities.domain.CoolingShelter;
 import lombok.Builder;
