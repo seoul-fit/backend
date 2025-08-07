@@ -58,6 +58,8 @@ public class AuthenticationService implements AuthenticateUserUseCase {
         User user = User.builder()
                 .email(command.getEmail())
                 .nickname(command.getNickname())
+                .oauthProvider(command.getProvider())
+                .oauthUserId(command.getOauthUserId())
                 .profileImageUrl(command.getProfileImageUrl())
                 .status(UserStatus.ACTIVE)
                 .build();
