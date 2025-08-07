@@ -78,7 +78,12 @@ seoul-api:
     environment:
       service-name:
         - RealtimeCityAir
-
+    amenities:
+      service-name:
+        - TbGtnHwcwP
+    facilities:
+      service-name:
+        - SeoulPublicLibraryInfo
 
 # UrbanPing 확장 설정 (오픈소스 기여자를 위한 설정)
 urbanping:

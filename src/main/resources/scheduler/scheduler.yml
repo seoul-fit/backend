@@ -3,12 +3,20 @@ seoul-fit:
     culture:
       request:
         cron:
-          - "0 0 6 * * *"
-          - "0 30 6 * * *"
+          - "0 0 6 * * *" # 매일 오전 06:00
+          - "0 5 6 * * *" # 매일 오전 06:05
+    facilities:
+      cooling-shelter:
+        cron: "0 0 7 * * *" # 매일 오전 07:00
+      public-library:
+         cron: "0 5 7 * * *" # 매일 오전 07:05
+    traffic:
+      bike:
+        cron: "0 */5 * * * *" #5분 단위 배치
 
 
---- # dev
+--- # test
 spring:
   config:
     activate:
-      on-profile: dev
+      on-profile: test

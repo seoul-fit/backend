@@ -1,7 +1,7 @@
 package com.seoulfit.backend.culture.adapter.in.web;
 
-import com.seoulfit.backend.tmp.presentation.culture.dtos.response.SeoulReservationApiResponse;
-import com.seoulfit.backend.tmp.application.service.impl.CulturalReservationServiceImpl;
+import com.seoulfit.backend.culture.adapter.in.web.dto.response.SeoulReservationApiResponse;
+import com.seoulfit.backend.culture.application.service.CulturalReservationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import java.util.Map;
 @Slf4j
 public class CulturalReservationController {
     
-    private final CulturalReservationServiceImpl reservationService;
+    private final CulturalReservationService reservationService;
 
     @Operation(summary = "문화 생활 예약 정보 관련 API", description = "문화 생활 예약 정보를 가져온다.")
     @GetMapping("/fetch")
