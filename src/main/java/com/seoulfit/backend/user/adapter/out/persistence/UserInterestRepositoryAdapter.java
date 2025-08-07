@@ -34,6 +34,11 @@ public class UserInterestRepositoryAdapter implements UserInterestPort {
     }
     
     @Override
+    public List<InterestCategory> findInterestsByUserId(Long userId) {
+        return userInterestRepository.findInterestCategoriesByUserId(userId);
+    }
+    
+    @Override
     public void deleteByUser(User user) {
         userInterestRepository.deleteByUser(user);
     }

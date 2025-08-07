@@ -30,6 +30,14 @@ public interface UserInterestRepository extends JpaRepository<UserInterest, Long
     List<InterestCategory> findInterestCategoriesByUser(@Param("user") User user);
     
     /**
+     * 사용자 ID로 관심사 카테고리 목록 조회
+     * @param userId 사용자 ID
+     * @return 관심사 카테고리 목록
+     */
+    @Query("SELECT ui.interestCategory FROM UserInterest ui WHERE ui.user.id = :userId")
+    List<InterestCategory> findInterestCategoriesByUserId(@Param("userId") Long userId);
+    
+    /**
      * 사용자의 모든 관심사 삭제
      * @param user 사용자
      */

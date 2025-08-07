@@ -155,7 +155,7 @@ public class TriggerSchedulerService {
                 NotificationEvent event = NotificationEvent.builder()
                         .source(this)
                         .userId(user.getId())
-                        .notificationType(result.getNotificationType())
+                        .type(result.getNotificationType())
                         .triggerCondition(result.getTriggerCondition())
                         .title(result.getTitle())
                         .message(result.getMessage())

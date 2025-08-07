@@ -1,10 +1,17 @@
 package com.seoulfit.backend.user.adapter.in.web;
 
+import com.seoulfit.backend.trigger.application.port.in.EvaluateTriggerUseCase;
+import com.seoulfit.backend.trigger.application.port.in.dto.LocationTriggerCommand;
+import com.seoulfit.backend.trigger.application.port.in.dto.TriggerEvaluationResult;
+import com.seoulfit.backend.trigger.adapter.in.web.dto.TriggerEvaluationResponse;
 import com.seoulfit.backend.user.adapter.in.web.dto.*;
+import com.seoulfit.backend.user.adapter.out.persistence.UserPort;
 import com.seoulfit.backend.user.application.port.in.AuthenticateUserUseCase;
 import com.seoulfit.backend.user.application.port.in.dto.*;
 import com.seoulfit.backend.user.application.service.OAuthService;
 import com.seoulfit.backend.user.domain.AuthProvider;
+import com.seoulfit.backend.user.domain.User;
+import com.seoulfit.backend.user.infrastructure.jwt.JwtTokenProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,6 +42,9 @@ public class AuthController {
 
     private final AuthenticateUserUseCase authenticateUserUseCase;
     private final OAuthService oAuthService;
+    private final EvaluateTriggerUseCase evaluateTriggerUseCase;
+    private final UserPort userPort;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Operation(
         summary = "01. OAuth 인가코드 검증",
@@ -197,6 +207,55 @@ public class AuthController {
             return ResponseEntity.ok(result);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("지원하지 않는 OAuth 제공자입니다: " + provider);
+        }
+    }
+
+    @Operation(
+        summary = "위치 기반 로그인", 
+        description = "사용자 로그인과 동시에 위치 정보를 전달하여 실시간 트리거를 평가하고 알림을 생성합니다."
+    )
+    @PostMapping("/login/location")
+    public ResponseEntity<LoginWithLocationResponse> loginWithLocation(@Valid @RequestBody LoginWithLocationRequest request) {
+        log.info("위치 기반 로그인 요청: userId={}, location=[{}, {}]", 
+                request.getUserId(), request.getLatitude(), request.getLongitude());
+
+        try {
+            // 사용자 인증 확인
+            User user = userPort.findByEmail(request.getUserId())
+                    .orElse(null);
+            
+            if (user == null) {
+                return ResponseEntity.ok(LoginWithLocationResponse.failure("사용자를 찾을 수 없습니다."));
+            }
+
+            // JWT 토큰 생성
+            String accessToken = jwtTokenProvider.createAccessToken(user.getId(), user.getEmail());
+            String refreshToken = jwtTokenProvider.createRefreshToken(user.getId());
+
+            // 위치 기반 트리거 평가
+            LocationTriggerCommand triggerCommand = LocationTriggerCommand.of(
+                    request.getUserId(),
+                    request.getLatitude(),
+                    request.getLongitude(),
+                    request.getRadius(),
+                    null // 모든 트리거 타입 평가
+            );
+
+            TriggerEvaluationResult triggerResult = evaluateTriggerUseCase.evaluateLocationBasedTriggers(triggerCommand);
+            TriggerEvaluationResponse triggerResponse = TriggerEvaluationResponse.from(triggerResult);
+
+            return ResponseEntity.ok(LoginWithLocationResponse.success(
+                    user.getId(),
+                    user.getNickname(),
+                    user.getEmail(),
+                    accessToken,
+                    refreshToken,
+                    triggerResponse
+            ));
+
+        } catch (Exception e) {
+            log.error("위치 기반 로그인 실패: userId={}, error={}", request.getUserId(), e.getMessage(), e);
+            return ResponseEntity.ok(LoginWithLocationResponse.failure("로그인 처리 중 오류가 발생했습니다."));
         }
     }
 

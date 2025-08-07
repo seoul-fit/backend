@@ -33,13 +33,13 @@ public class NotificationEventListener {
     @EventListener
     public void handleNotificationEvent(NotificationEvent event) {
         log.info("알림 이벤트 처리 시작: userId={}, type={}, condition={}", 
-                event.getUserId(), event.getNotificationType(), event.getTriggerCondition());
+                event.getUserId(), event.getType(), event.getTriggerCondition());
         
         try {
             // 알림 히스토리 생성
             CreateNotificationCommand command = CreateNotificationCommand.of(
                     event.getUserId(),
-                    event.getNotificationType(),
+                    event.getType(),
                     event.getTitle(),
                     event.getMessage(),
                     event.getTriggerCondition(),
@@ -49,11 +49,11 @@ public class NotificationEventListener {
             manageNotificationHistoryUseCase.createNotification(command);
             
             log.info("알림 이벤트 처리 완료: userId={}, type={}", 
-                    event.getUserId(), event.getNotificationType());
+                    event.getUserId(), event.getType());
             
         } catch (Exception e) {
             log.error("알림 이벤트 처리 중 오류 발생: userId={}, type={}", 
-                    event.getUserId(), event.getNotificationType(), e);
+                    event.getUserId(), event.getType(), e);
         }
     }
 }

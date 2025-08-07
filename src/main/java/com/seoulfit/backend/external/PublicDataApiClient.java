@@ -286,6 +286,51 @@ public class PublicDataApiClient {
     }
 
     /**
+     * 위치 기반 실시간 데이터를 조회합니다.
+     * 
+     * @param latitude 위도
+     * @param longitude 경도
+     * @return 실시간 데이터 맵
+     */
+    public Map<String, Object> fetchRealtimeData(Double latitude, Double longitude) {
+        log.debug("위치 기반 실시간 데이터 조회: lat={}, lng={}", latitude, longitude);
+        
+        Map<String, Object> realtimeData = new HashMap<>();
+        
+        try {
+            // 도시 데이터 조회 (비동기를 동기로 변환)
+            Map<String, Object> cityData = getCityData("광화문·덕수궁").block();
+            if (cityData != null) {
+                realtimeData.put("CITY_DATA", cityData);
+            }
+            
+            // 따릉이 데이터 조회
+            Map<String, Object> bikeData = getBikeData(1, 100).block();
+            if (bikeData != null) {
+                realtimeData.put("BIKE_SHARE", bikeData);
+            }
+            
+            // 대기질 데이터 조회
+            Map<String, Object> airData = getAirQualityData(1, 25).block();
+            if (airData != null) {
+                realtimeData.put("AIR_QUALITY", airData);
+            }
+            
+            // 문화행사 데이터 조회
+            Map<String, Object> culturalData = getCulturalEventData(1, 50).block();
+            if (culturalData != null) {
+                realtimeData.put("CULTURAL_EVENTS", culturalData);
+            }
+            
+        } catch (Exception e) {
+            log.error("실시간 데이터 조회 중 오류 발생: lat={}, lng={}, error={}", 
+                    latitude, longitude, e.getMessage(), e);
+        }
+        
+        return realtimeData;
+    }
+
+    /**
      * 캐시된 응답을 담는 내부 클래스
      */
     private static class CachedResponse {

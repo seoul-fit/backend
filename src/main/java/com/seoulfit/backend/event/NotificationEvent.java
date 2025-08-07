@@ -19,7 +19,7 @@ import org.springframework.context.ApplicationEvent;
 public class NotificationEvent extends ApplicationEvent {
     
     private final Long userId;
-    private final NotificationType notificationType;
+    private final NotificationType type;
     private final TriggerCondition triggerCondition;
     private final String title;
     private final String message;
@@ -27,12 +27,12 @@ public class NotificationEvent extends ApplicationEvent {
     private final int priority;
     
     @Builder
-    public NotificationEvent(Object source, Long userId, NotificationType notificationType,
+    public NotificationEvent(Object source, Long userId, NotificationType type,
                            TriggerCondition triggerCondition, String title, String message,
                            String locationInfo, int priority) {
-        super(source);
+        super(source != null ? source : "system");
         this.userId = userId;
-        this.notificationType = notificationType;
+        this.type = type;
         this.triggerCondition = triggerCondition;
         this.title = title;
         this.message = message;
@@ -45,20 +45,20 @@ public class NotificationEvent extends ApplicationEvent {
      * 
      * @param source 이벤트 소스
      * @param userId 사용자 ID
-     * @param notificationType 알림 타입
+     * @param type 알림 타입
      * @param triggerCondition 트리거 조건
      * @param title 제목
      * @param message 메시지
      * @param locationInfo 위치 정보
      * @return 알림 이벤트
      */
-    public static NotificationEvent of(Object source, Long userId, NotificationType notificationType,
+    public static NotificationEvent of(Object source, Long userId, NotificationType type,
                                      TriggerCondition triggerCondition, String title, String message,
                                      String locationInfo) {
         return NotificationEvent.builder()
                 .source(source)
                 .userId(userId)
-                .notificationType(notificationType)
+                .type(type)
                 .triggerCondition(triggerCondition)
                 .title(title)
                 .message(message)
