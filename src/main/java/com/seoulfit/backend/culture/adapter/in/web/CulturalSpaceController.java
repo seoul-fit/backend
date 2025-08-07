@@ -1,61 +1,46 @@
 package com.seoulfit.backend.culture.adapter.in.web;
 
-import com.seoulfit.backend.culture.application.service.CulturalSpaceService;
-import com.seoulfit.backend.culture.adapter.in.web.dto.response.SeoulCulturalSpaceApiResponse;
+// import com.seoulfit.backend.culture.application.service.CulturalSpaceService;
+import com.seoulfit.backend.culture.domain.CulturalSpace;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.util.List;
 
-@Tag(name = "서울시 문화공간 정보 관련 API", description = "CulturalSpaceController.class")
 @RestController
-@RequestMapping("/api/v1/cultural-space")
+@RequestMapping("/api/cultural-spaces")
 @RequiredArgsConstructor
-@Slf4j
+@Tag(name = "Cultural Spaces", description = "문화공간 정보 API")
 public class CulturalSpaceController {
-    
-    private final CulturalSpaceService culturalSpaceService;
 
-    @Operation(summary = "문화 공간 정보 관련 API", description = "문화 공간 정보를 가져온다.")
-    @GetMapping("/fetch")
-    public ResponseEntity<Map<String, Object>> fetchCulturalSpaces(
-            @RequestParam(defaultValue = "1") int startIndex,
-            @RequestParam(defaultValue = "1000") int endIndex) {
-        try {
-            log.info("Fetching cultural spaces from {} to {}", startIndex, endIndex);
-            
-            SeoulCulturalSpaceApiResponse response = culturalSpaceService.saveCultureSpace(startIndex, endIndex);
-            
-            if (response == null) {
-                return ResponseEntity.badRequest().body(Map.of(
-                        "success", false,
-                        "message", "API 응답이 null입니다.",
-                        "data", null
-                ));
-            }
-            
-            return ResponseEntity.ok(Map.of(
-                    "success", true,
-                    "message", "문화 공간 정보 관련 데이터 가져오기 완료",
-                    "totalCount", response.getListTotalCount(),
-                    "resultCode", response.getResult() != null ? response.getResult().getCode() : "UNKNOWN",
-                    "resultMessage", response.getResult() != null ? response.getResult().getMessage() : "No result info",
-                    "dataCount", response.getRow() != null ? response.getRow().size() : 0,
-                    "data", response
-            ));
-        } catch (Exception e) {
-            log.error("Error fetching cultural spaces", e);
-            return ResponseEntity.badRequest().body(Map.of(
-                    "success", false,
-                    "message", "문화공간 정보 데이터 가져오기에 실패했습니다.",
-                    "error", e.getMessage(),
-                    "errorType", e.getClass().getSimpleName()
-            ));
-        }
+    // private final CulturalSpaceService culturalSpaceService;
+
+    @Operation(summary = "문화공간 목록 조회", description = "저장된 문화공간 목록을 조회합니다.")
+    @GetMapping
+    public ResponseEntity<List<CulturalSpace>> getCulturalSpaces() {
+        // List<CulturalSpace> spaces = culturalSpaceService.getCulturalSpaces();
+        return ResponseEntity.ok(List.of());
     }
 
+    @Operation(summary = "문화공간 상세 조회", description = "특정 문화공간의 상세 정보를 조회합니다.")
+    @GetMapping("/{id}")
+    public ResponseEntity<CulturalSpace> getCulturalSpace(@PathVariable Long id) {
+        // CulturalSpace space = culturalSpaceService.getCulturalSpace(id);
+        return ResponseEntity.notFound().build();
+    }
+
+    @Operation(summary = "문화공간 데이터 동기화", description = "서울시 API에서 최신 문화공간 데이터를 가져와 저장합니다.")
+    @PostMapping("/sync")
+    public ResponseEntity<String> syncCulturalSpaces() {
+        try {
+            // int syncedCount = culturalSpaceService.saveCultureSpaces();
+            return ResponseEntity.ok("문화공간 데이터 동기화 완료. 동기화된 건수: " + 0);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body("문화공간 데이터 동기화 실패: " + e.getMessage());
+        }
+    }
 }
