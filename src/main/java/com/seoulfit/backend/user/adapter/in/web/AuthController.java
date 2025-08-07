@@ -36,7 +36,26 @@ public class AuthController {
     private final AuthenticateUserUseCase authenticateUserUseCase;
     private final OAuthService oAuthService;
 
-    @Operation(summary = "OAuth 사용자 확인", description = "OAuth 사용자 존재 여부를 확인합니다.")
+    @Operation(
+        summary = "01. OAuth 인가코드 검증",
+        description = "프론트엔드에서 받은 인가코드로 OAuth 제공자에서 사용자 정보를 조회합니다. " +
+                     "회원가입 전에 사용자 정보를 미리 확인할 때 사용합니다."
+    )
+    @PostMapping("/oauth/authorizecheck")
+    public ResponseEntity<OAuthAuthorizeCheckResponse> checkAuthorizationCode(@Valid @RequestBody OAuthAuthorizeCheckRequest request) {
+        log.info("OAuth 인가코드 검증 요청: provider={}", request.getProvider());
+
+        OAuthAuthorizeCheckCommand command = OAuthAuthorizeCheckCommand.of(
+                request.getProvider(),
+                request.getAuthorizationCode(),
+                request.getRedirectUri()
+        );
+
+        OAuthAuthorizeCheckResult result = authenticateUserUseCase.checkAuthorizationCode(command);
+        return ResponseEntity.ok(OAuthAuthorizeCheckResponse.from(result));
+    }
+
+    @Operation(summary = "02. OAuth 사용자 확인", description = "OAuth 사용자 존재 여부를 확인합니다.")
     @PostMapping("/oauth/check")
     public ResponseEntity<OAuthUserCheckResponse> checkOAuthUser(@Valid @RequestBody OAuthLoginRequest request) {
         // 기존 방식과의 호환성을 위해 유지
@@ -108,7 +127,7 @@ public class AuthController {
         return ResponseEntity.ok(TokenResponse.from(result));
     }
 
-    @Operation(summary = "OAuth 회원가입", description = "OAuth 정보로 회원가입합니다.")
+    @Operation(summary = "03. OAuth 회원가입", description = "OAuth 정보로 회원가입합니다.")
     @PostMapping("/oauth/signup")
     public ResponseEntity<TokenResponse> oauthSignUp(@Valid @RequestBody OAuthSignUpRequest request) {
         OAuthSignUpCommand command = OAuthSignUpCommand.of(

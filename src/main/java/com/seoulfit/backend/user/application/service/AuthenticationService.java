@@ -200,6 +200,41 @@ public class AuthenticationService implements AuthenticateUserUseCase {
                         .build());
     }
 
+    @Override
+    public OAuthAuthorizeCheckResult checkAuthorizationCode(OAuthAuthorizeCheckCommand command) {
+        log.info("OAuth 인가코드 검증 시작: provider={}", command.getProvider());
+
+        try {
+            // OAuth 클라이언트 조회
+            OAuthClient oAuthClient = oAuthClientFactory.getClient(command.getProvider());
+
+            // 인가코드로 액세스 토큰 교환
+            OAuthTokenResponse tokenResponse = oAuthClient.exchangeCodeForToken(
+                    command.getAuthorizationCode(),
+                    command.getRedirectUri()
+            );
+
+            // 액세스 토큰으로 사용자 정보 조회
+            OAuthUserInfo userInfo = oAuthClient.getUserInfo(tokenResponse.getAccessToken());
+
+            log.info("OAuth 사용자 정보 조회 성공: provider={}, oauthUserId={}", 
+                    command.getProvider(), userInfo.getOAuthId());
+
+            return OAuthAuthorizeCheckResult.of(
+                    command.getProvider(),
+                    userInfo.getOAuthId(),
+                    userInfo.getNickname(),
+                    userInfo.getEmail(),
+                    userInfo.getProfileImageUrl()
+            );
+
+        } catch (Exception e) {
+            log.error("OAuth 인가코드 검증 실패: provider={}, error={}", 
+                    command.getProvider(), e.getMessage(), e);
+            throw new RuntimeException("OAuth 인가코드 검증에 실패했습니다: " + e.getMessage(), e);
+        }
+    }
+
     /**
      * 토큰 결과 생성
      *

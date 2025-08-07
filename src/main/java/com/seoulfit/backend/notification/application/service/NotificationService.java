@@ -52,7 +52,7 @@ public class NotificationService implements ManageNotificationUseCase {
                 command.userId(), command.getNotificationType(), command.title());
 
         // 실제 알림 발송
-        sendNotificationAsync(savedNotification, command.priority() != null ? command.priority() : 50);
+//        sendNotificationAsync(savedNotification, command.priority() != null ? command.priority() : 50);
 
         return NotificationHistoryResult.from(savedNotification);
     }

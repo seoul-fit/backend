@@ -56,6 +56,15 @@ public interface AuthenticateUserUseCase {
     TokenResult refreshToken(String refreshToken);
 
     /**
+     * OAuth 인가코드 검증
+     * 인가코드로 OAuth 제공자에서 사용자 정보를 조회
+     *
+     * @param command OAuth 인가코드 검증 명령
+     * @return OAuth 인가코드 검증 결과
+     */
+    OAuthAuthorizeCheckResult checkAuthorizationCode(OAuthAuthorizeCheckCommand command);
+
+    /**
      * 사용자 존재 여부 확인
      *
      * @param email 이메일
