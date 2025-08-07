@@ -4,7 +4,7 @@ import com.seoulfit.backend.notification.application.port.in.ManageNotificationU
 import com.seoulfit.backend.notification.application.port.in.dto.CreateNotificationCommand;
 import com.seoulfit.backend.notification.application.port.in.dto.NotificationHistoryQuery;
 import com.seoulfit.backend.notification.application.port.in.dto.NotificationHistoryResult;
-import com.seoulfit.backend.notification.adapter.in.web.dto.CreateNotificationRequest;
+import com.seoulfit.backend.notification.adapter.in.web.dto.request.CreateNotificationRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

@@ -6,6 +6,8 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import com.seoulfit.backend.external.dto.SeoulLibraryInfoDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -174,6 +176,36 @@ public class PublicDataApiClient {
                     log.debug("문화행사 데이터 조회 성공: start={}, end={}", startIndex, endIndex);
                 })
                 .doOnError(error -> log.error("문화행사 데이터 조회 실패: start={}, end={}", startIndex, endIndex, error));
+    }
+
+    /**
+     * 서울시 공공도서관 현황 정보를 조회합니다.
+     *
+     * @param startIndex 시작 인덱스
+     * @param endIndex   종료 인덱스
+     * @return API 응답 데이터
+     */
+    public Mono<SeoulLibraryInfoDto> getSeoulLibraryData(int startIndex, int endIndex) {
+        String cacheKey = String.format("SeoulPublicLibraryInfo_%d_%d", startIndex, endIndex);
+
+        // 캐시 확인 (30분 캐시)
+        CachedResponse cached = responseCache.get(cacheKey);
+        if (cached != null && !cached.isExpired(Duration.ofMinutes(30))) {
+            return Mono.just((SeoulLibraryInfoDto) cached.data);
+        }
+
+        String url = String.format("%s/%s/json/SeoulPublicLibraryInfo/%d/%d/", baseUrl, apiKey, startIndex, endIndex);
+
+        return webClient.get()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(SeoulLibraryInfoDto.class)
+                .timeout(Duration.ofSeconds(timeoutSeconds))
+                .retryWhen(Retry.backoff(retryAttempts, Duration.ofSeconds(1)))
+                .doOnSuccess(data -> {
+                    log.info("도서관 데이터 조회 성공: start={} end={}", startIndex, endIndex);
+                })
+                .doOnError(error -> log.error("도서관 데이터 조회 실패: start={} end={} cause={}", startIndex, endIndex, error.getMessage()));
     }
 
     /**
