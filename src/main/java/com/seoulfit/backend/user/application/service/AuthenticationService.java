@@ -66,6 +66,12 @@ public class AuthenticationService implements AuthenticateUserUseCase {
 
         // OAuth 정보는 별도로 관리해야 할 수 있음 (AuthUser 엔티티 사용)
         User savedUser = userPort.save(user);
+        
+        // 사용자 선호도 저장
+        if (command.getInterests() != null && !command.getInterests().isEmpty()) {
+            userPort.saveUserInterests(savedUser.getId(), command.getInterests());
+        }
+
         log.info("OAuth 회원가입 완료: userId={}, provider={}", savedUser.getId(), command.getProvider());
 
         return createTokenResult(savedUser);

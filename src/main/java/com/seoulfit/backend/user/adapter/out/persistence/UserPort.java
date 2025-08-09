@@ -75,4 +75,12 @@ public interface UserPort {
      * @return 해당 관심사를 가진 사용자 목록
      */
     List<User> findUsersByInterest(InterestCategory interestCategory);
+
+    /**
+     * 회원가입 시 사용자 관심사 저장
+     *
+     * @param userId 사용자 ID
+     * @param interests 사용자 관심사 목록
+     */
+    void saveUserInterests(Long userId, List<InterestCategory> interests);
 }

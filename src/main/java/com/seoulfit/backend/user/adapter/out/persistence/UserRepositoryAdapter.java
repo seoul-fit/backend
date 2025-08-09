@@ -3,6 +3,7 @@ package com.seoulfit.backend.user.adapter.out.persistence;
 import com.seoulfit.backend.user.domain.InterestCategory;
 import com.seoulfit.backend.user.domain.AuthProvider;
 import com.seoulfit.backend.user.domain.User;
+import com.seoulfit.backend.user.domain.UserInterest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +19,7 @@ import java.util.Optional;
 public class UserRepositoryAdapter implements UserPort {
     
     private final UserRepository userRepository;
+    private final UserInterestRepository userInterestRepository;
     
     @Override
     public User save(User user) {
@@ -60,5 +62,17 @@ public class UserRepositoryAdapter implements UserPort {
     public List<User> findUsersByInterest(InterestCategory interestCategory) {
         // UserInterest 조인을 통해 특정 관심사를 가진 사용자 조회
         return userRepository.findUsersByInterestCategory(interestCategory);
+    }
+
+    @Override
+    public void saveUserInterests(Long userId, List<InterestCategory> interests) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다: " + userId));
+        
+        List<UserInterest> userInterests = interests.stream()
+                .map(interest -> UserInterest.of(user, interest))
+                .toList();
+        
+        userInterestRepository.saveAll(userInterests);
     }
 }

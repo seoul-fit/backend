@@ -4,6 +4,7 @@ import com.seoulfit.backend.user.application.port.out.UserPort;
 import com.seoulfit.backend.user.domain.AuthProvider;
 import com.seoulfit.backend.user.domain.InterestCategory;
 import com.seoulfit.backend.user.domain.User;
+import com.seoulfit.backend.user.domain.UserInterest;
 import com.seoulfit.backend.user.domain.UserStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,7 @@ import java.util.Optional;
 public class UserPersistenceAdapter implements UserPort {
 
     private final UserJpaRepository userJpaRepository;
+    private final UserInterestRepository userInterestRepository;
 
     @Override
     public User save(User user) {
@@ -81,5 +83,17 @@ public class UserPersistenceAdapter implements UserPort {
     @Override
     public long countByStatus(UserStatus status) {
         return userJpaRepository.countByStatus(status);
+    }
+
+    @Override
+    public void saveUserInterests(Long userId, List<InterestCategory> interests) {
+        User user = userJpaRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다: " + userId));
+        
+        List<UserInterest> userInterests = interests.stream()
+                .map(interest -> UserInterest.of(user, interest))
+                .toList();
+        
+        userInterestRepository.saveAll(userInterests);
     }
 }
