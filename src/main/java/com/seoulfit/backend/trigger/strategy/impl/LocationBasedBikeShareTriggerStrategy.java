@@ -40,9 +40,9 @@ public class LocationBasedBikeShareTriggerStrategy implements TriggerStrategy {
         log.debug("위치 기반 따릉이 트리거 평가 시작: userId={}, location=[{}, {}]", 
                 context.getUser().getId(), context.getUserLatitude(), context.getUserLongitude());
 
-        // 사용자가 교통에 관심이 있는지 확인
-        if (!context.getUserInterests().contains(InterestCategory.TRAFFIC)) {
-            log.debug("사용자가 교통에 관심이 없음: userId={}", context.getUser().getId());
+        // 사용자가 따릉이에 관심이 있는지 확인
+        if (!context.getUserInterests().contains(InterestCategory.BIKE)) {
+            log.debug("사용자가 따릉이에 관심이 없음: userId={}", context.getUser().getId());
             return TriggerResult.notTriggered();
         }
 

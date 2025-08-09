@@ -35,8 +35,7 @@ public class CongestionTriggerStrategy implements TriggerStrategy {
         log.debug("혼잡도 기반 트리거 평가 시작: userId={}", context.getUser().getId());
         
         // 사용자가 교통이나 혼잡도에 관심이 있는지 확인
-        if (!context.getUserInterests().contains(InterestCategory.TRAFFIC) &&
-            !context.getUserInterests().contains(InterestCategory.CONGESTION)) {
+        if (context.getUserInterests().contains(InterestCategory.CONGESTION)) {
             log.debug("사용자가 교통/혼잡도에 관심이 없음: userId={}", context.getUser().getId());
             return TriggerResult.notTriggered();
         }

@@ -39,7 +39,7 @@ public class BikeShareTriggerStrategy implements TriggerStrategy {
         log.debug("따릉이 기반 트리거 평가 시작: userId={}", context.getUser().getId());
         
         // 사용자가 따릉이에 관심이 있는지 확인
-        if (!context.getUserInterests().contains(InterestCategory.BIKE_SHARING)) {
+        if (!context.getUserInterests().contains(InterestCategory.BIKE)) {
             log.debug("사용자가 따릉이에 관심이 없음: userId={}", context.getUser().getId());
             return TriggerResult.notTriggered();
         }
