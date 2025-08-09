@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * 사용자 관심사 관리 컨트롤러
- * 
+ * <p>
  * 사용자가 체크박스로 관심사를 선택하고 관리할 수 있는 API 제공
  * 
  * @author UrbanPing Team
@@ -90,17 +90,12 @@ public class UserInterestController {
     @PutMapping
     @Transactional
     public ResponseEntity<UserInterestResponse> updateUserInterests(
-            @Valid @RequestBody UserInterestRequest request,
-            @AuthenticationPrincipal UserDetails userDetails) {
-        
-        log.info("사용자 관심사 설정 요청: userId={}, 관심사 개수={}", 
-                userDetails.getUsername(), request.getInterestCount());
-
+            @Valid @RequestBody UserInterestRequest request) {
         if (!request.isValid()) {
-            throw new IllegalArgumentException("유효하지 않은 관심사 설정입니다.");
+            throw new IllegalArgumentException("유효하지 않은 관심사입니다.");
         }
 
-        User user = userPort.findByEmail(userDetails.getUsername())
+        User user = userPort.findById(request.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
         // 기존 관심사 삭제

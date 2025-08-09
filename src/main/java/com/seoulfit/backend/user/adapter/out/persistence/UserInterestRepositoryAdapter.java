@@ -3,6 +3,7 @@ package com.seoulfit.backend.user.adapter.out.persistence;
 import com.seoulfit.backend.user.domain.InterestCategory;
 import com.seoulfit.backend.user.domain.User;
 import com.seoulfit.backend.user.domain.UserInterest;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +18,7 @@ import java.util.List;
 public class UserInterestRepositoryAdapter implements UserInterestPort {
     
     private final UserInterestRepository userInterestRepository;
+    private final EntityManager entityManager;
     
     @Override
     public UserInterest save(UserInterest userInterest) {
@@ -41,6 +43,7 @@ public class UserInterestRepositoryAdapter implements UserInterestPort {
     @Override
     public void deleteByUser(User user) {
         userInterestRepository.deleteByUser(user);
+        entityManager.flush();
     }
     
     @Override

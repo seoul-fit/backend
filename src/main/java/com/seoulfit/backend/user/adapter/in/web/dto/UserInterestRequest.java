@@ -22,8 +22,11 @@ import java.util.List;
 @NoArgsConstructor
 public class UserInterestRequest {
 
+    @NotNull(message = "사용자 ID는 필수입니다.")
+    private Long userId;
+
     @Schema(description = "선택한 관심사 카테고리 목록", 
-            example = "[\"RESTAURANTS\", \"LIBRARIES\", \"PARKS\", \"SPORTS_FACILITIES\", \"CULTURAL_FACILITIES\"]",
+            example = "[\"RESTAURANTS\", \"LIBRARIES\", \"PARKS\", \"SPORTS\", \"CULTURE\"]",
             required = true)
     @NotNull(message = "관심사 목록은 필수입니다.")
     @NotEmpty(message = "최소 하나 이상의 관심사를 선택해야 합니다.")

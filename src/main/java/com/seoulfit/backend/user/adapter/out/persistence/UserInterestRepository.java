@@ -4,6 +4,7 @@ import com.seoulfit.backend.user.domain.InterestCategory;
 import com.seoulfit.backend.user.domain.User;
 import com.seoulfit.backend.user.domain.UserInterest;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -41,5 +42,6 @@ public interface UserInterestRepository extends JpaRepository<UserInterest, Long
      * 사용자의 모든 관심사 삭제
      * @param user 사용자
      */
+    @Modifying
     void deleteByUser(User user);
 }
