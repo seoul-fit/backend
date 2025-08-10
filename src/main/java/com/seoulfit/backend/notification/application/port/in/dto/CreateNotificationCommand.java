@@ -13,7 +13,8 @@ public record CreateNotificationCommand(
         String message,
         String data,
         TriggerCondition triggerCondition,
-        String locationInfo
+        String locationInfo,
+        Integer priority
 ) {
 
     public CreateNotificationCommand {
@@ -36,7 +37,15 @@ public record CreateNotificationCommand(
      */
     public static CreateNotificationCommand of(Long userId, NotificationType type, String title, String message,
             TriggerCondition triggerCondition, String locationInfo) {
-        return new CreateNotificationCommand(userId, type, title, message, null, triggerCondition, locationInfo);
+        return new CreateNotificationCommand(userId, type, title, message, null, triggerCondition, locationInfo, null);
+    }
+    
+    /**
+     * 우선순위가 포함된 알림 생성 명령 생성
+     */
+    public static CreateNotificationCommand of(Long userId, NotificationType type, String title, String message,
+            TriggerCondition triggerCondition, String locationInfo, Integer priority) {
+        return new CreateNotificationCommand(userId, type, title, message, null, triggerCondition, locationInfo, priority);
     }
 
     // 기존 코드와의 호환성을 위한 별칭 메서드들

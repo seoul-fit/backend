@@ -65,6 +65,18 @@ public class User {
     private String oauthUserId;
 
     /**
+     * OAuth Provider AccessToken (로그아웃, 연결 해제용)
+     */
+    @Column(name = "oauth_access_token", length = 2000)
+    private String oauthAccessToken;
+
+    /**
+     * OAuth AccessToken 만료 시간
+     */
+    @Column(name = "oauth_token_expires_at")
+    private LocalDateTime oauthTokenExpiresAt;
+
+    /**
      * 프로필 이미지 URL
      */
     @Column(name = "profile_image_url")
@@ -111,13 +123,16 @@ public class User {
 
     @Builder
     public User(String email, String password, String nickname, AuthProvider oauthProvider, 
-                String oauthUserId, String profileImageUrl, Double locationLatitude, 
+                String oauthUserId, String oauthAccessToken, LocalDateTime oauthTokenExpiresAt, 
+                String profileImageUrl, Double locationLatitude, 
                 Double locationLongitude, String locationAddress, UserStatus status) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
         this.oauthProvider = oauthProvider;
         this.oauthUserId = oauthUserId;
+        this.oauthAccessToken = oauthAccessToken;
+        this.oauthTokenExpiresAt = oauthTokenExpiresAt;
         this.profileImageUrl = profileImageUrl;
         this.locationLatitude = locationLatitude;
         this.locationLongitude = locationLongitude;
@@ -161,6 +176,32 @@ public class User {
                 .nickname(nickname)
                 .oauthProvider(provider)
                 .oauthUserId(oauthUserId)
+                .profileImageUrl(profileImageUrl)
+                .status(UserStatus.ACTIVE)
+                .build();
+    }
+
+    /**
+     * OAuth 사용자 생성 (토큰 정보 포함)
+     *
+     * @param provider        OAuth 프로바이더
+     * @param oauthUserId     OAuth 사용자 ID
+     * @param nickname        닉네임
+     * @param email           이메일 (선택사항)
+     * @param profileImageUrl 프로필 이미지 URL (선택사항)
+     * @param accessToken     OAuth Provider AccessToken
+     * @param expiresAt       토큰 만료 시간
+     * @return OAuth 사용자
+     */
+    public static User createOAuthUserWithToken(AuthProvider provider, String oauthUserId, String nickname,
+                                               String email, String profileImageUrl, String accessToken, LocalDateTime expiresAt) {
+        return User.builder()
+                .email(email)
+                .nickname(nickname)
+                .oauthProvider(provider)
+                .oauthUserId(oauthUserId)
+                .oauthAccessToken(accessToken)
+                .oauthTokenExpiresAt(expiresAt)
                 .profileImageUrl(profileImageUrl)
                 .status(UserStatus.ACTIVE)
                 .build();
@@ -376,6 +417,56 @@ public class User {
         return this.oauthProvider == provider && 
                this.oauthUserId != null && 
                this.oauthUserId.equals(oauthUserId);
+    }
+
+    /**
+     * OAuth AccessToken 업데이트
+     *
+     * @param accessToken OAuth Provider AccessToken
+     * @param expiresAt   토큰 만료 시간
+     */
+    public void updateOAuthToken(String accessToken, LocalDateTime expiresAt) {
+        if (!isOAuthUser()) {
+            throw new IllegalStateException("OAuth 사용자가 아닙니다.");
+        }
+        this.oauthAccessToken = accessToken;
+        this.oauthTokenExpiresAt = expiresAt;
+    }
+
+    /**
+     * OAuth AccessToken 제거 (로그아웃 시)
+     */
+    public void clearOAuthToken() {
+        this.oauthAccessToken = null;
+        this.oauthTokenExpiresAt = null;
+    }
+
+    /**
+     * OAuth AccessToken 보유 여부 확인
+     *
+     * @return 토큰 보유 여부
+     */
+    public boolean hasOAuthToken() {
+        return this.oauthAccessToken != null;
+    }
+
+    /**
+     * OAuth AccessToken 만료 여부 확인
+     *
+     * @return 만료 여부
+     */
+    public boolean isOAuthTokenExpired() {
+        return this.oauthTokenExpiresAt != null && 
+               this.oauthTokenExpiresAt.isBefore(LocalDateTime.now());
+    }
+
+    /**
+     * 유효한 OAuth AccessToken 보유 여부 확인
+     *
+     * @return 유효한 토큰 보유 여부
+     */
+    public boolean hasValidOAuthToken() {
+        return hasOAuthToken() && !isOAuthTokenExpired();
     }
 
     // ===== 검증 메서드들 =====

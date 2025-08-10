@@ -193,20 +193,46 @@ public class AuthController {
 
     @Operation(
         summary = "OAuth 로그아웃", 
-        description = "OAuth 제공자에서 로그아웃 처리합니다. 카카오의 경우 세션이 종료됩니다."
+        description = "OAuth 제공자에서 로그아웃 처리합니다. JWT 토큰으로 사용자를 조회하여 저장된 OAuth AccessToken을 사용합니다."
     )
     @PostMapping("/oauth/logout")
     public ResponseEntity<Map<String, Object>> oauthLogout(
-            @Parameter(description = "OAuth 제공자") @RequestParam String provider,
-            @Parameter(description = "액세스 토큰") @RequestParam String accessToken) {
+            @Parameter(description = "사용자 JWT 토큰") @RequestHeader("Authorization") String authHeader) {
         
         try {
-            AuthProvider authProvider = AuthProvider.valueOf(provider.toUpperCase());
-            Map<String, Object> result = oAuthService.logout(authProvider, accessToken);
+            // JWT 토큰에서 Bearer 제거
+            String jwtToken = authHeader.replace("Bearer ", "");
             
+            // JWT에서 사용자 ID 추출
+            Long userId = jwtTokenProvider.getUserIdFromToken(jwtToken);
+            
+            // 사용자 조회
+            User user = userPort.findById(userId)
+                    .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+            
+            // OAuth 사용자가 아닌 경우
+            if (!user.isOAuthUser()) {
+                return ResponseEntity.ok(Map.of("result", "OAuth 사용자가 아닙니다."));
+            }
+            
+            // 유효한 OAuth 토큰이 없는 경우
+            if (!user.hasValidOAuthToken()) {
+                return ResponseEntity.ok(Map.of("result", "유효한 OAuth 토큰이 없습니다."));
+            }
+            
+            // OAuth Provider 로그아웃 수행
+            Map<String, Object> result = oAuthService.logout(user.getOauthProvider(), user.getOauthAccessToken());
+            
+            // 사용자의 OAuth 토큰 제거
+            user.clearOAuthToken();
+            userPort.save(user);
+            
+            result.put("message", "로그아웃이 완료되었습니다.");
             return ResponseEntity.ok(result);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("지원하지 않는 OAuth 제공자입니다: " + provider);
+            
+        } catch (Exception e) {
+            log.error("OAuth 로그아웃 실패: {}", e.getMessage(), e);
+            return ResponseEntity.ok(Map.of("result", "로그아웃 처리 중 오류가 발생했습니다."));
         }
     }
 
@@ -261,20 +287,47 @@ public class AuthController {
 
     @Operation(
         summary = "OAuth 연결 해제", 
-        description = "OAuth 제공자와의 연결을 해제합니다. 카카오의 경우 앱과 사용자의 연결이 완전히 해제됩니다."
+        description = "OAuth 제공자와의 연결을 해제합니다. JWT 토큰으로 사용자를 조회하여 저장된 OAuth AccessToken을 사용합니다."
     )
     @PostMapping("/oauth/unlink")
     public ResponseEntity<Map<String, Object>> oauthUnlink(
-            @Parameter(description = "OAuth 제공자") @RequestParam String provider,
-            @Parameter(description = "액세스 토큰") @RequestParam String accessToken) {
+            @Parameter(description = "사용자 JWT 토큰") @RequestHeader("Authorization") String authHeader) {
         
         try {
-            AuthProvider authProvider = AuthProvider.valueOf(provider.toUpperCase());
-            Map<String, Object> result = oAuthService.unlink(authProvider, accessToken);
+            // JWT 토큰에서 Bearer 제거
+            String jwtToken = authHeader.replace("Bearer ", "");
             
+            // JWT에서 사용자 ID 추출
+            Long userId = jwtTokenProvider.getUserIdFromToken(jwtToken);
+            
+            // 사용자 조회
+            User user = userPort.findById(userId)
+                    .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+            
+            // OAuth 사용자가 아닌 경우
+            if (!user.isOAuthUser()) {
+                return ResponseEntity.ok(Map.of("result", "OAuth 사용자가 아닙니다."));
+            }
+            
+            // 유효한 OAuth 토큰이 없는 경우
+            if (!user.hasValidOAuthToken()) {
+                return ResponseEntity.ok(Map.of("result", "유효한 OAuth 토큰이 없습니다."));
+            }
+            
+            // OAuth Provider 연결 해제 수행
+            Map<String, Object> result = oAuthService.unlink(user.getOauthProvider(), user.getOauthAccessToken());
+            
+            // 사용자 계정 비활성화 또는 삭제
+            user.delete(); // 또는 user.deactivate();
+            user.clearOAuthToken();
+            userPort.save(user);
+            
+            result.put("message", "연결 해제가 완료되었습니다.");
             return ResponseEntity.ok(result);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("지원하지 않는 OAuth 제공자입니다: " + provider);
+            
+        } catch (Exception e) {
+            log.error("OAuth 연결 해제 실패: {}", e.getMessage(), e);
+            return ResponseEntity.ok(Map.of("result", "연결 해제 처리 중 오류가 발생했습니다."));
         }
     }
 
