@@ -10,9 +10,8 @@ import java.util.List;
 
 /**
  * 사용자 관심사 응답 DTO
- * 
  * 사용자의 관심사 정보를 클라이언트에 반환하기 위한 응답 객체
- * 
+ *
  * @author UrbanPing Team
  * @since 1.0.0
  */
@@ -23,9 +22,6 @@ public class UserInterestResponse {
 
     @Schema(description = "사용자 ID", example = "1")
     private final Long userId;
-
-    @Schema(description = "사용자 이메일", example = "user@example.com")
-    private final String userEmail;
 
     @Schema(description = "선택된 관심사 목록")
     private final List<InterestInfo> interests;
@@ -46,7 +42,7 @@ public class UserInterestResponse {
     @Getter
     @Builder
     public static class InterestInfo {
-        
+
         @Schema(description = "관심사 카테고리", example = "RESTAURANTS")
         private final InterestCategory category;
 
@@ -80,17 +76,15 @@ public class UserInterestResponse {
     /**
      * 관심사 목록으로부터 응답 생성
      */
-    public static UserInterestResponse from(Long userId, String userEmail, 
-                                          List<InterestCategory> interests) {
+    public static UserInterestResponse from(Long userId, List<InterestCategory> interests) {
         return UserInterestResponse.builder()
                 .userId(userId)
-                .userEmail(userEmail)
                 .interests(interests.stream()
                         .map(InterestInfo::from)
                         .toList())
                 .totalCount(interests.size())
                 .lastUpdated(LocalDateTime.now())
-                .isCompleted(interests.size() > 0)
+                .isCompleted(!interests.isEmpty())
                 .build();
     }
 }
