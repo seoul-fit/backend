@@ -1,17 +1,8 @@
 package com.seoulfit.backend.culture.adapter.in.web;
 
-// import com.seoulfit.backend.culture.application.service.CulturalEventService;
-import com.seoulfit.backend.culture.application.service.SeoulCulturalApiService;
-import com.seoulfit.backend.culture.domain.CulturalEvent;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/cultural-events")
@@ -19,7 +10,7 @@ import java.util.List;
 @Tag(name = "Cultural Events", description = "문화행사 정보 API")
 public class CulturalEventController {
 
-    // private final CulturalEventService culturalEventService;
+/*    // private final CulturalEventService culturalEventService;
     private final SeoulCulturalApiService seoulCulturalApiService;
 
     @Operation(summary = "문화행사 목록 조회", description = "저장된 문화행사 목록을 조회합니다.")
@@ -49,5 +40,5 @@ public class CulturalEventController {
             return ResponseEntity.internalServerError()
                     .body("문화행사 데이터 동기화 실패: " + e.getMessage());
         }
-    }
+    }*/
 }
