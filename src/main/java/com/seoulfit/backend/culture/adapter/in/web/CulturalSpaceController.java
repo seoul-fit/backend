@@ -1,7 +1,5 @@
 package com.seoulfit.backend.culture.adapter.in.web;
 
-// import com.seoulfit.backend.culture.application.service.CulturalSpaceService;
-import com.seoulfit.backend.culture.domain.CulturalSpace;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +16,7 @@ public class CulturalSpaceController {
 
     // private final CulturalSpaceService culturalSpaceService;
 
-    @Operation(summary = "문화공간 목록 조회", description = "저장된 문화공간 목록을 조회합니다.")
+/*    @Operation(summary = "문화공간 목록 조회", description = "저장된 문화공간 목록을 조회합니다.")
     @GetMapping
     public ResponseEntity<List<CulturalSpace>> getCulturalSpaces() {
         // List<CulturalSpace> spaces = culturalSpaceService.getCulturalSpaces();
@@ -42,5 +40,6 @@ public class CulturalSpaceController {
             return ResponseEntity.internalServerError()
                     .body("문화공간 데이터 동기화 실패: " + e.getMessage());
         }
-    }
+    }*/
+
 }
