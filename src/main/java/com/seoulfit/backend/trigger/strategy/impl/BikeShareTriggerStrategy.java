@@ -5,6 +5,7 @@ import com.seoulfit.backend.trigger.domain.TriggerCondition;
 import com.seoulfit.backend.trigger.dto.TriggerContext;
 import com.seoulfit.backend.trigger.dto.TriggerResult;
 import com.seoulfit.backend.trigger.strategy.TriggerStrategy;
+import com.seoulfit.backend.trigger.utils.TriggerUtils;
 import com.seoulfit.backend.user.domain.InterestCategory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -119,20 +120,25 @@ public class BikeShareTriggerStrategy implements TriggerStrategy {
      */
     private BikeStationInfo mapToBikeStationInfo(Map<String, Object> stationData) {
         try {
-            String stationName = getStringValue(stationData, "SBIKE_SPOT_NM");
-            double latitude = getDoubleValue(stationData, "SBIKE_Y");
-            double longitude = getDoubleValue(stationData, "SBIKE_X");
-            int availabilityRate = getIntValue(stationData, "SBIKE_SHARED");
-            int parkingCount = getIntValue(stationData, "SBIKE_PARKING_CNT");
-            int rackCount = getIntValue(stationData, "SBIKE_RACK_CNT");
+            String stationName = TriggerUtils.getStringValue(stationData, "SBIKE_SPOT_NM");
+            Double latitude = TriggerUtils.getDoubleValue(stationData, "SBIKE_Y");
+            Double longitude = TriggerUtils.getDoubleValue(stationData, "SBIKE_X");
+            Integer availabilityRate = TriggerUtils.getIntValue(stationData, "SBIKE_SHARED");
+            Integer parkingCount = TriggerUtils.getIntValue(stationData, "SBIKE_PARKING_CNT");
+            Integer rackCount = TriggerUtils.getIntValue(stationData, "SBIKE_RACK_CNT");
+            
+            if (latitude == null || longitude == null) {
+                log.warn("따릉이 대여소 데이터에 위치 정보 없음: {}", stationData);
+                return null;
+            }
             
             return BikeStationInfo.builder()
                     .stationName(stationName)
                     .latitude(latitude)
                     .longitude(longitude)
-                    .availabilityRate(availabilityRate)
-                    .parkingCount(parkingCount)
-                    .rackCount(rackCount)
+                    .availabilityRate(availabilityRate != null ? availabilityRate : 0)
+                    .parkingCount(parkingCount != null ? parkingCount : 0)
+                    .rackCount(rackCount != null ? rackCount : 0)
                     .build();
         } catch (Exception e) {
             log.warn("따릉이 대여소 데이터 파싱 실패: {}", stationData, e);
@@ -148,7 +154,7 @@ public class BikeShareTriggerStrategy implements TriggerStrategy {
      * @return 반경 내 여부
      */
     private boolean isWithinRadius(TriggerContext context, BikeStationInfo station) {
-        double distance = calculateDistance(
+        double distance = TriggerUtils.calculateDistance(
                 context.getUserLatitude(), context.getUserLongitude(),
                 station.latitude, station.longitude
         );
@@ -157,60 +163,6 @@ public class BikeShareTriggerStrategy implements TriggerStrategy {
         return distance <= locationRadius;
     }
     
-    /**
-     * 두 지점 간의 거리를 계산합니다 (Haversine formula).
-     * 
-     * @param lat1 위도1
-     * @param lon1 경도1
-     * @param lat2 위도2
-     * @param lon2 경도2
-     * @return 거리 (미터)
-     */
-    private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-        final int R = 6371; // 지구 반지름 (km)
-        
-        double latDistance = Math.toRadians(lat2 - lat1);
-        double lonDistance = Math.toRadians(lon2 - lon1);
-        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
-                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        
-        return R * c * 1000; // 미터로 변환
-    }
-    
-    private String getStringValue(Map<String, Object> map, String key) {
-        Object value = map.get(key);
-        return value != null ? value.toString() : "";
-    }
-    
-    private double getDoubleValue(Map<String, Object> map, String key) {
-        Object value = map.get(key);
-        if (value instanceof Number) {
-            return ((Number) value).doubleValue();
-        } else if (value instanceof String) {
-            try {
-                return Double.parseDouble((String) value);
-            } catch (NumberFormatException e) {
-                return 0.0;
-            }
-        }
-        return 0.0;
-    }
-    
-    private int getIntValue(Map<String, Object> map, String key) {
-        Object value = map.get(key);
-        if (value instanceof Number) {
-            return ((Number) value).intValue();
-        } else if (value instanceof String) {
-            try {
-                return Integer.parseInt((String) value);
-            } catch (NumberFormatException e) {
-                return 0;
-            }
-        }
-        return 0;
-    }
     
     @Override
     public String getSupportedTriggerType() {

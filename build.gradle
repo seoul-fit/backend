@@ -61,6 +61,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'io.projectreactor:reactor-test' // Reactive 테스트
+    testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0' // MockWebServer for API testing
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 

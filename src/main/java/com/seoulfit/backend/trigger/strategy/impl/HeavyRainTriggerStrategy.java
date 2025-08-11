@@ -5,6 +5,7 @@ import com.seoulfit.backend.trigger.domain.TriggerCondition;
 import com.seoulfit.backend.trigger.dto.TriggerContext;
 import com.seoulfit.backend.trigger.dto.TriggerResult;
 import com.seoulfit.backend.trigger.strategy.TriggerStrategy;
+import com.seoulfit.backend.trigger.utils.TriggerUtils;
 import com.seoulfit.backend.user.domain.InterestCategory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -95,8 +96,8 @@ public class HeavyRainTriggerStrategy implements TriggerStrategy {
             if (!weatherList.isEmpty()) {
                 java.util.Map<String, Object> weather = weatherList.get(0);
                 
-                double hourlyRainfall = getDoubleValue(weather, "RAIN_HOUR", "RAINFALL_1H");
-                double dailyRainfall = getDoubleValue(weather, "RAIN_DAY", "RAINFALL_24H");
+                double hourlyRainfall = getDoubleValueMultipleKeys(weather, "RAIN_HOUR", "RAINFALL_1H");
+                double dailyRainfall = getDoubleValueMultipleKeys(weather, "RAIN_DAY", "RAINFALL_24H");
                 
                 return RainfallInfo.builder()
                         .hourlyRainfall(hourlyRainfall)
@@ -115,8 +116,8 @@ public class HeavyRainTriggerStrategy implements TriggerStrategy {
             if (!rainList.isEmpty()) {
                 java.util.Map<String, Object> rain = rainList.get(0);
                 
-                double hourlyRainfall = getDoubleValue(rain, "RAINFALL1H", "RF1H");
-                double dailyRainfall = getDoubleValue(rain, "RAINFALL24H", "RF24H");
+                double hourlyRainfall = getDoubleValueMultipleKeys(rain, "RAINFALL1H", "RF1H");
+                double dailyRainfall = getDoubleValueMultipleKeys(rain, "RAINFALL24H", "RF24H");
                 
                 return RainfallInfo.builder()
                         .hourlyRainfall(hourlyRainfall)
@@ -135,17 +136,11 @@ public class HeavyRainTriggerStrategy implements TriggerStrategy {
      * @param keys 시도할 키들
      * @return Double 값
      */
-    private double getDoubleValue(java.util.Map<String, Object> map, String... keys) {
+    private double getDoubleValueMultipleKeys(java.util.Map<String, Object> map, String... keys) {
         for (String key : keys) {
-            Object value = map.get(key);
-            if (value instanceof String) {
-                try {
-                    return Double.parseDouble((String) value);
-                } catch (NumberFormatException e) {
-                    // 다음 키 시도
-                }
-            } else if (value instanceof Number) {
-                return ((Number) value).doubleValue();
+            Double value = TriggerUtils.getDoubleValue(map, key);
+            if (value != null) {
+                return value;
             }
         }
         return 0.0;

@@ -5,6 +5,7 @@ import com.seoulfit.backend.trigger.domain.TriggerCondition;
 import com.seoulfit.backend.trigger.dto.TriggerContext;
 import com.seoulfit.backend.trigger.dto.TriggerResult;
 import com.seoulfit.backend.trigger.strategy.TriggerStrategy;
+import com.seoulfit.backend.trigger.utils.TriggerUtils;
 import com.seoulfit.backend.user.domain.InterestCategory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +36,7 @@ public class CongestionTriggerStrategy implements TriggerStrategy {
         log.debug("혼잡도 기반 트리거 평가 시작: userId={}", context.getUser().getId());
         
         // 사용자가 교통이나 혼잡도에 관심이 있는지 확인
-        if (context.getUserInterests().contains(InterestCategory.CONGESTION)) {
+        if (!context.getUserInterests().contains(InterestCategory.CONGESTION)) {
             log.debug("사용자가 교통/혼잡도에 관심이 없음: userId={}", context.getUser().getId());
             return TriggerResult.notTriggered();
         }
@@ -104,13 +105,18 @@ public class CongestionTriggerStrategy implements TriggerStrategy {
      */
     private CongestionInfo mapToCongestionInfo(java.util.Map<String, Object> congestionData) {
         try {
-            String areaName = getStringValue(congestionData, "AREA_NM");
-            String congestionLevel = getStringValue(congestionData, "AREA_CONGEST_LVL");
-            double latitude = getDoubleValue(congestionData, "AREA_Y");
-            double longitude = getDoubleValue(congestionData, "AREA_X");
-            String popMin = getStringValue(congestionData, "AREA_PPLTN_MIN");
-            String popMax = getStringValue(congestionData, "AREA_PPLTN_MAX");
-            String message = getStringValue(congestionData, "AREA_CONGEST_MSG");
+            String areaName = TriggerUtils.getStringValue(congestionData, "AREA_NM");
+            String congestionLevel = TriggerUtils.getStringValue(congestionData, "AREA_CONGEST_LVL");
+            Double latitude = TriggerUtils.getDoubleValue(congestionData, "AREA_Y");
+            Double longitude = TriggerUtils.getDoubleValue(congestionData, "AREA_X");
+            String popMin = TriggerUtils.getStringValue(congestionData, "AREA_PPLTN_MIN");
+            String popMax = TriggerUtils.getStringValue(congestionData, "AREA_PPLTN_MAX");
+            String message = TriggerUtils.getStringValue(congestionData, "AREA_CONGEST_MSG");
+            
+            if (latitude == null || longitude == null) {
+                log.warn("혼잡도 데이터에 위치 정보 없음: {}", congestionData);
+                return null;
+            }
             
             return CongestionInfo.builder()
                     .areaName(areaName)
@@ -135,7 +141,7 @@ public class CongestionTriggerStrategy implements TriggerStrategy {
      * @return 반경 내 여부
      */
     private boolean isWithinRadius(TriggerContext context, CongestionInfo congestion) {
-        double distance = calculateDistance(
+        double distance = TriggerUtils.calculateDistance(
                 context.getUserLatitude(), context.getUserLongitude(),
                 congestion.latitude, congestion.longitude
         );
@@ -144,27 +150,6 @@ public class CongestionTriggerStrategy implements TriggerStrategy {
         return distance <= locationRadius;
     }
     
-    /**
-     * 두 지점 간의 거리를 계산합니다 (Haversine formula).
-     * 
-     * @param lat1 위도1
-     * @param lon1 경도1
-     * @param lat2 위도2
-     * @param lon2 경도2
-     * @return 거리 (미터)
-     */
-    private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-        final int R = 6371; // 지구 반지름 (km)
-        
-        double latDistance = Math.toRadians(lat2 - lat1);
-        double lonDistance = Math.toRadians(lon2 - lon1);
-        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
-                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        
-        return R * c * 1000; // 미터로 변환
-    }
     
     /**
      * 혼잡도 알림 메시지를 생성합니다.
@@ -191,24 +176,6 @@ public class CongestionTriggerStrategy implements TriggerStrategy {
         return message.toString();
     }
     
-    private String getStringValue(java.util.Map<String, Object> map, String key) {
-        Object value = map.get(key);
-        return value != null ? value.toString() : "";
-    }
-    
-    private double getDoubleValue(java.util.Map<String, Object> map, String key) {
-        Object value = map.get(key);
-        if (value instanceof Number) {
-            return ((Number) value).doubleValue();
-        } else if (value instanceof String) {
-            try {
-                return Double.parseDouble((String) value);
-            } catch (NumberFormatException e) {
-                return 0.0;
-            }
-        }
-        return 0.0;
-    }
     
     @Override
     public String getSupportedTriggerType() {

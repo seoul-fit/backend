@@ -27,6 +27,36 @@ public record TriggerEvaluationCommand(
 
     public static TriggerEvaluationCommand of(Long id, List<InterestCategory> interestCategories, Double locationLatitude,
             Double locationLongitude, String locationAddress) {
-        return null;
+        Map<String, Object> parameters = Map.of(
+                "userId", id,
+                "userInterests", interestCategories != null ? interestCategories : List.of(),
+                "latitude", locationLatitude,
+                "longitude", locationLongitude,
+                "userAddress", locationAddress != null ? locationAddress : ""
+        );
+        
+        return new TriggerEvaluationCommand("ALL", id, parameters);
+    }
+    
+    public Long getUserId() {
+        return userId;
+    }
+    
+    public List<InterestCategory> getUserInterests() {
+        @SuppressWarnings("unchecked")
+        List<InterestCategory> interests = (List<InterestCategory>) parameters.get("userInterests");
+        return interests != null ? interests : List.of();
+    }
+    
+    public Double getLatitude() {
+        return (Double) parameters.get("latitude");
+    }
+    
+    public Double getLongitude() {
+        return (Double) parameters.get("longitude");
+    }
+    
+    public String getUserAddress() {
+        return (String) parameters.get("userAddress");
     }
 }

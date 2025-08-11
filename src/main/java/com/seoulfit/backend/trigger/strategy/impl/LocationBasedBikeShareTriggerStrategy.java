@@ -5,6 +5,7 @@ import com.seoulfit.backend.trigger.domain.TriggerCondition;
 import com.seoulfit.backend.trigger.dto.TriggerContext;
 import com.seoulfit.backend.trigger.dto.TriggerResult;
 import com.seoulfit.backend.trigger.strategy.TriggerStrategy;
+import com.seoulfit.backend.trigger.utils.TriggerUtils;
 import com.seoulfit.backend.user.domain.InterestCategory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -107,7 +108,7 @@ public class LocationBasedBikeShareTriggerStrategy implements TriggerStrategy {
         return stations.stream()
                 .map(this::mapToBikeStation)
                 .filter(station -> station != null)
-                .filter(station -> calculateDistance(userLat, userLng, 
+                .filter(station -> TriggerUtils.calculateDistance(userLat, userLng, 
                         station.getLatitude(), station.getLongitude()) <= searchRadius)
                 .toList();
     }
@@ -117,14 +118,27 @@ public class LocationBasedBikeShareTriggerStrategy implements TriggerStrategy {
      */
     private BikeStation mapToBikeStation(Map<String, Object> data) {
         try {
+            String id = TriggerUtils.getStringValue(data, "STATION_ID");
+            String name = TriggerUtils.getStringValue(data, "STATION_NAME");
+            String address = TriggerUtils.getStringValue(data, "ADDR");
+            Double latitude = TriggerUtils.getDoubleValue(data, "LAT");
+            Double longitude = TriggerUtils.getDoubleValue(data, "LNG");
+            Integer availableBikes = TriggerUtils.getIntValue(data, "BIKE_COUNT");
+            Integer availableSlots = TriggerUtils.getIntValue(data, "SLOT_COUNT");
+            
+            if (latitude == null || longitude == null) {
+                log.warn("따릉이 대여소 데이터에 위치 정보 없음: {}", data);
+                return null;
+            }
+            
             return BikeStation.builder()
-                    .id(String.valueOf(data.get("STATION_ID")))
-                    .name(String.valueOf(data.get("STATION_NAME")))
-                    .address(String.valueOf(data.get("ADDR")))
-                    .latitude(Double.parseDouble(String.valueOf(data.get("LAT"))))
-                    .longitude(Double.parseDouble(String.valueOf(data.get("LNG"))))
-                    .availableBikes(Integer.parseInt(String.valueOf(data.get("BIKE_COUNT"))))
-                    .availableSlots(Integer.parseInt(String.valueOf(data.get("SLOT_COUNT"))))
+                    .id(id != null ? id : "")
+                    .name(name != null ? name : "")
+                    .address(address != null ? address : "")
+                    .latitude(latitude)
+                    .longitude(longitude)
+                    .availableBikes(availableBikes != null ? availableBikes : 0)
+                    .availableSlots(availableSlots != null ? availableSlots : 0)
                     .build();
         } catch (Exception e) {
             log.warn("따릉이 대여소 데이터 파싱 실패: {}", data, e);
@@ -154,23 +168,6 @@ public class LocationBasedBikeShareTriggerStrategy implements TriggerStrategy {
                 .orElse(null);
     }
 
-    /**
-     * 두 지점 간 거리 계산 (미터)
-     */
-    private double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
-        final int R = 6371; // 지구 반지름 (km)
-        
-        double latDistance = Math.toRadians(lat2 - lat1);
-        double lngDistance = Math.toRadians(lng2 - lng1);
-        
-        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
-                * Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2);
-        
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        
-        return R * c * 1000; // 미터로 변환
-    }
 
     @Override
     public String getSupportedTriggerType() {

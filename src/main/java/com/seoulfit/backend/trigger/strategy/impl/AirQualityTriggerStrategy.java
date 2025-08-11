@@ -5,6 +5,7 @@ import com.seoulfit.backend.trigger.domain.TriggerCondition;
 import com.seoulfit.backend.trigger.dto.TriggerContext;
 import com.seoulfit.backend.trigger.dto.TriggerResult;
 import com.seoulfit.backend.trigger.strategy.TriggerStrategy;
+import com.seoulfit.backend.trigger.utils.TriggerUtils;
 import com.seoulfit.backend.user.domain.InterestCategory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -81,11 +82,11 @@ public class AirQualityTriggerStrategy implements TriggerStrategy {
                 java.util.Map<String, Object> weather = weatherList.get(0);
                 
                 return AirQualityInfo.builder()
-                        .pm10Index(getStringValue(weather, "PM10_INDEX"))
-                        .pm25Index(getStringValue(weather, "PM25_INDEX"))
-                        .airIndex(getStringValue(weather, "AIR_IDX"))
-                        .pm10Value(getStringValue(weather, "PM10"))
-                        .pm25Value(getStringValue(weather, "PM25"))
+                        .pm10Index(TriggerUtils.getStringValue(weather, "PM10_INDEX"))
+                        .pm25Index(TriggerUtils.getStringValue(weather, "PM25_INDEX"))
+                        .airIndex(TriggerUtils.getStringValue(weather, "AIR_IDX"))
+                        .pm10Value(TriggerUtils.getStringValue(weather, "PM10"))
+                        .pm25Value(TriggerUtils.getStringValue(weather, "PM25"))
                         .build();
             }
         }
@@ -93,17 +94,6 @@ public class AirQualityTriggerStrategy implements TriggerStrategy {
         return null;
     }
     
-    /**
-     * Map에서 String 값을 안전하게 추출합니다.
-     * 
-     * @param map 데이터 맵
-     * @param key 키
-     * @return String 값
-     */
-    private String getStringValue(java.util.Map<String, Object> map, String key) {
-        Object value = map.get(key);
-        return value != null ? value.toString() : null;
-    }
     
     /**
      * 대기질이 나쁜지 확인합니다.
