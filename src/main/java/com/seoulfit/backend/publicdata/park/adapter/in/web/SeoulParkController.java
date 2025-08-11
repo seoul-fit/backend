@@ -29,7 +29,7 @@ public class SeoulParkController {
     private final SeoulParkQueryUseCase queryUseCase;
     private final SeoulParkDailyBatch dailyBatch;
 
-    @Operation(summary = "최신 공원 정보 조회", description = "가장 최근에 수집된 서울시 공원 정보를 조회합니다.")
+ /*   @Operation(summary = "최신 공원 정보 조회", description = "가장 최근에 수집된 서울시 공원 정보를 조회합니다.")
     @GetMapping
     public ResponseEntity<List<SeoulPark>> getLatestParks() {
         log.info("최신 공원 정보 조회 요청");
@@ -128,5 +128,5 @@ public class SeoulParkController {
         }
         
         return ResponseEntity.ok(result);
-    }
+    }*/
 }

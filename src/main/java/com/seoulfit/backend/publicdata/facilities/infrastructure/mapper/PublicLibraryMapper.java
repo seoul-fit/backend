@@ -1,6 +1,6 @@
 package com.seoulfit.backend.publicdata.facilities.infrastructure.mapper;
 
-import com.seoulfit.backend.location.domain.Library;
+import com.seoulfit.backend.publicdata.facilities.domain.Library;
 import com.seoulfit.backend.publicdata.facilities.adapter.out.persistence.api.dto.SeoulLibraryInfoDto;
 
 import java.util.List;

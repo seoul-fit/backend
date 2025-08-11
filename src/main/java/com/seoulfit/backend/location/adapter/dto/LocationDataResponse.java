@@ -2,6 +2,8 @@ package com.seoulfit.backend.location.adapter.dto;
 
 import com.seoulfit.backend.location.application.LocationBasedDataService;
 import com.seoulfit.backend.location.domain.*;
+import com.seoulfit.backend.publicdata.facilities.domain.CoolingCenter;
+import com.seoulfit.backend.publicdata.facilities.domain.Library;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;

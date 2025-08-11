@@ -23,7 +23,7 @@ public class CultureDailyBatch {
 
     @Scheduled(cron = "${urbanping.scheduler.culture.daily-cron[1]}")
     public void cultureSpaceDailyBatch() {
-        culturalSpaceService.saveCultureSpace(1,1000);
+        culturalSpaceService.saveCultureSpace(1,10000);
     }
 
     @Scheduled(cron = "${urbanping.scheduler.culture.daily-cron[2]}")

@@ -2,7 +2,7 @@ package com.seoulfit.backend.publicdata.facilities.adapter.out.persistence.api;
 
 import com.seoulfit.backend.publicdata.facilities.adapter.in.web.dto.response.AmenitiesResponse;
 import com.seoulfit.backend.publicdata.facilities.application.port.out.LoadCoolingShelterPort;
-import com.seoulfit.backend.publicdata.facilities.domain.CoolingShelter;
+import com.seoulfit.backend.publicdata.facilities.domain.CoolingCenter;
 import com.seoulfit.backend.shared.utils.RestClientUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,18 +30,18 @@ public class CoolingShelterApiAdapter implements LoadCoolingShelterPort {
     private final RestClientUtils<AmenitiesResponse> restClientUtils;
 
     @Override
-    public List<CoolingShelter> loadAmenities(int startIndex, int endIndex) {
+    public List<CoolingCenter> loadAmenities(int startIndex, int endIndex) {
         String url = String.format("%s/%s/%d/%d/", baseUrl, serviceName, startIndex, endIndex);
 
         try {
             AmenitiesResponse response = restClientUtils.callGetApi(url, AmenitiesResponse.class);
             log.info("Amenities response Size: {}", response.getTbGtnHwcwP().getListTotalCount());
             
-            List<CoolingShelter> coolingShelterList = response.getTbGtnHwcwP().getRow().stream()
+            List<CoolingCenter> coolingShelterList = response.getTbGtnHwcwP().getRow().stream()
                 .map(this::mapToCoolingShelter)
                 .toList();
 
-            log.info("Successfully loaded {} amenities from API", coolingShelterList.size());
+            log.info("Successfully loaded {} from API", coolingShelterList.size());
             return coolingShelterList;
 
         } catch (Exception e) {
@@ -53,20 +53,19 @@ public class CoolingShelterApiAdapter implements LoadCoolingShelterPort {
     /**
      * API 응답을 도메인 객체로 변환
      */
-    private CoolingShelter mapToCoolingShelter(AmenitiesResponse.AmenitiesData row) {
-        return CoolingShelter.builder()
-                .year(row.getYear())
+    private CoolingCenter mapToCoolingShelter(AmenitiesResponse.AmenitiesData row) {
+        return CoolingCenter.builder()
+                .facilityYear(Integer.parseInt(row.getYear()))
                 .areaCode(row.getAreaCode())
                 .facilityType1(row.getFacilityType1())
                 .facilityType2(row.getFacilityType2())
-                .facilityName(row.getFacilityName())
-                .detailedAddress(row.getDetailedAddress())
-                .lotNumberAddress(row.getLotNumberAddress())
-                .areaSquareMeters(row.getAreaSquareMeters())
-                .usePersonNumber(row.getUsePersonNumber())
-                .remark(row.getRemark())
-                .longitude(row.getLongitude())
-                .latitude(row.getLatitude())
+                .name(row.getFacilityName())
+                .roadAddress(row.getDetailedAddress())
+                .lotAddress(row.getLotNumberAddress())
+                .areaSize(row.getAreaSquareMeters())
+                .remarks(row.getRemark())
+                .longitude(Double.parseDouble(row.getLongitude().toString()))
+                .latitude(Double.parseDouble(row.getLatitude().toString()))
                 .mapCoordX(row.getMapCoordX())
                 .mapCoordY(row.getMapCoordY())
                 .build();

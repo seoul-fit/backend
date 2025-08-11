@@ -3,7 +3,7 @@ package com.seoulfit.backend.publicdata.facilities.application.service;
 import com.seoulfit.backend.publicdata.facilities.application.port.in.CommandCoolingShelterUseCase;
 import com.seoulfit.backend.publicdata.facilities.application.port.out.CommandCoolingShelterPort;
 import com.seoulfit.backend.publicdata.facilities.application.port.out.LoadCoolingShelterPort;
-import com.seoulfit.backend.publicdata.facilities.domain.CoolingShelter;
+import com.seoulfit.backend.publicdata.facilities.domain.CoolingCenter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 편의시설 애플리케이션 서비스
@@ -27,17 +26,25 @@ public class FacilitiesService implements CommandCoolingShelterUseCase {
 
     @Transactional
     @Override
-    public List<CoolingShelter> saveCoolingShelter(GetAmenitiesQuery query) {
+    public List<CoolingCenter> saveCoolingShelter(GetAmenitiesQuery query) {
         try {
-            List<CoolingShelter> coolingShelterList = loadCoolingShelterPort.loadAmenities(
+            commandCoolingShelterPort.truncate();
+            List<CoolingCenter> coolingShelterList = loadCoolingShelterPort.loadAmenities(
                 query.startIndex(), 
                 query.endIndex()
             );
+            List<CoolingCenter> coolingShelterListV2 = loadCoolingShelterPort.loadAmenities(1001,2000);
+            List<CoolingCenter> coolingShelterListV3 = loadCoolingShelterPort.loadAmenities(2001,3000);
+            List<CoolingCenter> coolingShelterListV4 = loadCoolingShelterPort.loadAmenities(3001,4000);
+            List<CoolingCenter> coolingShelterListV5 = loadCoolingShelterPort.loadAmenities(4001,5000);
 
             log.info("Successfully Cooling-Shelter Size : {}", coolingShelterList.size());
 
-            commandCoolingShelterPort.truncate();
             commandCoolingShelterPort.save(coolingShelterList);
+            commandCoolingShelterPort.save(coolingShelterListV2);
+            commandCoolingShelterPort.save(coolingShelterListV3);
+            commandCoolingShelterPort.save(coolingShelterListV4);
+            commandCoolingShelterPort.save(coolingShelterListV5);
 
             return coolingShelterList;
             
@@ -49,15 +56,15 @@ public class FacilitiesService implements CommandCoolingShelterUseCase {
 
     @Transactional(readOnly = true)
     @Override
-    public List<CoolingShelter> getAmenitiesNearby(BigDecimal latitude, BigDecimal longitude, double radiusKm) {
+    public List<CoolingCenter> getAmenitiesNearby(BigDecimal latitude, BigDecimal longitude, double radiusKm) {
         log.info("Fetching amenities near location: lat={}, lon={}, radius={}km", 
             latitude, longitude, radiusKm);
         
-        try {
+/*        try {
             // 전체 편의시설 조회 후 거리 기반 필터링
-            List<CoolingShelter> allAmenities = loadCoolingShelterPort.loadAmenities(1, 1000);
+            List<CoolingCenter> allAmenities = loadCoolingShelterPort.loadAmenities(1, 1000);
             
-            List<CoolingShelter> nearbyAmenities = allAmenities.stream()
+            List<CoolingCenter> nearbyAmenities = allAmenities.stream()
                 .filter(amenity -> amenity.isWithinRange(latitude, longitude, radiusKm))
                 .collect(Collectors.toList());
             
@@ -67,6 +74,7 @@ public class FacilitiesService implements CommandCoolingShelterUseCase {
         } catch (Exception e) {
             log.error("Error fetching nearby amenities: {}", e.getMessage(), e);
             throw new RuntimeException("Failed to fetch nearby amenities: " + e.getMessage(), e);
-        }
+        }*/
+        return null;
     }
 }
