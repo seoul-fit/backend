@@ -1,6 +1,5 @@
 package com.seoulfit.backend.publicdata.facilities.adapter.in.web.dto.response;
 
-import com.seoulfit.backend.publicdata.facilities.domain.CoolingShelter;
 import lombok.Builder;
 
 import java.math.BigDecimal;
@@ -22,18 +21,4 @@ public record AmenitiesWebResponse(
 
 ) {
 
-    public static AmenitiesWebResponse from(CoolingShelter coolingShelter) {
-        return AmenitiesWebResponse.builder()
-                .facilityName(coolingShelter.getFacilityName())
-                .address(coolingShelter.getLotNumberAddress())
-                .detailedAddress(coolingShelter.getDetailedAddress())
-                .latitude(coolingShelter.getLatitude())
-                .longitude(coolingShelter.getLongitude())
-                .facilityType(coolingShelter.getFacilityType1() + coolingShelter.getFacilityType2())
-                .usePersonNumber(coolingShelter.getUsePersonNumber())
-                .remark(coolingShelter.getRemark())
-                .areaCode(coolingShelter.getAreaCode())
-                .build();
-
-    }
 }

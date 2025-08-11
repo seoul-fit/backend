@@ -1,6 +1,6 @@
 package com.seoulfit.backend.publicdata.facilities.application.service;
 
-import com.seoulfit.backend.location.domain.Library;
+import com.seoulfit.backend.publicdata.facilities.domain.Library;
 import com.seoulfit.backend.publicdata.facilities.application.port.in.CommandPublicLibraryUseCase;
 import com.seoulfit.backend.publicdata.facilities.application.port.out.CommandPublicLibraryPort;
 import com.seoulfit.backend.publicdata.facilities.application.port.out.LoadPublicLibraryPort;

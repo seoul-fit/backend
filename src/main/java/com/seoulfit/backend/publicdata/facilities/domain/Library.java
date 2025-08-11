@@ -1,4 +1,4 @@
-package com.seoulfit.backend.location.domain;
+package com.seoulfit.backend.publicdata.facilities.domain;
 
 import com.seoulfit.backend.location.util.GeoUtils;
 import jakarta.persistence.*;

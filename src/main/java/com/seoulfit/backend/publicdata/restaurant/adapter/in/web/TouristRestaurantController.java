@@ -29,7 +29,7 @@ public class TouristRestaurantController {
     private final TouristRestaurantQueryUseCase queryUseCase;
     private final TouristRestaurantDailyBatch dailyBatch;
 
-    @Operation(summary = "최신 음식점 정보 조회", description = "가장 최근에 수집된 서울시 관광 음식점 정보를 조회합니다.")
+/*    @Operation(summary = "최신 음식점 정보 조회", description = "가장 최근에 수집된 서울시 관광 음식점 정보를 조회합니다.")
     @GetMapping
     public ResponseEntity<List<TouristRestaurant>> getLatestRestaurants() {
         log.info("최신 음식점 정보 조회 요청");
@@ -180,5 +180,5 @@ public class TouristRestaurantController {
         }
         
         return ResponseEntity.ok(result);
-    }
+    }*/
 }

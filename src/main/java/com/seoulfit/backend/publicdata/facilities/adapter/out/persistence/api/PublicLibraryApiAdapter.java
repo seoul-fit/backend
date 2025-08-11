@@ -1,6 +1,6 @@
 package com.seoulfit.backend.publicdata.facilities.adapter.out.persistence.api;
 
-import com.seoulfit.backend.location.domain.Library;
+import com.seoulfit.backend.publicdata.facilities.domain.Library;
 import com.seoulfit.backend.publicdata.facilities.adapter.out.persistence.api.dto.SeoulLibraryInfoDto;
 import com.seoulfit.backend.publicdata.facilities.application.port.out.LoadPublicLibraryPort;
 import com.seoulfit.backend.publicdata.facilities.infrastructure.mapper.PublicLibraryMapper;

@@ -1,6 +1,6 @@
-package com.seoulfit.backend.location.infrastructure;
+package com.seoulfit.backend.publicdata.facilities.adapter.out.persistence.repository;
 
-import com.seoulfit.backend.location.domain.CoolingCenter;
+import com.seoulfit.backend.publicdata.facilities.domain.CoolingCenter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

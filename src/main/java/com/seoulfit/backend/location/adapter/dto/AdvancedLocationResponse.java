@@ -3,12 +3,13 @@ package com.seoulfit.backend.location.adapter.dto;
 import com.seoulfit.backend.location.application.AdvancedLocationDataService;
 import com.seoulfit.backend.location.domain.*;
 import com.seoulfit.backend.location.util.GeoUtils;
+import com.seoulfit.backend.publicdata.facilities.domain.CoolingCenter;
+import com.seoulfit.backend.publicdata.facilities.domain.Library;
 import com.seoulfit.backend.user.domain.InterestCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**

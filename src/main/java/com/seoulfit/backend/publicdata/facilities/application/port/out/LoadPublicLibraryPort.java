@@ -1,6 +1,6 @@
 package com.seoulfit.backend.publicdata.facilities.application.port.out;
 
-import com.seoulfit.backend.location.domain.Library;
+import com.seoulfit.backend.publicdata.facilities.domain.Library;
 
 import java.util.List;
 
