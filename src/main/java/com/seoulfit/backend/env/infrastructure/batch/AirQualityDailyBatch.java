@@ -62,6 +62,32 @@ public class AirQualityDailyBatch {
     }
 
     /**
+     * 주간 통계 배치 (매주 일요일 새벽 2시)
+     */
+    @Scheduled(cron = "0 0 2 * * SUN")
+    public void executeWeeklyStatistics() {
+        log.info("=== 서울시 대기질 정보 주간 통계 배치 시작 ===");
+
+        try {
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime oneWeekAgo = now.minusDays(7);
+
+            var statistics = airQualityRepository.getStatistics(oneWeekAgo, now);
+
+            log.info("=== 주간 대기질 통계 (최근 7일) ===");
+            log.info("평균 PM10: {:.2f} ㎍/㎥", statistics.avgPm10());
+            log.info("평균 PM2.5: {:.2f} ㎍/㎥", statistics.avgPm25());
+            log.info("평균 통합대기환경지수: {:.2f}", statistics.avgKhai());
+            log.info("좋음: {}회, 보통: {}회, 나쁨 이상: {}회",
+                    statistics.goodCount(), statistics.moderateCount(), statistics.unhealthyCount());
+            log.info("전체 측정 횟수: {}", statistics.totalCount());
+
+        } catch (Exception e) {
+            log.error("주간 통계 배치 중 오류 발생", e);
+        }
+    }
+
+    /**
      * 수동 일일 배치 실행 (테스트용)
      */
     public AirQualityBatchUseCase.AirQualityBatchResult executeManualDailyBatch() {
@@ -126,29 +152,4 @@ public class AirQualityDailyBatch {
         }
     }
 
-    /**
-     * 주간 통계 배치 (매주 일요일 새벽 2시)
-     */
-    @Scheduled(cron = "0 0 2 * * SUN")
-    public void executeWeeklyStatistics() {
-        log.info("=== 서울시 대기질 정보 주간 통계 배치 시작 ===");
-        
-        try {
-            LocalDateTime now = LocalDateTime.now();
-            LocalDateTime oneWeekAgo = now.minusDays(7);
-            
-            var statistics = airQualityRepository.getStatistics(oneWeekAgo, now);
-            
-            log.info("=== 주간 대기질 통계 (최근 7일) ===");
-            log.info("평균 PM10: {:.2f} ㎍/㎥", statistics.avgPm10());
-            log.info("평균 PM2.5: {:.2f} ㎍/㎥", statistics.avgPm25());
-            log.info("평균 통합대기환경지수: {:.2f}", statistics.avgKhai());
-            log.info("좋음: {}회, 보통: {}회, 나쁨 이상: {}회", 
-                statistics.goodCount(), statistics.moderateCount(), statistics.unhealthyCount());
-            log.info("전체 측정 횟수: {}", statistics.totalCount());
-            
-        } catch (Exception e) {
-            log.error("주간 통계 배치 중 오류 발생", e);
-        }
-    }
 }

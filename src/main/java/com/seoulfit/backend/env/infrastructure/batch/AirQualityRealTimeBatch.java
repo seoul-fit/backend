@@ -3,7 +3,6 @@ package com.seoulfit.backend.env.infrastructure.batch;
 import com.seoulfit.backend.env.application.port.in.AirQualityBatchUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -20,7 +19,7 @@ public class AirQualityRealTimeBatch {
 
     private final AirQualityBatchUseCase airQualityBatchUseCase;
 
-    @Scheduled(cron = "0 */5 * * * ?")
+    //@Scheduled(cron = "0 */5 * * * ?")
     public void executeRealTimeBatch() {
         LocalDateTime now = LocalDateTime.now();
         String currentTime = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));

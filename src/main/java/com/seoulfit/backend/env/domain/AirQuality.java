@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -16,13 +17,7 @@ import java.time.LocalDateTime;
  * 서울시 공공 데이터 API에서 제공하는 대기질 정보를 저장
  */
 @Entity
-@Table(name = "air_quality", indexes = {
-    @Index(name = "idx_air_quality_station", columnList = "msrSteNm"),
-    @Index(name = "idx_air_quality_date", columnList = "msrDt"),
-    @Index(name = "idx_air_quality_region", columnList = "msrRgnNm"),
-    @Index(name = "idx_air_quality_pm10", columnList = "pm10Value"),
-    @Index(name = "idx_air_quality_pm25", columnList = "pm25Value")
-})
+@Table(name = "air_quality")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
@@ -32,94 +27,62 @@ public class AirQuality {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /**
-     * 측정일시
-     */
+    @Comment("측정 일시")
     @Column(name = "msr_dt", nullable = false)
     private LocalDateTime msrDt;
 
-    /**
-     * 측정소 지역명
-     */
+    @Comment("측정소 지역명")
     @Column(name = "msr_rgn_nm", length = 100)
     private String msrRgnNm;
 
-    /**
-     * 측정소명
-     */
+    @Comment("측정소 명")
     @Column(name = "msr_ste_nm", length = 100, nullable = false)
     private String msrSteNm;
 
-    /**
-     * PM10 농도 (㎍/㎥)
-     */
+    @Comment("PM10 농도 ((㎍/㎥)")
     @Column(name = "pm10_value")
     private Integer pm10Value;
 
-    /**
-     * PM2.5 농도 (㎍/㎥)
-     */
+    @Comment("PM2.5 농도 (㎍/㎥)")
     @Column(name = "pm25_value")
     private Integer pm25Value;
 
-    /**
-     * 오존 농도 (ppm)
-     */
+    @Comment("오존 농도 (ppm)")
     @Column(name = "o3_value")
     private Double o3Value;
 
-    /**
-     * 이산화질소 농도 (ppm)
-     */
+    @Comment("이산화질소 농도 (ppm)")
     @Column(name = "no2_value")
     private Double no2Value;
 
-    /**
-     * 일산화탄소 농도 (ppm)
-     */
+    @Comment("일산화탄소 농도 (ppm)")
     @Column(name = "co_value")
     private Double coValue;
 
-    /**
-     * 아황산가스 농도 (ppm)
-     */
+    @Comment("아황솬가스 농도 (ppm)")
     @Column(name = "so2_value")
     private Double so2Value;
 
-    /**
-     * 통합대기환경지수
-     */
+    @Comment("통합대기환경지수")
     @Column(name = "khai_value")
     private Integer khaiValue;
 
-    /**
-     * 통합대기환경지수 등급
-     */
+    @Comment("통합대기환경지수 등급")
     @Column(name = "khai_grade", length = 20)
     private String khaiGrade;
 
-    /**
-     * PM10 24시간 예측이동평균농도
-     */
+    @Comment("PM10 24시간 예측이동평균농도")
     @Column(name = "pm10_24h_avg")
     private Integer pm1024hAvg;
 
-    /**
-     * PM2.5 24시간 예측이동평균농도
-     */
+    @Comment("PM2.5 24시간 예측이동평균농도")
     @Column(name = "pm25_24h_avg")
     private Integer pm2524hAvg;
 
-    /**
-     * 생성일시
-     */
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    /**
-     * 수정일시
-     */
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
@@ -207,4 +170,5 @@ public class AirQuality {
         this.pm1024hAvg = pm1024hAvg;
         this.pm2524hAvg = pm2524hAvg;
     }
+
 }

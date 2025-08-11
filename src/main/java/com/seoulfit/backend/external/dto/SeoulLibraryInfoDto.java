@@ -43,8 +43,6 @@ public class SeoulLibraryInfoDto {
 
         @JsonProperty("MESSAGE")
         private String message;
-
-        // Getters and Setters
     }
 
     @Getter
