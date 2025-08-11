@@ -41,32 +41,6 @@ public class AirQualityBatchController {
         return ResponseEntity.ok(result);
     }
 
-    @Operation(summary = "일일 배치 수동 실행", description = "대기질 정보 일일 배치를 수동으로 실행합니다.")
-    @PostMapping("/daily")
-    public ResponseEntity<AirQualityBatchUseCase.AirQualityBatchResult> executeDailyBatch() {
-        log.info("일일 배치 수동 실행 요청");
-        
-        AirQualityBatchUseCase.AirQualityBatchResult result = 
-            dailyBatch.executeManualDailyBatch();
-        
-        log.info("일일 배치 수동 실행 완료 - 성공: {}", result.success());
-        return ResponseEntity.ok(result);
-    }
-
-    @Operation(summary = "특정 날짜 일일 배치 실행", description = "특정 날짜의 대기질 정보 일일 배치를 실행합니다.")
-    @PostMapping("/daily/{dataDate}")
-    public ResponseEntity<AirQualityBatchUseCase.AirQualityBatchResult> executeDailyBatchForDate(
-            @Parameter(description = "데이터 날짜 (yyyyMMdd)", example = "20240810")
-            @PathVariable String dataDate) {
-        log.info("특정 날짜 일일 배치 실행 요청 - 날짜: {}", dataDate);
-        
-        AirQualityBatchUseCase.AirQualityBatchResult result = 
-            dailyBatch.executeManualDailyBatch(dataDate);
-        
-        log.info("특정 날짜 일일 배치 실행 완료 - 날짜: {}, 성공: {}", dataDate, result.success());
-        return ResponseEntity.ok(result);
-    }
-
     @Operation(summary = "특정 시간대 배치 실행", description = "특정 시간대의 대기질 정보 배치를 실행합니다.")
     @PostMapping("/time-range")
     public ResponseEntity<AirQualityBatchUseCase.AirQualityBatchResult> executeTimeBatch(

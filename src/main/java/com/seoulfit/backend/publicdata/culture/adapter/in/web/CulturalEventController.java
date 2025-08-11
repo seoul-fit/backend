@@ -1,44 +1,29 @@
 package com.seoulfit.backend.publicdata.culture.adapter.in.web;
 
+import com.seoulfit.backend.publicdata.culture.application.port.in.QueryCulturalEventsUseCase;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "서울시 문화행사 정보 관련 API", description = "CulturalEventController.class")
 @RestController
-@RequestMapping("/api/cultural-events")
+@RequestMapping("/api/v1/cultural-events")
 @RequiredArgsConstructor
-@Tag(name = "Cultural Events", description = "문화행사 정보 API")
 public class CulturalEventController {
+    private final QueryCulturalEventsUseCase queryCulturalEventsUseCase;
 
-/*    // private final CulturalEventService culturalEventService;
-    private final SeoulCulturalApiService seoulCulturalApiService;
-
-    @Operation(summary = "문화행사 목록 조회", description = "저장된 문화행사 목록을 조회합니다.")
-    @GetMapping
-    public ResponseEntity<List<CulturalEvent>> getCulturalEvents(
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-        
-        // List<CulturalEvent> events = culturalEventService.getCulturalEvents(startDate, endDate);
-        return ResponseEntity.ok(List.of());
-    }
-
-    @Operation(summary = "문화행사 상세 조회", description = "특정 문화행사의 상세 정보를 조회합니다.")
-    @GetMapping("/{id}")
-    public ResponseEntity<CulturalEvent> getCulturalEvent(@PathVariable Long id) {
-        // CulturalEvent event = culturalEventService.getCulturalEvent(id);
-        return ResponseEntity.notFound().build();
-    }
-
-    @Operation(summary = "문화행사 데이터 동기화", description = "서울시 API에서 최신 문화행사 데이터를 가져와 저장합니다.")
-    @PostMapping("/sync")
-    public ResponseEntity<String> syncCulturalEvents() {
+    @Operation(summary = "문화 생활 정보를 가져온다.", description = "문화 생활 데이터를 DB에 동기화 시킨다.")
+    @GetMapping("/fetch")
+    public ResponseEntity<?> syncCulturalEvents() {
         try {
-            // int syncedCount = culturalEventService.saveCultureEvents();
-            return ResponseEntity.ok("문화행사 데이터 동기화 완료. 동기화된 건수: " + 0);
+            return ResponseEntity.ok(queryCulturalEventsUseCase.getAllCulturalEvents());
         } catch (Exception e) {
-            return ResponseEntity.internalServerError()
-                    .body("문화행사 데이터 동기화 실패: " + e.getMessage());
+            return ResponseEntity.badRequest().build();
         }
-    }*/
+    }
+
 }

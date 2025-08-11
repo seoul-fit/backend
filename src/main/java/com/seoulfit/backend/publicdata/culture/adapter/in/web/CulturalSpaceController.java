@@ -1,45 +1,39 @@
 package com.seoulfit.backend.publicdata.culture.adapter.in.web;
 
+import com.seoulfit.backend.publicdata.culture.application.port.in.QueryCulturalSpaceUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Map;
 
+@Tag(name = "서울시 문화공간 정보 관련 API", description = "CulturalSpaceController.class")
 @RestController
-@RequestMapping("/api/cultural-spaces")
+@RequestMapping("/api/v1/cultural-space")
 @RequiredArgsConstructor
-@Tag(name = "Cultural Spaces", description = "문화공간 정보 API")
+@Slf4j
 public class CulturalSpaceController {
+    private final QueryCulturalSpaceUseCase queryCulturalSpaceUseCase;
 
-    // private final CulturalSpaceService culturalSpaceService;
-
-/*    @Operation(summary = "문화공간 목록 조회", description = "저장된 문화공간 목록을 조회합니다.")
-    @GetMapping
-    public ResponseEntity<List<CulturalSpace>> getCulturalSpaces() {
-        // List<CulturalSpace> spaces = culturalSpaceService.getCulturalSpaces();
-        return ResponseEntity.ok(List.of());
-    }
-
-    @Operation(summary = "문화공간 상세 조회", description = "특정 문화공간의 상세 정보를 조회합니다.")
-    @GetMapping("/{id}")
-    public ResponseEntity<CulturalSpace> getCulturalSpace(@PathVariable Long id) {
-        // CulturalSpace space = culturalSpaceService.getCulturalSpace(id);
-        return ResponseEntity.notFound().build();
-    }
-
-    @Operation(summary = "문화공간 데이터 동기화", description = "서울시 API에서 최신 문화공간 데이터를 가져와 저장합니다.")
-    @PostMapping("/sync")
-    public ResponseEntity<String> syncCulturalSpaces() {
+    @Operation(summary = "문화 공간 정보 관련 API", description = "문화 공간 정보를 가져온다.")
+    @GetMapping("/fetch")
+    public ResponseEntity<?> fetchCulturalSpaces() {
         try {
-            // int syncedCount = culturalSpaceService.saveCultureSpaces();
-            return ResponseEntity.ok("문화공간 데이터 동기화 완료. 동기화된 건수: " + 0);
+            return ResponseEntity.ok(queryCulturalSpaceUseCase.getAllCulturalSpace());
         } catch (Exception e) {
-            return ResponseEntity.internalServerError()
-                    .body("문화공간 데이터 동기화 실패: " + e.getMessage());
+            log.error("Error fetching cultural spaces", e);
+            return ResponseEntity.badRequest().body(Map.of(
+                    "success", false,
+                    "message", "문화공간 정보 데이터 가져오기에 실패했습니다.",
+                    "error", e.getMessage(),
+                    "errorType", e.getClass().getSimpleName()
+            ));
         }
-    }*/
+    }
 
 }

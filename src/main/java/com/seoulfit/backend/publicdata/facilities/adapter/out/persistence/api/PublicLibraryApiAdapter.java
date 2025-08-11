@@ -1,8 +1,8 @@
 package com.seoulfit.backend.publicdata.facilities.adapter.out.persistence.api;
 
+import com.seoulfit.backend.location.domain.Library;
 import com.seoulfit.backend.publicdata.facilities.adapter.out.persistence.api.dto.SeoulLibraryInfoDto;
 import com.seoulfit.backend.publicdata.facilities.application.port.out.LoadPublicLibraryPort;
-import com.seoulfit.backend.publicdata.facilities.domain.PublicLibrary;
 import com.seoulfit.backend.publicdata.facilities.infrastructure.mapper.PublicLibraryMapper;
 import com.seoulfit.backend.shared.utils.RestClientUtils;
 import lombok.RequiredArgsConstructor;
@@ -25,13 +25,13 @@ public class PublicLibraryApiAdapter implements LoadPublicLibraryPort {
     private final RestClientUtils<SeoulLibraryInfoDto> restClientUtils;
 
     @Override
-    public List<PublicLibrary> loadPublicLibrary(int startIndex, int endIndex) {
+    public List<Library> loadPublicLibrary(int startIndex, int endIndex) {
         String url = String.format("%s/%s/%d/%d/", baseUrl, serviceName, startIndex, endIndex);
 
         try {
             SeoulLibraryInfoDto response = restClientUtils.callGetApi(url, SeoulLibraryInfoDto.class);
 
-            List<PublicLibrary> publicLibraryList = PublicLibraryMapper.convertToEntity(response.getSeoulPublicLibraryInfo());
+            List<Library> publicLibraryList = PublicLibraryMapper.convertToEntity(response.getSeoulPublicLibraryInfo());
 
             log.info("Successfully loaded {} amenities from API", publicLibraryList.size());
             return publicLibraryList;
