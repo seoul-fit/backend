@@ -3,7 +3,7 @@ package com.seoulfit.backend.scheduler;
 import com.seoulfit.backend.user.adapter.out.persistence.UserInterestPort;
 import com.seoulfit.backend.user.adapter.out.persistence.UserPort;
 import com.seoulfit.backend.event.NotificationEvent;
-import com.seoulfit.backend.external.PublicDataApiClient;
+import com.seoulfit.backend.publicdata.PublicDataApiClient;
 import com.seoulfit.backend.trigger.TriggerManager;
 import com.seoulfit.backend.trigger.dto.TriggerContext;
 import com.seoulfit.backend.trigger.dto.TriggerResult;

@@ -1,6 +1,6 @@
 package com.seoulfit.backend.trigger.adapter.out.external;
 
-import com.seoulfit.backend.external.PublicDataApiClient;
+import com.seoulfit.backend.publicdata.PublicDataApiClient;
 import com.seoulfit.backend.trigger.application.port.out.PublicDataPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
