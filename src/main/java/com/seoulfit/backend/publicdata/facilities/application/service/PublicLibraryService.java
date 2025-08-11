@@ -1,9 +1,9 @@
 package com.seoulfit.backend.publicdata.facilities.application.service;
 
+import com.seoulfit.backend.location.domain.Library;
 import com.seoulfit.backend.publicdata.facilities.application.port.in.CommandPublicLibraryUseCase;
 import com.seoulfit.backend.publicdata.facilities.application.port.out.CommandPublicLibraryPort;
 import com.seoulfit.backend.publicdata.facilities.application.port.out.LoadPublicLibraryPort;
-import com.seoulfit.backend.publicdata.facilities.domain.PublicLibrary;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class PublicLibraryService implements CommandPublicLibraryUseCase {
     @Override
     public void savePublicLibraryList() {
         try{
-            List<PublicLibrary> publicLibraryList = loadPublicLibraryPort.loadPublicLibrary(1, 1000);
+            List<Library> publicLibraryList = loadPublicLibraryPort.loadPublicLibrary(1, 1000);
 
             commandPublicLibraryPort.truncate();
             commandPublicLibraryPort.save(publicLibraryList);
