@@ -10,7 +10,7 @@ import java.util.List;
  * OAuth 클라이언트 팩토리
  * OAuth 제공자에 따라 적절한 클라이언트를 반환
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Component

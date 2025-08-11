@@ -15,7 +15,7 @@ import java.util.List;
  * 지도에 마커를 표시하기 위한 위치 기반 데이터 응답
  * 사용자 관심사에 따른 맞춤형 데이터 제공
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Schema(description = "위치 기반 통합 데이터 응답")

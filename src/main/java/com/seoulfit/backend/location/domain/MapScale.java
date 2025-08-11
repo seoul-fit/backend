@@ -8,7 +8,7 @@ import lombok.Getter;
  * 지도의 축적(Scale) 정보에 따라 적절한 검색 반경을 자동으로 결정하는 시스템
  * 사용자의 지도 확대/축소 레벨에 따라 최적화된 데이터 조회 범위를 제공
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Getter

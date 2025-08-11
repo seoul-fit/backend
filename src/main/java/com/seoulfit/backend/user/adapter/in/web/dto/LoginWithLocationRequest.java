@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
  * 
  * 사용자 로그인 시 위치 정보를 함께 전달하여 실시간 트리거 평가를 수행
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Schema(description = "위치 정보를 포함한 로그인 요청")

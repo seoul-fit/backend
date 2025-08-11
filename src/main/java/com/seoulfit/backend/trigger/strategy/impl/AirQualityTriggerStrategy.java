@@ -17,7 +17,7 @@ import java.util.List;
  * 
  * 미세먼지, 초미세먼지 등 대기질이 나쁨 이상일 때 알림을 발송하는 전략
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
  * OAuth 인가코드 검증 요청 DTO
  * 프론트엔드에서 받은 인가코드로 사용자 정보를 조회하기 위한 요청
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Schema(description = "OAuth 인가코드 검증 요청")

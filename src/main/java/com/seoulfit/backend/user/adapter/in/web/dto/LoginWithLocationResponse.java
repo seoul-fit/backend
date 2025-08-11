@@ -10,7 +10,7 @@ import lombok.Getter;
  * 
  * 로그인 성공과 함께 트리거 평가 결과를 반환
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Schema(description = "위치 정보를 포함한 로그인 응답")

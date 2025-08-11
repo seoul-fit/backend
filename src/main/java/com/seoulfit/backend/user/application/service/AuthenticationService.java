@@ -30,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
  * <p>
  * 헥사고날 아키텍처의 애플리케이션 서비스 모든 인증 관련 비즈니스 로직을 통합 관리 Authorization Code Flow를 지원하도록 업데이트
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

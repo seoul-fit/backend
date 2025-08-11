@@ -12,7 +12,7 @@ import java.util.Map;
  * 
  * 트리거 평가 결과를 담는 객체
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Getter

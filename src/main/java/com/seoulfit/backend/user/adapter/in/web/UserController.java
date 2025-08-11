@@ -19,7 +19,7 @@ import jakarta.validation.Valid;
  * 헥사고날 아키텍처의 입력 어댑터
  * 사용자 프로필과 관련된 HTTP 요청을 처리
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

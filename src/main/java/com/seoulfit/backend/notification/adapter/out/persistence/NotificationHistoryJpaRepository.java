@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * 알림 히스토리 JPA Repository
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 public interface NotificationHistoryJpaRepository extends JpaRepository<NotificationHistory, Long> {

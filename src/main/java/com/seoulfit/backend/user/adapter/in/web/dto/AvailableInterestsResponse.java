@@ -13,7 +13,7 @@ import java.util.List;
  * 
  * 사용자가 체크박스로 선택할 수 있는 모든 관심사 카테고리를 반환
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Schema(description = "선택 가능한 관심사 목록 응답")

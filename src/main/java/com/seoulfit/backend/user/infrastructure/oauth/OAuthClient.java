@@ -8,7 +8,7 @@ import com.seoulfit.backend.user.infrastructure.dto.OAuthUserInfo;
  * OAuth 클라이언트 인터페이스
  * OAuth 제공자와의 통신을 담당
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 public interface OAuthClient {

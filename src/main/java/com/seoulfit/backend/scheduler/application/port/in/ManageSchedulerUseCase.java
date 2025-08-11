@@ -8,7 +8,7 @@ import com.seoulfit.backend.scheduler.application.port.in.dto.SchedulerExecution
  * 헥사고날 아키텍처의 입력 포트
  * 스케줄링 작업과 관련된 비즈니스 로직을 정의
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 public interface ManageSchedulerUseCase {

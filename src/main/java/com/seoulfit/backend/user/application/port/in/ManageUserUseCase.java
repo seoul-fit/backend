@@ -8,7 +8,7 @@ import com.seoulfit.backend.user.application.port.in.dto.UserResult;
  * <p>
  * 헥사고날 아키텍처의 입력 포트 사용자 프로필 관리와 관련된 비즈니스 로직을 정의
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 public interface ManageUserUseCase {

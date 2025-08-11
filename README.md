@@ -208,7 +208,7 @@ UrbanPing은 오픈소스 프로젝트입니다. 여러분의 기여를 환영�
 ```
 MIT License
 
-Copyright (c) 2025 UrbanPing Team
+Copyright (c) 2025 Seoul Fit
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

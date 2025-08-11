@@ -11,7 +11,7 @@ import lombok.Getter;
  * <p>
  * 트리거 전략의 평가 결과를 담는 객체
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Getter

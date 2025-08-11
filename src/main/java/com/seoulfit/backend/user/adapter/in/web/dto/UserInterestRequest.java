@@ -14,7 +14,7 @@ import java.util.List;
  * 
  * 사용자가 체크박스로 선택한 관심사들을 설정하기 위한 요청 객체
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Schema(description = "사용자 관심사 설정 요청")

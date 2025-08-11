@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * 
  * 강수량이 설정된 임계값을 초과할 때 알림을 발송하는 전략
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

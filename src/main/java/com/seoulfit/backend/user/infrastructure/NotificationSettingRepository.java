@@ -13,7 +13,7 @@ import java.util.Optional;
 /**
  * 알림 설정 Repository
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 public interface NotificationSettingRepository extends JpaRepository<NotificationSetting, Long> {

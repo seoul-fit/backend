@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * 
  * 사용자와 관심사 카테고리 간의 연관관계를 나타내는 엔티티
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Entity

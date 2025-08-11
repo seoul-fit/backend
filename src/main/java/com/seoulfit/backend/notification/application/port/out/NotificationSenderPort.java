@@ -8,7 +8,7 @@ import com.seoulfit.backend.notification.domain.NotificationHistory;
  * 헥사고날 아키텍처의 출력 포트
  * 실제 알림 발송 (푸시, 웹훅, 이메일 등)을 담당
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 public interface NotificationSenderPort {

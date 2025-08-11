@@ -10,7 +10,7 @@ import lombok.Getter;
  * OAuth 인가코드 검증 응답 DTO
  * 인가코드로 조회한 사용자 정보를 프론트엔드로 반환
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Schema(description = "OAuth 인가코드 검증 응답")

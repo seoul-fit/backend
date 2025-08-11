@@ -8,7 +8,7 @@ import lombok.Getter;
  * UrbanPing 시스템에서 제공하는 도시 정보 카테고리
  * 사용자가 체크박스로 선택할 수 있는 관심사들
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Getter

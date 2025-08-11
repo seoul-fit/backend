@@ -17,7 +17,7 @@ import java.util.List;
  * 외부 API 호출을 위한 RestTemplate 및 RestClient 설정
  * OAuth 토큰 교환을 위한 설정 추가
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

@@ -8,7 +8,7 @@ import java.util.Map;
  * 헥사고날 아키텍처의 출력 포트
  * 외부 공공 데이터 API 접근을 위한 인터페이스
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 public interface PublicDataPort {

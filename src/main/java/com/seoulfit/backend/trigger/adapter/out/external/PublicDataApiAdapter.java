@@ -16,7 +16,7 @@ import java.util.Map;
  * 헥사고날 아키텍처의 출력 어댑터
  * 외부 공공 데이터 API 호출을 담당
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

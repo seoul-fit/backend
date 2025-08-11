@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * <p>
  * 헥사고날 아키텍처의 애플리케이션 서비스 스케줄링 작업과 관련된 비즈니스 로직을 처리
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

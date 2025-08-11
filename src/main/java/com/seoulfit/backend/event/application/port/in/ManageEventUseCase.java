@@ -9,7 +9,7 @@ import com.seoulfit.backend.event.application.port.in.dto.EventResult;
  * 헥사고날 아키텍처의 입력 포트
  * 도메인 이벤트 발행 및 처리와 관련된 비즈니스 로직을 정의
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 public interface ManageEventUseCase {

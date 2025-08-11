@@ -29,7 +29,7 @@ import java.util.List;
  * 사용자 위치를 기반으로 주변의 다양한 시설 정보를 제공하는 API
  * 사용자 관심사에 따라 맞춤형 데이터를 제공하며, 지도에 마커를 그리기 위한 데이터를 반환
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

@@ -18,7 +18,7 @@ import java.util.List;
  * 
  * 특정 지역의 인구 혼잡도가 높을 때 알림을 발송하는 전략
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

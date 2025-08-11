@@ -4,7 +4,7 @@ package com.seoulfit.backend.user.domain;
  * 카카오 OAuth 스코프 정의
  * 카카오 공식 문서 기준 동의항목
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 public enum KakaoScope {

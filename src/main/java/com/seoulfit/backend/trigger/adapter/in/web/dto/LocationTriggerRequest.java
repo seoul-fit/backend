@@ -15,7 +15,7 @@ import java.util.List;
  * 
  * 사용자의 위치 정보를 기반으로 트리거를 평가하기 위한 요청 객체
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Schema(description = "위치 기반 트리거 평가 요청")

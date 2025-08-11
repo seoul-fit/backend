@@ -11,7 +11,7 @@ import org.springframework.data.domain.Page;
  * 헥사고날 아키텍처의 입력 포트
  * 알림 생성, 조회, 읽음 처리 등의 비즈니스 로직을 정의
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 public interface ManageNotificationUseCase {

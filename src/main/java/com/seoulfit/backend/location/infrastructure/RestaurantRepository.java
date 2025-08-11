@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 맛집 레포지토리
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Repository

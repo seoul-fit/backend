@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
  * OAuth 토큰 요청 DTO
  * Authorization Code를 Access Token으로 교환하기 위한 요청
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Getter

@@ -16,7 +16,7 @@ import java.util.List;
  * 
  * 거리 정보와 지도 축적 정보를 포함한 고급 위치 기반 데이터 응답
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Schema(description = "고도화된 위치 기반 데이터 응답")

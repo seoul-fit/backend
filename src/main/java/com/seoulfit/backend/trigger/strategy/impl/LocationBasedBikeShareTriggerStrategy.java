@@ -19,7 +19,7 @@ import java.util.Map;
  * 사용자 위치 주변의 따릉이 대여소 상황을 실시간으로 모니터링하여
  * 자전거 부족이나 포화 상태를 알림
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

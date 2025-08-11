@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 /**
  * 사용자 수정 요청 DTO
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Getter

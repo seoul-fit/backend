@@ -8,7 +8,7 @@ import lombok.Getter;
  * OAuth 인가코드 검증 명령
  * 인가코드로 사용자 정보를 조회하기 위한 명령 객체
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Getter

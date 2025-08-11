@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
  * OAuth 로그인 요청 DTO
  * Authorization Code Flow를 위한 승인 코드 기반 로그인
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Getter

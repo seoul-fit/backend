@@ -18,7 +18,7 @@ import java.util.Map;
  * 
  * 따릉이 대여소의 자전거 부족 또는 포화 상태일 때 알림을 발송하는 전략
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

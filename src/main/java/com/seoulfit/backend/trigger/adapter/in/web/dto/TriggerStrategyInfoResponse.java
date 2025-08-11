@@ -11,7 +11,7 @@ import java.util.Map;
  * 
  * 등록된 트리거 전략의 정보를 클라이언트에 반환하기 위한 응답 객체
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Schema(description = "트리거 전략 정보")

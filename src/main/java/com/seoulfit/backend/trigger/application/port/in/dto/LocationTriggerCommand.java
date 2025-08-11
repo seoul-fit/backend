@@ -10,7 +10,7 @@ import java.util.List;
  * 
  * 사용자의 위치 정보를 기반으로 트리거를 평가하기 위한 명령 객체
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Getter

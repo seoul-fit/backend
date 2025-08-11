@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 /**
  * 알림 생성 요청 DTO
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Getter

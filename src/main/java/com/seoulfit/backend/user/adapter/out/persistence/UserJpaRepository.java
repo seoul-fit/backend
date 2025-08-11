@@ -14,7 +14,7 @@ import java.util.Optional;
 /**
  * 사용자 JPA Repository
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 public interface UserJpaRepository extends JpaRepository<User, Long> {

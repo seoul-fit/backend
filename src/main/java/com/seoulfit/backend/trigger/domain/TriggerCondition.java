@@ -7,7 +7,7 @@ import lombok.Getter;
  * <p>
  * UrbanPing 시스템에서 사용되는 트리거 발동 조건들을 정의 각 조건은 특정 상황에서 알림을 발송하기 위한 기준
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Getter

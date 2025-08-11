@@ -9,7 +9,7 @@ import com.seoulfit.backend.trigger.dto.TriggerResult;
  * 오픈소스 확장성을 위한 Strategy Pattern 구현
  * 새로운 트리거 조건을 쉽게 추가할 수 있도록 설계
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 public interface TriggerStrategy {

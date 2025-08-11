@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * Google OAuth 클라이언트 구현
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

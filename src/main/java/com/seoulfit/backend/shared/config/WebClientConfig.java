@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  * 공공 API 호출을 위한 WebClient 빈 설정
  * 타임아웃, 로깅, 에러 처리 등을 포함
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

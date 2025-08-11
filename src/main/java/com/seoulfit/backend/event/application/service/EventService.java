@@ -19,7 +19,7 @@ import java.util.UUID;
  * 헥사고날 아키텍처의 애플리케이션 서비스
  * 도메인 이벤트 발행 및 처리와 관련된 비즈니스 로직을 처리
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
  * OAuth 토큰 응답 DTO
  * OAuth 제공자로부터 받는 토큰 응답
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Getter

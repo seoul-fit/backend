@@ -12,7 +12,7 @@ import java.util.List;
  * 사용자 관심사 응답 DTO
  * 사용자의 관심사 정보를 클라이언트에 반환하기 위한 응답 객체
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Schema(description = "사용자 관심사 응답")

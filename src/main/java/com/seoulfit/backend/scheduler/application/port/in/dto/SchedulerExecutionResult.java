@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * <p>
  * 헥사고날 아키텍처의 Result 객체
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Getter

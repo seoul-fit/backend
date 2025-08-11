@@ -8,7 +8,7 @@ import lombok.Getter;
  * UrbanPing 시스템에서 사용되는 알림 분류
  * 우선순위와 긴급도를 포함한 도메인 값 객체
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Getter

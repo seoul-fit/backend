@@ -12,7 +12,7 @@ import java.util.Optional;
  * 
  * DDD의 Repository 패턴을 적용한 도메인 포트
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 public interface UserRepository {

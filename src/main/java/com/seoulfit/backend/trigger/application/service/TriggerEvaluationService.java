@@ -33,7 +33,7 @@ import java.util.Optional;
  * 
  * 실시간 트리거 평가 및 관리를 담당하는 서비스
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

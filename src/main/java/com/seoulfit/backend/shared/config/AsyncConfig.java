@@ -14,7 +14,7 @@ import java.util.concurrent.Executor;
  * 
  * 스케줄링과 비동기 이벤트 처리를 위한 설정
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

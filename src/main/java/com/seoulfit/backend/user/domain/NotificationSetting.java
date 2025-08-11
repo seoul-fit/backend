@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * <p>
  * 사용자별 알림 채널, 알림 타입, 트리거 조건별 설정을 관리
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Entity

@@ -7,7 +7,7 @@ import lombok.Getter;
 /**
  * OAuth 권한부여 승인코드 기반 인증 명령
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Getter

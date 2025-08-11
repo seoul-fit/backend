@@ -8,7 +8,7 @@ import lombok.Getter;
  * OAuth 사용자 정보 DTO
  * OAuth 제공자로부터 받은 사용자 정보를 담는 객체
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Getter

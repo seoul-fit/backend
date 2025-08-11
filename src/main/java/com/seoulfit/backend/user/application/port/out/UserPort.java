@@ -12,7 +12,7 @@ import java.util.Optional;
  * <p>
  * 헥사고날 아키텍처의 출력 포트 사용자 데이터 접근을 위한 인터페이스
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 public interface UserPort {

@@ -15,7 +15,7 @@ import java.util.List;
  * 사용자 위치를 기반으로 주변의 다양한 시설 정보를 조회하는 서비스
  * 맛집, 문화시설, 도서관, 공원, 체육시설, 무더위쉼터 등을 통합 제공
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

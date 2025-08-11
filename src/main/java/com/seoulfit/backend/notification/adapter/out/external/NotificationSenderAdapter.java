@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 헥사고날 아키텍처의 출력 어댑터
  * 다양한 채널을 통한 알림 발송을 담당
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

@@ -14,7 +14,7 @@ import java.util.Map;
  * 
  * 트리거 평가 결과를 클라이언트에 반환하기 위한 응답 객체
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Schema(description = "트리거 평가 결과")

@@ -30,7 +30,7 @@ import java.util.Map;
  * 사용자 인증과 관련된 HTTP 요청을 처리
  * 카카오 공식 문서 기준으로 최신 OAuth 2.0 Authorization Code Flow 지원
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

@@ -16,7 +16,7 @@ import java.util.List;
  * 지도 축적정보를 활용한 최적화된 데이터 조회 서비스
  * 2단계 필터링 (바운딩 박스 → 원형 반경)으로 성능 최적화
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

@@ -5,7 +5,7 @@ package com.seoulfit.backend.user.domain;
  * <p>
  * 지원하는 OAuth 제공자들을 정의
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 public enum AuthProvider {

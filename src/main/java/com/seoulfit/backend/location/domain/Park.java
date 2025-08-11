@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * 
  * 서울시 주요 공원 현황 정보를 저장하는 엔티티
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Entity

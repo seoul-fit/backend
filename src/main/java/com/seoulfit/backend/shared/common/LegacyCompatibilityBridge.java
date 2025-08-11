@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  * <p>
  * 점진적 마이그레이션을 위해 기존 코드와 새로운 구조 간의 연결점 역할
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Component

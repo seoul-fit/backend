@@ -9,7 +9,7 @@ import lombok.experimental.UtilityClass;
  * 고성능 거리 계산 및 지리적 연산을 위한 유틸리티 클래스
  * 다양한 거리 계산 알고리즘과 최적화 기법을 제공
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @UtilityClass

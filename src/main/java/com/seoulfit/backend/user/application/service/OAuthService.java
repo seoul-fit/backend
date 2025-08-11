@@ -13,7 +13,7 @@ import java.util.Map;
  * OAuth 관련 추가 서비스
  * 로그아웃, 연결 해제 등 확장 기능 제공
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

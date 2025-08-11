@@ -26,7 +26,7 @@ import java.util.List;
  * 실시간 트리거 평가 및 관리를 위한 REST API 제공
  * 사용자 위치 기반 트리거와 수동 트리거 평가 지원
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * 
  * 서울시 관광 음식점 정보를 저장하는 엔티티
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Entity

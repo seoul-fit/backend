@@ -7,7 +7,7 @@ import lombok.Getter;
  * 
  * 사용자의 현재 상태를 나타내는 도메인 값 객체
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Getter

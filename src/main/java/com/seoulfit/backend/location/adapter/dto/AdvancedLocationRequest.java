@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
  * 지도 축적정보를 포함한 고급 위치 기반 데이터 조회 요청
  * 다양한 방식으로 지도 축적을 지정할 수 있음
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Schema(description = "고도화된 위치 기반 데이터 요청")

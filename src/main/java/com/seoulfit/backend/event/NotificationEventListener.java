@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * Observer Pattern을 통한 이벤트 기반 알림 처리
  * 비동기 처리로 성능 최적화
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

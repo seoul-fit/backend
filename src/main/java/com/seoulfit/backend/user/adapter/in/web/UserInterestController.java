@@ -22,7 +22,7 @@ import java.util.List;
  * 사용자 관심사 관리 컨트롤러
  * 사용자가 체크박스로 관심사를 선택하고 관리할 수 있는 API 제공
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

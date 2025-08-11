@@ -22,7 +22,7 @@ import java.util.Map;
  * Kakao OAuth 클라이언트 구현
  * 카카오 공식 문서 기준으로 최신 API 적용
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

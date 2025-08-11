@@ -15,7 +15,7 @@ import java.util.Map;
  * 
  * 트리거 발동 이력을 저장하여 중복 알림 방지 및 분석에 활용
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Entity

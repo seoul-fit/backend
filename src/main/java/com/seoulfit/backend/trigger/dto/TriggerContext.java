@@ -14,7 +14,7 @@ import java.util.Map;
  * 
  * 트리거 전략에서 사용할 모든 정보를 담는 컨텍스트 객체
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Getter

@@ -10,7 +10,7 @@ import com.seoulfit.backend.user.domain.AuthProvider;
  * 사용자 인증과 관련된 모든 비즈니스 로직을 정의
  * Authorization Code Flow를 지원하도록 업데이트
  *
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 public interface AuthenticateUserUseCase {

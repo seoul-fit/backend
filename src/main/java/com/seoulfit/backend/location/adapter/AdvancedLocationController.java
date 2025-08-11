@@ -28,7 +28,7 @@ import java.util.List;
  * 지도 축적정보를 활용한 최적화된 위치 기반 데이터 조회 API
  * 2단계 필터링과 성능 최적화 기법을 적용한 고급 기능 제공
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 @Slf4j

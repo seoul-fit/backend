@@ -4,7 +4,7 @@ package com.seoulfit.backend.user.domain.exception;
  * OAuth 관련 예외
  * 카카오 OAuth API 에러 코드 기준
  * 
- * @author UrbanPing Team
+ * @author Seoul Fit
  * @since 1.0.0
  */
 public class OAuthException extends RuntimeException {
