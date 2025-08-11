@@ -15,7 +15,7 @@ public class FacilitiesDailyBatch {
     private final CommandPublicLibraryUseCase libraryUseCase;
 
 
-    @Scheduled(cron = "${urbanping.scheduler.facilities[0]}")
+    @Scheduled(cron = "${urbanping.scheduler.facilities.daily-cron[0]}")
     public void coolingShelterDailyBatch() {
         coolingShelterUseCase.saveCoolingShelter(new CommandCoolingShelterUseCase.GetAmenitiesQuery(
                         1, 1000, "", ""
@@ -23,7 +23,7 @@ public class FacilitiesDailyBatch {
         );
     }
 
-    @Scheduled(cron = "${urbanping.scheduler.facilities[1]}")
+    @Scheduled(cron = "${urbanping.scheduler.facilities.daily-cron[1]}")
     public void libraryDailyBatch() {
         libraryUseCase.savePublicLibraryList();
     }
