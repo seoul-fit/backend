@@ -78,6 +78,9 @@ seoul-api:
     environment:
       service-name:
         - RealtimeCityAir
+      api-key: ${SEOUL_API_KEY:666e634468776c7339314668766844}
+      batch-size: 1000
+      retention-days: 30
     amenities:
       service-name:
         - TbGtnHwcwP
@@ -125,6 +128,9 @@ urbanping:
   scheduler:
     realtime-interval: 300000 # 5분 (밀리초)
     cultural-interval: 1800000 # 30분 (밀리초)
+    env-realtime-interval: 300000 # 5분 (밀리초) - 대기질 실시간 배치
+    env-daily-cron: "0 0 3 * * ?" # 매일 새벽 3시 - 대기질 일일 배치
+    env-weekly-cron: "0 0 2 * * SUN" # 매주 일요일 새벽 2시 - 대기질 주간 통계
     enabled: true
 
 logging:
@@ -135,6 +141,9 @@ logging:
     com.seoulfit.backend.trigger: INFO
     com.seoulfit.backend.scheduler: INFO
     com.seoulfit.backend.external: INFO
+    # 환경 정보 시스템 로깅
+    com.seoulfit.backend.env: INFO
+    com.seoulfit.backend.env.infrastructure.batch: INFO
 
 jwt:
   secret: ${JWT_SECRET:your-very-secure-secret-key-that-is-at-least-256-bits-long}
