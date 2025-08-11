@@ -9,13 +9,17 @@ import lombok.ToString;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "cultural_reservation")
+@Table(name = "cultural_reservation",
+        indexes = {
+                @Index(name = "idx_reservation_location", columnList = "x_coord,y_coord")
+        })
 @Getter
 @NoArgsConstructor
 @ToString
 public class CulturalReservation {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", length = 50, nullable = false)
     private Long id; // 서비스ID (기본 키로 가정)
 

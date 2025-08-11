@@ -6,6 +6,7 @@ import com.seoulfit.backend.publicdata.culture.domain.CulturalSpace;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -16,5 +17,13 @@ public class QueryCulturalSpaceAdapter implements QueryCulturalSpacePort {
     @Override
     public List<CulturalSpace> getAllCulturalSpace() {
         return culturalSpaceRepository.findAll();
+    }
+
+    @Override
+    public List<CulturalSpace> getCulturalSpaceLocation(double latitude, double longitude) {
+        double radiusKm = 2.0;
+        return culturalSpaceRepository.findWithInRadius(
+                BigDecimal.valueOf(latitude), BigDecimal.valueOf(longitude), radiusKm
+        );
     }
 }

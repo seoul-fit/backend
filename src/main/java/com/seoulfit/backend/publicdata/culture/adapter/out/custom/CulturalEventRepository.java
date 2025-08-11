@@ -36,24 +36,6 @@ public interface CulturalEventRepository extends JpaRepository<CulturalEvent, Lo
 
     @Query("""
         SELECT ce FROM CulturalEvent ce 
-        WHERE ce.codeName IN :categories
-        AND (6371 * acos(cos(radians(:latitude)) * cos(radians(ce.latitude)) 
-            * cos(radians(ce.longitude) - radians(:longitude)) 
-            + sin(radians(:latitude)) * sin(radians(ce.latitude)))) <= :radiusKm
-        AND (ce.startDate <= :endDate AND ce.endDate >= :startDate)
-        ORDER BY (6371 * acos(cos(radians(:latitude)) * cos(radians(ce.latitude)) 
-            * cos(radians(ce.longitude) - radians(:longitude)) 
-            + sin(radians(:latitude)) * sin(radians(ce.latitude))))
-        """)
-    List<CulturalEvent> findNearbyEvents(@Param("latitude") BigDecimal latitude,
-                                         @Param("longitude") BigDecimal longitude,
-                                         @Param("radiusKm") double radiusKm,
-                                         @Param("categories") List<String> categories,
-                                         @Param("startDate") LocalDate startDate,
-                                         @Param("endDate") LocalDate endDate);
-
-    @Query("""
-        SELECT ce FROM CulturalEvent ce 
         WHERE ce.startDate >= :startDate 
         AND ce.startDate <= :endDate
         ORDER BY ce.startDate ASC
@@ -76,4 +58,18 @@ public interface CulturalEventRepository extends JpaRepository<CulturalEvent, Lo
 
     @Query("SELECT DISTINCT ce.district FROM CulturalEvent ce ORDER BY ce.district")
     List<String> findAllDistricts();
+
+    @Query("""
+        SELECT ce FROM CulturalEvent ce 
+        WHERE ce.latitude IS NOT NULL AND ce.longitude IS NOT NULL 
+        AND (6371 * acos(cos(radians(:latitude)) * cos(radians(ce.latitude)) 
+            * cos(radians(ce.longitude) - radians(:longitude)) 
+            + sin(radians(:latitude)) * sin(radians(ce.latitude)))) <= :radiusKm
+        ORDER BY (6371 * acos(cos(radians(:latitude)) * cos(radians(ce.latitude)) 
+            * cos(radians(ce.longitude) - radians(:longitude)) 
+            + sin(radians(:latitude)) * sin(radians(ce.latitude))))
+        """)
+    List<CulturalEvent> findWithInRadius(@Param("latitude") BigDecimal latitude,
+                                         @Param("longitude") BigDecimal longitude,
+                                         @Param("radiusKm") double radiusKm);
 }

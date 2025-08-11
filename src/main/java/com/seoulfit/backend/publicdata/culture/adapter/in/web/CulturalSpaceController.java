@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -35,5 +36,13 @@ public class CulturalSpaceController {
             ));
         }
     }
+
+    @Operation(summary = "위도, 경도 기반 2km 내에 문화 공간 정보를 가져온다.", description = "문화 공간 정보 조회 반경(2km)")
+    @GetMapping("/nearby")
+    public ResponseEntity<?> getNearby(@RequestParam String latitude,
+                                       @RequestParam String longitude) {
+        return ResponseEntity.ok(queryCulturalSpaceUseCase.getCulturalSpaceByLatitudeAndLongitude(latitude, longitude));
+    }
+
 
 }

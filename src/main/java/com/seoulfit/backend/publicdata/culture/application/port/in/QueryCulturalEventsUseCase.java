@@ -11,4 +11,5 @@ public interface QueryCulturalEventsUseCase {
 
     List<CulturalEvent> getAllCulturalEvents();
 
+    List<CulturalEvent> getCulturalEventByLatitudeAndLongitude(String latitude, String longitude);
 }

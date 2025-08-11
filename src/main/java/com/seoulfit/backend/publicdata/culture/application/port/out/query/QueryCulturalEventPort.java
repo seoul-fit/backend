@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface QueryCulturalEventPort {
     List<CulturalEvent> getAllCulturalEvent();
+
+    List<CulturalEvent> getCulturalEventLocation(double latitude, double longitude);
 }

@@ -7,4 +7,6 @@ import java.util.List;
 public interface QueryCulturalSpacePort {
     List<CulturalSpace> getAllCulturalSpace();
 
+    List<CulturalSpace> getCulturalSpaceLocation(double latitude, double longitude);
+
 }

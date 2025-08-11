@@ -6,6 +6,7 @@ import com.seoulfit.backend.publicdata.culture.domain.CulturalEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -16,6 +17,13 @@ public class QueryCulturalEventAdapter implements QueryCulturalEventPort {
     @Override
     public List<CulturalEvent> getAllCulturalEvent() {
         return culturalEventRepository.findAll();
+    }
+
+    @Override
+    public List<CulturalEvent> getCulturalEventLocation(double latitude, double longitude) {
+        double radius = 2.0;
+
+        return culturalEventRepository.findWithInRadius(BigDecimal.valueOf(latitude), BigDecimal.valueOf(longitude), radius);
     }
 
 }

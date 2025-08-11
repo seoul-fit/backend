@@ -22,4 +22,14 @@ public class QueryCulturalEventService implements QueryCulturalEventsUseCase {
         return culturalEventPort.getAllCulturalEvent();
     }
 
+    @Override
+    public List<CulturalEvent> getCulturalEventByLatitudeAndLongitude(String latitude, String longitude) {
+        List<CulturalEvent> culturalEventLocation = culturalEventPort.getCulturalEventLocation(
+                Double.parseDouble(latitude),
+                Double.parseDouble(longitude)
+        );
+        log.info("EventLocation Count: {}", culturalEventLocation.size());
+        return culturalEventLocation;
+    }
+
 }
