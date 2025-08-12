@@ -6,4 +6,7 @@ import java.util.List;
 
 public interface QueryLibraryUseCase {
     List<Library> getAllLibrary();
+
+    List<Library> getLibraryByLatitudeAndLongitude(String latitude, String longitude);
+
 }

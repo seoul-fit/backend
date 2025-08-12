@@ -17,4 +17,10 @@ public class QueryCoolingCenterAdapter implements QueryCoolingCenterPort {
     public List<CoolingCenter> queryCoolingCenter() {
         return coolingCenterRepository.findAll();
     }
+
+    @Override
+    public List<CoolingCenter> queryCoolingCenterLocation(double latitude, double longitude) {
+        double radiusKm = 2.0;
+        return coolingCenterRepository.findByLocationWithinRadius(latitude, longitude, radiusKm);
+    }
 }

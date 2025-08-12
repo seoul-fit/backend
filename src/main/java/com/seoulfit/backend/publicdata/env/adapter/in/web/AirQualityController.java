@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -19,7 +18,7 @@ import java.util.List;
  * 헥사고날 아키텍처의 Adapter In
  */
 @Slf4j
-@RestController
+// @RestController Todo: 필요할 때 api open
 @RequestMapping("/api/env/air-quality")
 @RequiredArgsConstructor
 @Tag(name = "대기질 정보", description = "서울시 대기질 정보 조회 API")

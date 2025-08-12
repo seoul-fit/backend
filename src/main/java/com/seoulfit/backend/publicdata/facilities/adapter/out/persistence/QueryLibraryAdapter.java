@@ -18,4 +18,10 @@ public class QueryLibraryAdapter implements QueryLibraryPort  {
         return libraryRepository.findAll();
     }
 
+    @Override
+    public List<Library> queryLibraryLocation(double latitude, double longitude) {
+        double radiusKm = 2.0;
+        return libraryRepository.findByLocationWithinRadius(latitude, longitude, radiusKm);
+    }
+
 }

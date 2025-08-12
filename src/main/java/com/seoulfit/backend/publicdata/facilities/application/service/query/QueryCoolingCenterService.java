@@ -22,4 +22,15 @@ public class QueryCoolingCenterService implements QueryCoolingCenterUseCase {
 
         return coolingCenters;
     }
+
+    @Override
+    public List<CoolingCenter> getCoolingCenterByLatitudeAndLongitude(String latitude, String longitude) {
+        List<CoolingCenter> coolingCenters = queryCoolingCenterPort.queryCoolingCenterLocation(
+                Double.parseDouble(latitude),
+                Double.parseDouble(longitude)
+        );
+        log.info("위치 기반 무더위 쉼터 조회 Count : {}", coolingCenters.size());
+
+        return coolingCenters;
+    }
 }

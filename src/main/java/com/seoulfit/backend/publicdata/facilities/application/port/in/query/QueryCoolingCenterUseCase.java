@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface QueryCoolingCenterUseCase {
     List<CoolingCenter> getAllCoolingCenter();
+
+    List<CoolingCenter> getCoolingCenterByLatitudeAndLongitude(String latitude, String longitude);
 }

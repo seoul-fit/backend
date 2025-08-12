@@ -6,4 +6,7 @@ import java.util.List;
 
 public interface QueryLibraryPort {
     List<Library> queryLibrary();
+
+    List<Library> queryLibraryLocation(double latitude, double longitude);
+
 }

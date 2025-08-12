@@ -22,4 +22,14 @@ public class QueryLibraryService implements QueryLibraryUseCase {
 
         return libraries;
     }
+
+    @Override
+    public List<Library> getLibraryByLatitudeAndLongitude(String latitude, String longitude) {
+        List<Library> libraries = queryLibraryPort.queryLibraryLocation(
+                Double.parseDouble(latitude),
+                Double.parseDouble(longitude)
+        );
+        log.info("위치 기반 공공 도서관 조회 Count : {}", libraries.size());
+        return libraries;
+    }
 }
