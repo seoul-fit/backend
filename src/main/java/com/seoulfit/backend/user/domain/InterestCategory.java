@@ -20,7 +20,8 @@ public enum InterestCategory {
     PARK("공원", "주요 공원 현황, 시설 정보, 이용 안내", "🌳"),
     BIKE("따릉이", "따릉이 대여소 현황, 자전거 이용 정보 등", "🚲"),
     WEATHER("날씨", "기상정보, 폭염, 한파, 미세먼지 등 날씨 관련 정보", "🌤️"),
-    CONGESTION("인구혼잡도", "유동인구, 혼잡 지역 정보 등", "👥");
+    CONGESTION("인구혼잡도", "유동인구, 혼잡 지역 정보 등", "👥"),
+    COOLING_SHELTER("무더위 쉼터", "서울시 무더위 쉼터 정보", "❄️");
 
     private final String displayName;
     private final String description;
