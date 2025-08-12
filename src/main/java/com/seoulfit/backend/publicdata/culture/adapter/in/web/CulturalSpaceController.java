@@ -1,7 +1,14 @@
 package com.seoulfit.backend.publicdata.culture.adapter.in.web;
 
+import com.seoulfit.backend.publicdata.culture.adapter.in.web.dto.CulturalSpaceResponse;
 import com.seoulfit.backend.publicdata.culture.application.port.in.QueryCulturalSpaceUseCase;
+import com.seoulfit.backend.publicdata.culture.domain.CulturalSpace;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,38 +18,81 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
+import java.util.List;
 
-@Tag(name = "서울시 문화공간 정보 관련 API", description = "CulturalSpaceController.class")
+@Tag(name = "서울시 문화공간 정보", description = "서울시 문화공간 정보 조회 API")
 @RestController
-@RequestMapping("/api/v1/cultural-space")
+@RequestMapping("/api/v1/cultural-spaces")
 @RequiredArgsConstructor
 @Slf4j
 public class CulturalSpaceController {
     private final QueryCulturalSpaceUseCase queryCulturalSpaceUseCase;
 
-    @Operation(summary = "문화 공간 정보 관련 API", description = "문화 공간 정보를 가져온다.")
-    @GetMapping("/fetch")
-    public ResponseEntity<?> fetchCulturalSpaces() {
+    @Operation(
+        summary = "문화공간 전체 조회", 
+        description = "서울시 모든 문화공간 정보를 조회합니다."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200", 
+            description = "조회 성공",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = CulturalSpaceResponse.class)
+            )
+        ),
+        @ApiResponse(responseCode = "500", description = "서버 오류")
+    })
+    @GetMapping("/all")
+    public ResponseEntity<List<CulturalSpaceResponse>> getAllCulturalSpaces() {
+        log.info("문화공간 전체 조회 요청");
+        
         try {
-            return ResponseEntity.ok(queryCulturalSpaceUseCase.getAllCulturalSpace());
+            List<CulturalSpace> spaces = queryCulturalSpaceUseCase.getAllCulturalSpace();
+            List<CulturalSpaceResponse> response = CulturalSpaceResponse.from(spaces);
+            
+            log.info("문화공간 {} 개 조회 완료", response.size());
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            log.error("Error fetching cultural spaces", e);
-            return ResponseEntity.badRequest().body(Map.of(
-                    "success", false,
-                    "message", "문화공간 정보 데이터 가져오기에 실패했습니다.",
-                    "error", e.getMessage(),
-                    "errorType", e.getClass().getSimpleName()
-            ));
+            log.error("문화공간 조회 중 오류 발생", e);
+            return ResponseEntity.internalServerError().build();
         }
     }
 
-    @Operation(summary = "위도, 경도 기반 2km 내에 문화 공간 정보를 가져온다.", description = "문화 공간 정보 조회 반경(2km)")
+    @Operation(
+        summary = "근처 문화공간 조회", 
+        description = "지정된 위도, 경도 기준 반경 2km 내의 문화공간 정보를 조회합니다."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200", 
+            description = "조회 성공",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = CulturalSpaceResponse.class)
+            )
+        ),
+        @ApiResponse(responseCode = "400", description = "잘못된 요청 파라미터"),
+        @ApiResponse(responseCode = "500", description = "서버 오류")
+    })
     @GetMapping("/nearby")
-    public ResponseEntity<?> getNearby(@RequestParam String latitude,
-                                       @RequestParam String longitude) {
-        return ResponseEntity.ok(queryCulturalSpaceUseCase.getCulturalSpaceByLatitudeAndLongitude(latitude, longitude));
+    public ResponseEntity<List<CulturalSpaceResponse>> getNearbyCulturalSpaces(
+            @Parameter(description = "위도", example = "37.5665", required = true)
+            @RequestParam String latitude,
+            @Parameter(description = "경도", example = "126.9780", required = true)
+            @RequestParam String longitude
+    ) {
+        log.info("근처 문화공간 조회 요청 - 위도: {}, 경도: {}", latitude, longitude);
+        
+        try {
+            List<CulturalSpace> spaces = queryCulturalSpaceUseCase.getCulturalSpaceByLatitudeAndLongitude(latitude, longitude);
+            List<CulturalSpaceResponse> response = CulturalSpaceResponse.from(spaces);
+            
+            log.info("근처 문화공간 {} 개 조회 완료", response.size());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("근처 문화공간 조회 중 오류 발생", e);
+            return ResponseEntity.internalServerError().build();
+        }
     }
-
-
 }
