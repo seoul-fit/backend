@@ -14,6 +14,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional(readOnly = true)
 public class PublicLibraryService implements CommandPublicLibraryUseCase {
     private final CommandPublicLibraryPort commandPublicLibraryPort;
     private final LoadPublicLibraryPort loadPublicLibraryPort;

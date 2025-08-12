@@ -1,4 +1,4 @@
-package com.seoulfit.backend.publicdata.park.application.port.out.dto;
+package com.seoulfit.backend.publicdata.park.adapter.out.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -40,7 +40,7 @@ public class SeoulParkApiResponse {
     public static class ParkInfo {
         
         @JsonProperty("P_IDX")
-        private Long pIdx;
+        private Integer pIdx;
 
         @JsonProperty("P_PARK")
         private String pPark;

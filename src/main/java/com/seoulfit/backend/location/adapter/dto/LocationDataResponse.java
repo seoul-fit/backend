@@ -1,14 +1,15 @@
 package com.seoulfit.backend.location.adapter.dto;
 
 import com.seoulfit.backend.location.application.LocationBasedDataService;
-import com.seoulfit.backend.location.domain.*;
+import com.seoulfit.backend.location.domain.Restaurant;
+import com.seoulfit.backend.location.domain.SportsFacility;
 import com.seoulfit.backend.publicdata.facilities.domain.CoolingCenter;
 import com.seoulfit.backend.publicdata.facilities.domain.Library;
+import com.seoulfit.backend.publicdata.park.domain.Park;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -202,8 +203,8 @@ public class LocationDataResponse {
         @Schema(description = "주요시설", example = "산책로, 자전거도로, 체육시설")
         private final String mainEquipment;
 
-        @Schema(description = "개원일", example = "1982-01-01")
-        private final LocalDate openDate;
+        @Schema(description = "개원일", example = "1982.01.01")
+        private final String openDate;
 
         @Schema(description = "관리부서 전화번호", example = "02-3780-0561")
         private final String adminTel;

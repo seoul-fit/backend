@@ -1,4 +1,4 @@
-package com.seoulfit.backend.publicdata.park.adapter.out.persistence;
+package com.seoulfit.backend.publicdata.park.adapter.out.persistence.repository;
 
 import com.seoulfit.backend.publicdata.park.domain.SeoulPark;
 import org.springframework.data.jpa.repository.JpaRepository;

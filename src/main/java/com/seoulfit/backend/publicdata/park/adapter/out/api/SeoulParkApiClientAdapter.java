@@ -1,7 +1,7 @@
 package com.seoulfit.backend.publicdata.park.adapter.out.api;
 
 import com.seoulfit.backend.publicdata.park.application.port.out.SeoulParkApiClient;
-import com.seoulfit.backend.publicdata.park.application.port.out.dto.SeoulParkApiResponse;
+import com.seoulfit.backend.publicdata.park.adapter.out.api.dto.SeoulParkApiResponse;
 import com.seoulfit.backend.shared.common.ApiProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

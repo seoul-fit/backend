@@ -5,6 +5,7 @@ import com.seoulfit.backend.location.domain.*;
 import com.seoulfit.backend.location.util.GeoUtils;
 import com.seoulfit.backend.publicdata.facilities.domain.CoolingCenter;
 import com.seoulfit.backend.publicdata.facilities.domain.Library;
+import com.seoulfit.backend.publicdata.park.domain.Park;
 import com.seoulfit.backend.user.domain.InterestCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;

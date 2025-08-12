@@ -1,4 +1,4 @@
-package com.seoulfit.backend.location.domain;
+package com.seoulfit.backend.publicdata.park.domain;
 
 import com.seoulfit.backend.location.util.GeoUtils;
 import jakarta.persistence.*;
@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -41,11 +40,11 @@ public class Park implements GeoUtils.GeoPoint {
     @Column(name = "content", columnDefinition = "TEXT")
     private String content; // 공원개요
 
-    @Column(name = "area", length = 100)
+    @Column(name = "area", length = 500)
     private String area; // 면적
 
     @Column(name = "open_date")
-    private LocalDate openDate; // 개원일
+    private String openDate; // 개원일
 
     @Column(name = "main_equipment", columnDefinition = "TEXT")
     private String mainEquipment; // 주요시설
@@ -99,7 +98,7 @@ public class Park implements GeoUtils.GeoPoint {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Park(Integer parkIdx, String name, String content, String area, LocalDate openDate,
+    public Park(Integer parkIdx, String name, String content, String area, String openDate,
                String mainEquipment, String mainPlants, String guidance, String visitRoad,
                String useReference, String imageUrl, String zone, String address,
                String managementDept, String adminTel, Double grs80Longitude, Double grs80Latitude,

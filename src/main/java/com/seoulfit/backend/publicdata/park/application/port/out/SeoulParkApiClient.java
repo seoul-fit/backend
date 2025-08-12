@@ -1,6 +1,6 @@
 package com.seoulfit.backend.publicdata.park.application.port.out;
 
-import com.seoulfit.backend.publicdata.park.application.port.out.dto.SeoulParkApiResponse;
+import com.seoulfit.backend.publicdata.park.adapter.out.api.dto.SeoulParkApiResponse;
 
 /**
  * 서울시 공원 정보 API 클라이언트 포트
