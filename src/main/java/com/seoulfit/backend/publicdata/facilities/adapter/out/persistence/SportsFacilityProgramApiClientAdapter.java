@@ -1,4 +1,4 @@
-package com.seoulfit.backend.publicdata.facilities.adapter.in.web;
+package com.seoulfit.backend.publicdata.facilities.adapter.out.persistence;
 
 import com.seoulfit.backend.shared.common.ApiProperties;
 import com.seoulfit.backend.publicdata.facilities.application.port.out.SportsFacilityProgramApiClient;

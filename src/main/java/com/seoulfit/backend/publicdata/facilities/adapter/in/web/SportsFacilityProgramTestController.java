@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * 서울시 공공체육시설 프로그램 정보 API 테스트 Controller
  */
 @Slf4j
-@RestController
+//@RestController
 @RequestMapping("/api/sports-programs/test")
 @RequiredArgsConstructor
 @Tag(name = "Sports Facility Programs Test", description = "서울시 공공체육시설 프로그램 정보 API 테스트")
