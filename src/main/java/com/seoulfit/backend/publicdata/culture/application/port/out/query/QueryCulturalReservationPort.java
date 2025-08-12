@@ -6,4 +6,7 @@ import java.util.List;
 
 public interface QueryCulturalReservationPort {
     List<CulturalReservation> getAllCulturalReservation();
+
+    List<CulturalReservation> getCulturalReservationLocation(String latitude, String longitude);
+
 }

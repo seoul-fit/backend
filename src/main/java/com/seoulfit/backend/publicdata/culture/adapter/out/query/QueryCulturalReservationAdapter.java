@@ -6,6 +6,7 @@ import com.seoulfit.backend.publicdata.culture.domain.CulturalReservation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -16,5 +17,18 @@ public class QueryCulturalReservationAdapter implements QueryCulturalReservation
     @Override
     public List<CulturalReservation> getAllCulturalReservation() {
         return culturalReservationRepository.findAll();
+    }
+
+    @Override
+    public List<CulturalReservation> getCulturalReservationLocation(String latitude, String longitude) {
+        double radiusKm = 2.0;
+        double x = Double.parseDouble(latitude);
+        double y = Double.parseDouble(longitude);
+
+        return culturalReservationRepository.findWithInRadius(
+                BigDecimal.valueOf(x),
+                BigDecimal.valueOf(y),
+                radiusKm
+        );
     }
 }

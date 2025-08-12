@@ -7,4 +7,6 @@ import java.util.List;
 public interface QueryCulturalReservationUseCase {
 
     List<CulturalReservation> getAllCulturalReservation();
+
+    List<CulturalReservation> getCulturalSpaceByLatitudeAndLongitude(String latitude, String longitude);
 }
