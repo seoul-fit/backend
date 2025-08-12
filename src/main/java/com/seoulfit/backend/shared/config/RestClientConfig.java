@@ -1,11 +1,18 @@
 package com.seoulfit.backend.shared.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 
@@ -69,11 +76,28 @@ public class RestClientConfig {
     public RestClient seoulApiRestClient() {
         return RestClient.builder()
                 .requestFactory(seoulApiRequestFactory())
+                .messageConverters(converters -> {
+                    // XML 처리를 위한 컨버터 추가 (JavaTimeModule 포함)
+                    XmlMapper xmlMapper = new XmlMapper();
+                    xmlMapper.registerModule(new JavaTimeModule());
+                    xmlMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+                    MappingJackson2XmlHttpMessageConverter xmlConverter = new MappingJackson2XmlHttpMessageConverter(xmlMapper);
+                    converters.add(0, xmlConverter); // 첫 번째로 추가하여 우선적으로 처리
+                    
+                    // JSON 처리를 위한 컨버터도 유지 (JavaTimeModule 포함)
+                    ObjectMapper jsonMapper = new ObjectMapper();
+                    jsonMapper.registerModule(new JavaTimeModule());
+                    jsonMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+                    MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter(jsonMapper);
+                    converters.add(1, jsonConverter);
+                })
                 .requestInterceptor((request, body, execution) -> {
                     log.debug("Seoul API Request: {} {}", request.getMethod(), request.getURI());
                     try {
                         var response = execution.execute(request, body);
-                        log.debug("Seoul API Response Status: {}", response.getStatusCode());
+                        log.debug("Seoul API Response Status: {} Content-Type: {}", 
+                                response.getStatusCode(), 
+                                response.getHeaders().getContentType());
                         return response;
                     } catch (Exception e) {
                         log.error("Seoul API Request failed: {} {}", request.getMethod(), request.getURI(), e);

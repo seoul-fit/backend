@@ -37,6 +37,13 @@ public class RestClientUtils<T> {
 
         } catch (RestClientException e) {
             log.error("RestClient error fetching data from Seoul API for URL: {}", url, e);
+            
+            // HttpMessageConverter 오류인 경우 더 상세한 로그
+            if (e.getMessage() != null && e.getMessage().contains("HttpMessageConverter")) {
+                log.error("Could not extract response - likely XML/JSON conversion issue. " +
+                         "Check if the API is returning the expected format (JSON vs XML)");
+            }
+            
             throw new RuntimeException("Failed to fetch data from Seoul API: " + e.getMessage(), e);
         } catch (Exception e) {
             log.error("Unexpected error fetching data from Seoul API for URL: {}", url, e);

@@ -119,7 +119,7 @@ public class SeoulApiResponse {
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.S")
         private LocalDateTime startDate;
 
-        @JsonProperty("END_DATE")
+        @JsonProperty("END_DATE") 
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.S")
         private LocalDateTime endDate;
 

@@ -35,6 +35,7 @@ public class CulturalSpaceService {
     @Transactional
     public SeoulCulturalSpaceApiResponse saveCultureSpace(int startIndex, int endIndex) {
 
+        log.info("Calling Seoul Cultural Space API with range: {} - {}", startIndex, endIndex);
         SeoulCulturalSpaceApiResponse response = fetchCulturalSpaceInfo(startIndex, endIndex);
 
         if (response == null || !response.isValid()) {
@@ -43,8 +44,8 @@ public class CulturalSpaceService {
         }
 
         if (!response.isSuccess()) {
-            String errorCode = response.getCulturalSpaceInfo().getResult().getCode();
-            String errorMessage = response.getCulturalSpaceInfo().getResult().getMessage();
+            String errorCode = response.getResult().getCode();
+            String errorMessage = response.getResult().getMessage();
             log.error("Seoul API returned error: {} - {}", errorCode, errorMessage);
             throw new RuntimeException("Seoul API error: " + errorCode + " - " + errorMessage);
         }
@@ -55,7 +56,7 @@ public class CulturalSpaceService {
         }
         entityManager.createNativeQuery("TRUNCATE TABLE cultural_spaces").executeUpdate();
 
-        List<SeoulCulturalSpaceApiResponse.CulturalSpaceData> data = response.getCulturalSpaceInfo().getRow();
+        List<SeoulCulturalSpaceApiResponse.CulturalSpaceData> data = response.getRow();
 
         List<CulturalSpace> culturalSpaces = culturalSpaceMapper.mapToEntity(data);
         culturalSpaceRepository.saveAll(culturalSpaces);
@@ -95,6 +96,7 @@ public class CulturalSpaceService {
 
     private String buildApiUrl(int startIndex, int endIndex, String num, String subjCode, String addr) {
         StringBuilder urlBuilder = new StringBuilder();
+        // baseUrl에 이미 /json이 포함되어 있으므로 중복 제거
         urlBuilder.append(baseUrl)
                 .append("/").append(serviceName)
                 .append("/").append(startIndex)

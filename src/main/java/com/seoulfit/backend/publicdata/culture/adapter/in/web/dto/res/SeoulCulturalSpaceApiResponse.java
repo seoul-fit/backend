@@ -14,31 +14,21 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SeoulCulturalSpaceApiResponse {
 
-    @JsonProperty("culturalSpaceInfo")
-    private CulturalSpaceInfo culturalSpaceInfo;
+    @JsonProperty("list_total_count")
+    private Integer listTotalCount;
 
-    @Getter
-    @NoArgsConstructor
-    @ToString
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class CulturalSpaceInfo {
+    @JsonProperty("RESULT")
+    private Result result;
 
-        @JsonProperty("list_total_count")
-        private Integer listTotalCount = 0;
+    @JsonProperty("row")
+    private List<CulturalSpaceData> row;
 
-        @JsonProperty("RESULT")
-        private Result result;
+    public boolean hasData() {
+        return row != null && !row.isEmpty();
+    }
 
-        @JsonProperty("row")
-        private List<CulturalSpaceData> row;
-
-        public boolean hasData() {
-            return row != null && !row.isEmpty();
-        }
-
-        public boolean isSuccess() {
-            return result != null && "INFO-000".equals(result.getCode());
-        }
+    public boolean isSuccess() {
+        return result != null && "INFO-000".equals(result.getCode());
     }
 
     @Getter
@@ -189,37 +179,10 @@ public class SeoulCulturalSpaceApiResponse {
         }
     }
 
-    // 편의 메서드들 - 기존 코드와의 호환성을 위해
-    public Integer getListTotalCount() {
-        return culturalSpaceInfo != null ? culturalSpaceInfo.getListTotalCount() : 0;
-    }
-
-    public Result getResult() {
-        return culturalSpaceInfo != null ? culturalSpaceInfo.getResult() : null;
-    }
-
-    public List<CulturalSpaceData> getRow() {
-        return culturalSpaceInfo != null ? culturalSpaceInfo.getRow() : null;
-    }
-
     /**
      * 응답 유효성 검증
      */
     public boolean isValid() {
-        return culturalSpaceInfo != null && culturalSpaceInfo.getResult() != null;
-    }
-
-    /**
-     * 성공 응답 여부
-     */
-    public boolean isSuccess() {
-        return isValid() && culturalSpaceInfo.isSuccess();
-    }
-
-    /**
-     * 데이터 존재 여부
-     */
-    public boolean hasData() {
-        return isValid() && culturalSpaceInfo.hasData();
+        return result != null;
     }
 }

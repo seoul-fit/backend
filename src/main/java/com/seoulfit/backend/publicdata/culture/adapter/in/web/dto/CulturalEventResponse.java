@@ -1,5 +1,6 @@
 package com.seoulfit.backend.publicdata.culture.adapter.in.web.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.seoulfit.backend.publicdata.culture.domain.CulturalEvent;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -89,9 +90,11 @@ public class CulturalEventResponse {
     private String homepageAddr;
 
     @Schema(description = "생성일시")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
 
     @Schema(description = "수정일시")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime updatedAt;
 
     /**
