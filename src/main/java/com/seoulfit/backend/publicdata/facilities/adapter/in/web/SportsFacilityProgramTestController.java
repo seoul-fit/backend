@@ -1,7 +1,7 @@
-package com.seoulfit.backend.publicdata.sports.adapter.in.web;
+package com.seoulfit.backend.publicdata.facilities.adapter.in.web;
 
-import com.seoulfit.backend.publicdata.sports.application.port.out.SportsFacilityProgramApiClient;
-import com.seoulfit.backend.publicdata.sports.application.port.out.dto.SportsFacilityProgramApiResponse;
+import com.seoulfit.backend.publicdata.facilities.application.port.out.SportsFacilityProgramApiClient;
+import com.seoulfit.backend.publicdata.facilities.adapter.out.persistence.api.dto.SportsFacilityProgramApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

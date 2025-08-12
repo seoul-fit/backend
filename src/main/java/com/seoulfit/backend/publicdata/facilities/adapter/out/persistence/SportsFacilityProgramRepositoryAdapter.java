@@ -1,7 +1,8 @@
-package com.seoulfit.backend.publicdata.sports.adapter.out.persistence;
+package com.seoulfit.backend.publicdata.facilities.adapter.out.persistence;
 
-import com.seoulfit.backend.publicdata.sports.application.port.out.SportsFacilityProgramRepository;
-import com.seoulfit.backend.publicdata.sports.domain.SportsFacilityProgram;
+import com.seoulfit.backend.publicdata.facilities.adapter.out.persistence.repository.SportsFacilityProgramJpaRepository;
+import com.seoulfit.backend.publicdata.facilities.application.port.out.SportsFacilityProgramRepository;
+import com.seoulfit.backend.publicdata.facilities.domain.SportsFacilityProgram;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;

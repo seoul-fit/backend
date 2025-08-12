@@ -1,6 +1,6 @@
-package com.seoulfit.backend.publicdata.sports.infrastructure.batch;
+package com.seoulfit.backend.publicdata.facilities.infrastructure.batch;
 
-import com.seoulfit.backend.publicdata.sports.application.port.in.SportsFacilityProgramBatchUseCase;
+import com.seoulfit.backend.publicdata.facilities.application.port.in.SportsFacilityProgramBatchUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

@@ -1,8 +1,8 @@
-package com.seoulfit.backend.publicdata.sports.application.service;
+package com.seoulfit.backend.publicdata.facilities.application.service;
 
-import com.seoulfit.backend.publicdata.sports.application.port.in.SportsFacilityProgramQueryUseCase;
-import com.seoulfit.backend.publicdata.sports.application.port.out.SportsFacilityProgramRepository;
-import com.seoulfit.backend.publicdata.sports.domain.SportsFacilityProgram;
+import com.seoulfit.backend.publicdata.facilities.application.port.in.SportsFacilityProgramQueryUseCase;
+import com.seoulfit.backend.publicdata.facilities.application.port.out.SportsFacilityProgramRepository;
+import com.seoulfit.backend.publicdata.facilities.domain.SportsFacilityProgram;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

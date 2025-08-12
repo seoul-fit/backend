@@ -1,4 +1,4 @@
-package com.seoulfit.backend.publicdata.sports.application.port.in;
+package com.seoulfit.backend.publicdata.facilities.application.port.in;
 
 /**
  * 서울시 공공체육시설 프로그램 정보 배치 처리 유스케이스

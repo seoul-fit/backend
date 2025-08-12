@@ -1,6 +1,6 @@
-package com.seoulfit.backend.publicdata.sports.adapter.out.persistence;
+package com.seoulfit.backend.publicdata.facilities.adapter.out.persistence.repository;
 
-import com.seoulfit.backend.publicdata.sports.domain.SportsFacilityProgram;
+import com.seoulfit.backend.publicdata.facilities.domain.SportsFacilityProgram;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

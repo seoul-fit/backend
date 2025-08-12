@@ -1,6 +1,6 @@
-package com.seoulfit.backend.publicdata.sports.application.port.in;
+package com.seoulfit.backend.publicdata.facilities.application.port.in;
 
-import com.seoulfit.backend.publicdata.sports.domain.SportsFacilityProgram;
+import com.seoulfit.backend.publicdata.facilities.domain.SportsFacilityProgram;
 
 import java.util.List;
 import java.util.Optional;

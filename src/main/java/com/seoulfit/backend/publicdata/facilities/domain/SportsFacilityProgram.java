@@ -1,4 +1,4 @@
-package com.seoulfit.backend.publicdata.sports.domain;
+package com.seoulfit.backend.publicdata.facilities.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

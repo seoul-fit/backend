@@ -1,6 +1,6 @@
-package com.seoulfit.backend.publicdata.sports.application.port.out;
+package com.seoulfit.backend.publicdata.facilities.application.port.out;
 
-import com.seoulfit.backend.publicdata.sports.application.port.out.dto.SportsFacilityProgramApiResponse;
+import com.seoulfit.backend.publicdata.facilities.adapter.out.persistence.api.dto.SportsFacilityProgramApiResponse;
 
 /**
  * 서울시 공공체육시설 프로그램 정보 API 클라이언트 포트

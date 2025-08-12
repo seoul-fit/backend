@@ -1,4 +1,4 @@
-package com.seoulfit.backend.publicdata.sports.application.port.out.dto;
+package com.seoulfit.backend.publicdata.facilities.adapter.out.persistence.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
