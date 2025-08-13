@@ -8,13 +8,13 @@ import java.util.Date;
 import javax.crypto.SecretKey;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * JWT 토큰 제공자 JWT 토큰 생성, 검증, 파싱 기능을 제공
  */
 @Slf4j
-@Component
+@Service
 public class JwtTokenProvider {
 
     private final SecretKey secretKey;

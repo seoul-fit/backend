@@ -64,11 +64,4 @@ public interface AuthenticateUserUseCase {
      */
     OAuthAuthorizeCheckResult checkAuthorizationCode(OAuthAuthorizeCheckCommand command);
 
-    /**
-     * 사용자 존재 여부 확인
-     *
-     * @param email 이메일
-     * @return 존재 여부
-     */
-    boolean existsByEmail(String email);
 }

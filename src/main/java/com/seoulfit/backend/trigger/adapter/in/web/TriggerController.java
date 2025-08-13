@@ -64,55 +64,6 @@ public class TriggerController {
     }
 
     @Operation(
-            summary = "특정 타입 트리거 평가",
-            description = "특정 타입의 트리거만 평가합니다."
-    )
-    @PostMapping("/evaluate/{triggerType}")
-    public ResponseEntity<TriggerEvaluationResponse> evaluateSpecificTrigger(
-            @Parameter(description = "트리거 타입") @PathVariable String triggerType,
-            @Valid @RequestBody LocationTriggerRequest request,
-            @AuthenticationPrincipal UserDetails userDetails) {
-
-        log.info("특정 타입 트리거 평가 요청: userId={}, type={}",
-                userDetails.getUsername(), triggerType);
-
-        LocationTriggerCommand command = LocationTriggerCommand.of(
-                userDetails.getUsername(),
-                request.getLatitude(),
-                request.getLongitude(),
-                request.getRadius(),
-                List.of(triggerType)
-        );
-
-        TriggerEvaluationResult result = evaluateTriggerUseCase.evaluateSpecificTrigger(command, triggerType);
-        return ResponseEntity.ok(TriggerEvaluationResponse.from(result));
-    }
-
-    @Operation(
-            summary = "모든 트리거 전략 정보 조회",
-            description = "시스템에 등록된 모든 트리거 전략의 정보를 조회합니다."
-    )
-    @GetMapping("/strategies")
-    public ResponseEntity<List<TriggerStrategyInfoResponse>> getAllTriggerStrategies() {
-        List<TriggerStrategyInfoResponse> strategies = evaluateTriggerUseCase.getAllTriggerStrategies();
-        return ResponseEntity.ok(strategies);
-    }
-
-    @Operation(
-            summary = "트리거 전략 활성화/비활성화",
-            description = "특정 트리거 전략을 활성화하거나 비활성화합니다."
-    )
-    @PutMapping("/strategies/{triggerType}/toggle")
-    public ResponseEntity<Void> toggleTriggerStrategy(
-            @Parameter(description = "트리거 타입") @PathVariable String triggerType,
-            @Parameter(description = "활성화 여부") @RequestParam boolean enabled) {
-
-        log.info("트리거 전략 토글 요청: type={}, enabled={}", triggerType, enabled);
-        evaluateTriggerUseCase.toggleTriggerStrategy(triggerType, enabled);
-        return ResponseEntity.ok().build();
-    }
-
-    @Operation(
             summary = "사용자 트리거 히스토리 조회",
             description = "사용자의 트리거 발동 히스토리를 조회합니다."
     )

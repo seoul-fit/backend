@@ -240,11 +240,6 @@ public class AuthenticationService implements AuthenticateUserUseCase {
     }
 
     @Override
-    public boolean existsByEmail(String email) {
-        return userPort.existsByEmail(email);
-    }
-
-    @Override
     public OAuthUserCheckResult checkOAuthUser(OAuthUserCheckCommand command) {
         log.info("OAuth 사용자 확인: provider={}, oauthUserId={}",
                 command.getProvider(), command.getOauthUserId());
