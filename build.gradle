@@ -21,6 +21,9 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://repo.osgeo.org/repository/release/"
+    }
 }
 
 dependencies {
@@ -47,6 +50,10 @@ dependencies {
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
     // XML 처리를 위한 Jackson XML 추가
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
+    
+    // Spatial data processing (alternative to GeoTools)
+    implementation 'org.locationtech.jts:jts-core:1.19.0'
+    implementation 'com.opencsv:opencsv:5.9'
 
     // Lombok
     compileOnly 'org.projectlombok:lombok'
