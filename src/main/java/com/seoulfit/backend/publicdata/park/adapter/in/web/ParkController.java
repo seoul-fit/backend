@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 서울시 공원 정보 REST Controller
@@ -29,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/parks")
 @RequiredArgsConstructor
 @Tag(name = "서울시 공원 정보", description = "서울시 공원 정보 조회 API")
-public class SeoulParkController {
+public class ParkController {
     private final ParkQueryUseCase queryUseCase;
 
     @Operation(

@@ -16,7 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class SeoulParkApiClientAdapter implements SeoulParkApiClient {
+public class ParkApiClientAdapter implements SeoulParkApiClient {
 
     private final RestTemplate restTemplate;
     private final ApiProperties apiProperties;
