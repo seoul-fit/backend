@@ -1,7 +1,7 @@
 package com.seoulfit.backend.publicdata.park.adapter.out.persistence;
 
 import com.seoulfit.backend.publicdata.park.domain.Park;
-import com.seoulfit.backend.location.infrastructure.ParkRepository;
+import com.seoulfit.backend.publicdata.park.adapter.out.persistence.repository.ParkRepository;
 import com.seoulfit.backend.publicdata.park.application.port.out.ParkQueryPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

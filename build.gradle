@@ -48,6 +48,9 @@ dependencies {
     // XML 처리를 위한 Jackson XML 추가
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
 
+    // google gson
+    implementation 'com.google.code.gson:gson:2.13.1'
+
     // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

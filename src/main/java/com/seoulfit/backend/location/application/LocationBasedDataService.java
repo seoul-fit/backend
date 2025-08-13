@@ -6,7 +6,10 @@ import com.seoulfit.backend.publicdata.facilities.adapter.out.persistence.reposi
 import com.seoulfit.backend.publicdata.facilities.adapter.out.persistence.repository.LibraryRepository;
 import com.seoulfit.backend.publicdata.facilities.domain.CoolingCenter;
 import com.seoulfit.backend.publicdata.facilities.domain.Library;
+import com.seoulfit.backend.publicdata.park.adapter.out.persistence.repository.ParkRepository;
 import com.seoulfit.backend.publicdata.park.domain.Park;
+import com.seoulfit.backend.publicdata.restaurant.adapter.out.persistence.repository.RestaurantRepository;
+import com.seoulfit.backend.publicdata.restaurant.domain.Restaurant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

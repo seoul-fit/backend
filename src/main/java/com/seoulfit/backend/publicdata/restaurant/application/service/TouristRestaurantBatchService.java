@@ -1,19 +1,17 @@
 package com.seoulfit.backend.publicdata.restaurant.application.service;
 
-import com.seoulfit.backend.publicdata.restaurant.application.port.in.TouristRestaurantBatchUseCase;
+import com.seoulfit.backend.publicdata.restaurant.adapter.out.api.dto.TouristRestaurantApiResponse;
+import com.seoulfit.backend.publicdata.restaurant.application.port.in.RestaurantBatchUseCase;
+import com.seoulfit.backend.publicdata.restaurant.application.port.out.RestaurantCommandPort;
 import com.seoulfit.backend.publicdata.restaurant.application.port.out.TouristRestaurantApiClient;
-import com.seoulfit.backend.publicdata.restaurant.application.port.out.TouristRestaurantRepository;
-import com.seoulfit.backend.publicdata.restaurant.application.port.out.dto.TouristRestaurantApiResponse;
-import com.seoulfit.backend.publicdata.restaurant.domain.TouristRestaurant;
+import com.seoulfit.backend.publicdata.restaurant.domain.Restaurant;
+import com.seoulfit.backend.publicdata.restaurant.infrastructure.mapper.RestaurantMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * 서울시 관광 음식점 정보 배치 처리 서비스
@@ -23,117 +21,61 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class TouristRestaurantBatchService implements TouristRestaurantBatchUseCase {
+public class TouristRestaurantBatchService implements RestaurantBatchUseCase {
 
     private final TouristRestaurantApiClient apiClient;
-    private final TouristRestaurantRepository repository;
+    private final RestaurantCommandPort restaurantCommandPort;
+    private final RestaurantMapper restaurantMapper;
 
     @Override
-    public TouristRestaurantBatchResult processDailyBatch(String dataDate) {
-        log.info("서울시 관광 음식점 정보 일일 배치 처리 시작 - 날짜: {}", dataDate);
-
+    public void processDailyBatch() {
+        log.info("서울시 관광 음식점 정보 일일 배치 처리 시작");
         try {
-            // 1. API에서 음식점 정보 조회
-            TouristRestaurantApiResponse apiResponse = apiClient.fetchAllRestaurantInfo();
-            
-            if (!apiResponse.isSuccess()) {
-                String errorMessage = "API 호출 실패: " + 
-                    (apiResponse.getTbVwRestaurants() != null && 
-                     apiResponse.getTbVwRestaurants().getResult() != null ? 
-                     apiResponse.getTbVwRestaurants().getResult().getMessage() : "Unknown error");
-                log.error(errorMessage);
-                return TouristRestaurantBatchResult.failure(dataDate, errorMessage);
-            }
+            TouristRestaurantApiResponse apiResponse1 = apiClient.fetchRestaurantInfo(1, 1000);
+            TouristRestaurantApiResponse apiResponse2 = apiClient.fetchRestaurantInfo(1001, 2000);
+            TouristRestaurantApiResponse apiResponse3 = apiClient.fetchRestaurantInfo(2001, 3000);
+            TouristRestaurantApiResponse apiResponse4 = apiClient.fetchRestaurantInfo(3001, 4000);
+            TouristRestaurantApiResponse apiResponse5 = apiClient.fetchRestaurantInfo(4001, 5000);
+            TouristRestaurantApiResponse apiResponse6 = apiClient.fetchRestaurantInfo(5001, 6000);
+            TouristRestaurantApiResponse apiResponse7 = apiClient.fetchRestaurantInfo(6001, 7000);
 
-            List<TouristRestaurantApiResponse.RestaurantInfo> restaurantInfoList = apiResponse.getRestaurantInfoList();
-            log.info("API에서 {} 개의 음식점 정보 조회 완료", restaurantInfoList.size());
+            if (!apiResponse1.isSuccess())
+                throw new RuntimeException("서울시 음식점 API 호출 실패");
 
-            // 2. 데이터 변환 및 저장
-            int savedCount = 0;
-            int updatedCount = 0;
 
-            for (TouristRestaurantApiResponse.RestaurantInfo restaurantInfo : restaurantInfoList) {
-                try {
-                    TouristRestaurant restaurant = convertToEntity(restaurantInfo, dataDate);
-                    
-                    // 기존 데이터 확인 (고유번호와 날짜로)
-                    Optional<TouristRestaurant> existingRestaurant = repository.findByPostSnAndDataDate(
-                        restaurant.getPostSn(), dataDate);
-                    
-                    if (existingRestaurant.isPresent()) {
-                        // 기존 데이터 업데이트
-                        TouristRestaurant existing = existingRestaurant.get();
-                        existing.update(
-                            restaurant.getLangCodeId(),
-                            restaurant.getRestaurantName(),
-                            restaurant.getPostUrl(),
-                            restaurant.getAddress(),
-                            restaurant.getNewAddress(),
-                            restaurant.getPhoneNumber(),
-                            restaurant.getWebsiteUrl(),
-                            restaurant.getOperatingHours(),
-                            restaurant.getSubwayInfo(),
-                            restaurant.getHomepageLanguage(),
-                            restaurant.getRepresentativeMenu()
-                        );
-                        repository.save(existing);
-                        updatedCount++;
-                    } else {
-                        // 새 데이터 저장
-                        repository.save(restaurant);
-                        savedCount++;
-                    }
-                } catch (Exception e) {
-                    log.warn("음식점 정보 저장 실패 - 고유번호: {}, 오류: {}", 
-                        restaurantInfo.getPostSn(), e.getMessage());
-                }
-            }
+            List<TouristRestaurantApiResponse.RestaurantInfo> restaurantInfoList1 = apiResponse1.getRestaurantInfoList();
+            List<TouristRestaurantApiResponse.RestaurantInfo> restaurantInfoList2 = apiResponse2.getRestaurantInfoList();
+            List<TouristRestaurantApiResponse.RestaurantInfo> restaurantInfoList3 = apiResponse3.getRestaurantInfoList();
+            List<TouristRestaurantApiResponse.RestaurantInfo> restaurantInfoList4 = apiResponse4.getRestaurantInfoList();
+            List<TouristRestaurantApiResponse.RestaurantInfo> restaurantInfoList5 = apiResponse5.getRestaurantInfoList();
+            List<TouristRestaurantApiResponse.RestaurantInfo> restaurantInfoList6 = apiResponse6.getRestaurantInfoList();
+            List<TouristRestaurantApiResponse.RestaurantInfo> restaurantInfoList7 = apiResponse7.getRestaurantInfoList();
 
-            // 3. 이전 데이터 정리 (3일 이전 데이터 삭제)
-            int deletedCount = cleanupOldData(3);
+            log.info("API에서 {} 개의 음식점 정보 조회 완료", restaurantInfoList1.size());
 
-            log.info("서울시 관광 음식점 정보 배치 처리 완료 - 조회: {}, 저장: {}, 업데이트: {}, 삭제: {}", 
-                restaurantInfoList.size(), savedCount, updatedCount, deletedCount);
+            List<Restaurant> restaurants1 = restaurantMapper.mapToEntity(restaurantInfoList1);
+            List<Restaurant> restaurants2 = restaurantMapper.mapToEntity(restaurantInfoList2);
+            List<Restaurant> restaurants3 = restaurantMapper.mapToEntity(restaurantInfoList3);
+            List<Restaurant> restaurants4 = restaurantMapper.mapToEntity(restaurantInfoList4);
+            List<Restaurant> restaurants5 = restaurantMapper.mapToEntity(restaurantInfoList5);
+            List<Restaurant> restaurants6 = restaurantMapper.mapToEntity(restaurantInfoList6);
+            List<Restaurant> restaurants7 = restaurantMapper.mapToEntity(restaurantInfoList7);
 
-            return TouristRestaurantBatchResult.success(dataDate, restaurantInfoList.size(), 
-                savedCount, updatedCount, deletedCount);
+
+            restaurantCommandPort.truncate();
+            restaurantCommandPort.saveRestaurantList(restaurants1);
+            restaurantCommandPort.saveRestaurantList(restaurants2);
+            restaurantCommandPort.saveRestaurantList(restaurants3);
+            restaurantCommandPort.saveRestaurantList(restaurants4);
+            restaurantCommandPort.saveRestaurantList(restaurants5);
+            restaurantCommandPort.saveRestaurantList(restaurants6);
+            restaurantCommandPort.saveRestaurantList(restaurants7);
 
         } catch (Exception e) {
-            log.error("서울시 관광 음식점 정보 배치 처리 실패", e);
-            return TouristRestaurantBatchResult.failure(dataDate, e.getMessage());
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 
-    @Override
-    public int cleanupOldData(int retentionDays) {
-        String cutoffDate = LocalDate.now()
-            .minusDays(retentionDays)
-            .format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        
-        int deletedCount = repository.deleteByDataDateBefore(cutoffDate);
-        log.info("{}일 이전 음식점 데이터 {} 건 삭제 완료", retentionDays, deletedCount);
-        
-        return deletedCount;
-    }
 
-    /**
-     * API 응답 데이터를 엔티티로 변환
-     */
-    private TouristRestaurant convertToEntity(TouristRestaurantApiResponse.RestaurantInfo restaurantInfo, String dataDate) {
-        return TouristRestaurant.builder()
-            .postSn(restaurantInfo.getPostSn())
-            .langCodeId(restaurantInfo.getLangCodeId())
-            .restaurantName(restaurantInfo.getPostSj())
-            .postUrl(restaurantInfo.getPostUrl())
-            .address(restaurantInfo.getAddress())
-            .newAddress(restaurantInfo.getNewAddress())
-            .phoneNumber(restaurantInfo.getCmmnTelno())
-            .websiteUrl(restaurantInfo.getCmmnHmpgUrl())
-            .operatingHours(restaurantInfo.getCmmnUseTime())
-            .subwayInfo(restaurantInfo.getSubwayInfo())
-            .homepageLanguage(restaurantInfo.getCmmnHmpgLang())
-            .representativeMenu(restaurantInfo.getFdReprsntMenu())
-            .dataDate(dataDate)
-            .build();
-    }
+
 }

@@ -22,7 +22,7 @@ public class CulturalReservationService {
     private String apiKey;
 
     private static final String BASE_URL = "http://openapi.seoul.go.kr:8088";
-    private static final String SERVICE_NAME = "ListPublicReservationSport"; // 체육시설 예약 정보
+    private static final String SERVICE_NAME = "ListPublicReservationCulture";
 
     private final RestClientUtils<SeoulReservationApiResponse> restClientUtils;
 

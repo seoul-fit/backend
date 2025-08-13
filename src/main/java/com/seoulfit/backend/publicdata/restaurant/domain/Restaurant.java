@@ -1,4 +1,4 @@
-package com.seoulfit.backend.location.domain;
+package com.seoulfit.backend.publicdata.restaurant.domain;
 
 import com.seoulfit.backend.location.util.GeoUtils;
 import jakarta.persistence.*;
@@ -48,13 +48,13 @@ public class Restaurant implements GeoUtils.GeoPoint {
     @Column(name = "new_address", length = 300)
     private String newAddress; // 신주소
 
-    @Column(name = "phone", length = 50)
+    @Column(name = "phone", length = 200)
     private String phone; // 전화번호
 
     @Column(name = "website", length = 500)
     private String website; // 웹사이트
 
-    @Column(name = "operating_hours", length = 200)
+    @Column(name = "operating_hours", length = 500)
     private String operatingHours; // 운영시간
 
     @Column(name = "subway_info", length = 300)
@@ -63,7 +63,7 @@ public class Restaurant implements GeoUtils.GeoPoint {
     @Column(name = "homepage_lang", length = 50)
     private String homepageLang; // 홈페이지 언어
 
-    @Column(name = "representative_menu", length = 300)
+    @Column(name = "representative_menu", length = 500)
     private String representativeMenu; // 대표메뉴
 
     @Column(name = "latitude")

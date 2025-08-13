@@ -1,7 +1,7 @@
 package com.seoulfit.backend.location.adapter.dto;
 
 import com.seoulfit.backend.location.application.LocationBasedDataService;
-import com.seoulfit.backend.location.domain.Restaurant;
+import com.seoulfit.backend.publicdata.restaurant.domain.Restaurant;
 import com.seoulfit.backend.location.domain.SportsFacility;
 import com.seoulfit.backend.publicdata.facilities.domain.CoolingCenter;
 import com.seoulfit.backend.publicdata.facilities.domain.Library;

@@ -1,7 +1,7 @@
 package com.seoulfit.backend.publicdata.restaurant.adapter.out.api;
 
 import com.seoulfit.backend.publicdata.restaurant.application.port.out.TouristRestaurantApiClient;
-import com.seoulfit.backend.publicdata.restaurant.application.port.out.dto.TouristRestaurantApiResponse;
+import com.seoulfit.backend.publicdata.restaurant.adapter.out.api.dto.TouristRestaurantApiResponse;
 import com.seoulfit.backend.shared.common.ApiProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

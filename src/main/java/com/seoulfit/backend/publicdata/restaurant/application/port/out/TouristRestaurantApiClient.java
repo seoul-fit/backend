@@ -1,6 +1,6 @@
 package com.seoulfit.backend.publicdata.restaurant.application.port.out;
 
-import com.seoulfit.backend.publicdata.restaurant.application.port.out.dto.TouristRestaurantApiResponse;
+import com.seoulfit.backend.publicdata.restaurant.adapter.out.api.dto.TouristRestaurantApiResponse;
 
 /**
  * 서울시 관광 음식점 정보 API 클라이언트 포트
