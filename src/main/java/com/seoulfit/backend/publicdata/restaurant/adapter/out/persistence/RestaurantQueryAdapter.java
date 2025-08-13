@@ -17,4 +17,10 @@ public class RestaurantQueryAdapter implements RestaurantQueryPort {
     public List<Restaurant> getAllRestaurant() {
         return restaurantRepository.findAll();
     }
+
+    @Override
+    public List<Restaurant> getRestaurantLocation(double latitude, double longitude) {
+        double radiusKm = 2.0;
+        return restaurantRepository.findByLocationWithinRadius(latitude, longitude, radiusKm);
+    }
 }

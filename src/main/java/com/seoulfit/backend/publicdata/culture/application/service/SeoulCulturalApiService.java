@@ -44,8 +44,7 @@ public class SeoulCulturalApiService {
      * @param title      공연/행사명 (선택)
      * @param date       날짜 (선택)
      */
-    private SeoulApiResponse fetchCulturalEvents(int startIndex, int endIndex,
-                                                                                                          String codeName, String title, LocalDate date) {
+    private SeoulApiResponse fetchCulturalEvents(int startIndex, int endIndex, String codeName, String title, LocalDate date) {
         try {
             String url = buildApiUrl(startIndex, endIndex, codeName, title, date);
 
@@ -98,10 +97,10 @@ public class SeoulCulturalApiService {
     /**
      * 전체 문화행사 조회
      */
-    public SeoulApiResponse fetchAllCulturalEvents() {
+    public SeoulApiResponse fetchAllCulturalEvents(int startIndex, int endIndex) {
         try {
             // 먼저 총 개수를 확인
-            SeoulApiResponse firstResponse = fetchCulturalEvents(1, 1000);
+            SeoulApiResponse firstResponse = fetchCulturalEvents(startIndex, endIndex);
             if (firstResponse == null || firstResponse.getCulturalEventInfo() == null)
                 throw new RuntimeException("Failed to get total count from Seoul API");
 

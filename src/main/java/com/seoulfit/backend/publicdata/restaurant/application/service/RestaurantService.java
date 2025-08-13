@@ -24,4 +24,15 @@ public class RestaurantService implements RestaurantQueryUseCase {
         return allRestaurant;
     }
 
+    @Override
+    public List<Restaurant> getRestaurantByLatitudeAndLongitude(String latitude, String longitude) {
+        double x = Double.parseDouble(latitude);
+        double y = Double.parseDouble(longitude);
+
+        List<Restaurant> restaurantLocation = restaurantQueryPort.getRestaurantLocation(x, y);
+        log.info("주변 레스토랑 개수 : {}", restaurantLocation.size());
+
+        return restaurantLocation;
+    }
+
 }

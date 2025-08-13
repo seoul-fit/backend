@@ -36,7 +36,10 @@ public class CulturalEventService {
             entityManager.createNativeQuery("TRUNCATE TABLE cultural_events").executeUpdate();
 
             // call api
-            SeoulApiResponse response = seoulCulturalApiService.fetchAllCulturalEvents();
+            SeoulApiResponse response = seoulCulturalApiService.fetchAllCulturalEvents(1,1000);
+            SeoulApiResponse response2 = seoulCulturalApiService.fetchAllCulturalEvents(1001,2000);
+            SeoulApiResponse response3 = seoulCulturalApiService.fetchAllCulturalEvents(2001,3000);
+            SeoulApiResponse response4 = seoulCulturalApiService.fetchAllCulturalEvents(3001,4000);
 
             if (response == null || !response.isValid()) {
                 log.warn("Invalid response received from Seoul API");
@@ -56,40 +59,21 @@ public class CulturalEventService {
             }
 
             List<SeoulApiResponse.CulturalEventData> data = response.getCulturalEventInfo().getRow();
+            List<SeoulApiResponse.CulturalEventData> data2 = response2.getCulturalEventInfo().getRow();
+            List<SeoulApiResponse.CulturalEventData> data3 = response3.getCulturalEventInfo().getRow();
+            List<SeoulApiResponse.CulturalEventData> data4 = response4.getCulturalEventInfo().getRow();
 
             List<CulturalEvent> culturalEvents = culturalEventMapper.mapToEntity(data);
+            List<CulturalEvent> culturalEvents2 = culturalEventMapper.mapToEntity(data2);
+            List<CulturalEvent> culturalEvents3 = culturalEventMapper.mapToEntity(data3);
+            List<CulturalEvent> culturalEvents4 = culturalEventMapper.mapToEntity(data4);
+
             culturalEventRepository.saveAll(culturalEvents);
+            culturalEventRepository.saveAll(culturalEvents2);
+            culturalEventRepository.saveAll(culturalEvents3);
+            culturalEventRepository.saveAll(culturalEvents4);
 
             return response.getCulturalEventInfo().getRow().size();
-
-        } catch (Exception e) {
-            log.error("Error during cultural events synchronization", e);
-            throw new RuntimeException("Failed to sync cultural events: " + e.getMessage(), e);
-        }
-    }
-
-    public SeoulApiResponse getSeoulCulturalEventList(int startIndex, int endIndex) {
-        try {
-            // API 상태 확인
-            if (!seoulCulturalApiService.isApiHealthy())
-                log.warn("Seoul API health check failed, but proceeding with sync attempt");
-
-            // call api
-            SeoulApiResponse response = seoulCulturalApiService.fetchAllCulturalEvents();
-
-            if (response == null || !response.isValid()) {
-                log.warn("Invalid response received from Seoul API");
-                return response;
-            }
-
-            if (!response.isSuccess()) {
-                String errorCode = response.getCulturalEventInfo().getResult().getCode();
-                String errorMessage = response.getCulturalEventInfo().getResult().getMessage();
-                log.error("Seoul API returned error: {} - {}", errorCode, errorMessage);
-                throw new RuntimeException("Seoul API error: " + errorCode + " - " + errorMessage);
-            }
-
-            return response;
 
         } catch (Exception e) {
             log.error("Error during cultural events synchronization", e);

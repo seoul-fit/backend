@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface RestaurantQueryUseCase {
     List<Restaurant> getRestaurantList();
+
+    List<Restaurant> getRestaurantByLatitudeAndLongitude(String latitude, String longitude);
 }

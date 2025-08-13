@@ -13,22 +13,30 @@ import java.util.List;
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SeoulCulturalSpaceApiResponse {
+    @JsonProperty("culturalSpaceInfo")
+    private CulturalSpaceInfo culturalSpaceInfo;
 
-    @JsonProperty("list_total_count")
-    private Integer listTotalCount;
+    @Getter
+    @NoArgsConstructor
+    @ToString
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class CulturalSpaceInfo {
+        @JsonProperty("list_total_count")
+        private Integer listTotalCount;
 
-    @JsonProperty("RESULT")
-    private Result result;
+        @JsonProperty("RESULT")
+        private Result result;
 
-    @JsonProperty("row")
-    private List<CulturalSpaceData> row;
+        @JsonProperty("row")
+        private List<CulturalSpaceData> row;
 
-    public boolean hasData() {
-        return row != null && !row.isEmpty();
-    }
+        public boolean hasData() {
+            return row != null && !row.isEmpty();
+        }
 
-    public boolean isSuccess() {
-        return result != null && "INFO-000".equals(result.getCode());
+        public boolean isSuccess() {
+            return result != null && "INFO-000".equals(result.getCode());
+        }
     }
 
     @Getter
@@ -179,10 +187,4 @@ public class SeoulCulturalSpaceApiResponse {
         }
     }
 
-    /**
-     * 응답 유효성 검증
-     */
-    public boolean isValid() {
-        return result != null;
-    }
 }

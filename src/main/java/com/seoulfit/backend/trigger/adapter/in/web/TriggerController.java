@@ -2,7 +2,6 @@ package com.seoulfit.backend.trigger.adapter.in.web;
 
 import com.seoulfit.backend.trigger.adapter.in.web.dto.LocationTriggerRequest;
 import com.seoulfit.backend.trigger.adapter.in.web.dto.TriggerEvaluationResponse;
-import com.seoulfit.backend.trigger.adapter.in.web.dto.TriggerStrategyInfoResponse;
 import com.seoulfit.backend.trigger.application.port.in.EvaluateTriggerUseCase;
 import com.seoulfit.backend.trigger.application.port.in.dto.LocationTriggerCommand;
 import com.seoulfit.backend.trigger.application.port.in.dto.TriggerEvaluationResult;
@@ -45,14 +44,13 @@ public class TriggerController {
     )
     @PostMapping("/evaluate/location")
     public ResponseEntity<TriggerEvaluationResponse> evaluateLocationBasedTriggers(
-            @Valid @RequestBody LocationTriggerRequest request,
-            @AuthenticationPrincipal UserDetails userDetails) {
+            @Valid @RequestBody LocationTriggerRequest request) {
 
         log.info("위치 기반 트리거 평가 요청: userId={}, lat={}, lng={}",
-                userDetails.getUsername(), request.getLatitude(), request.getLongitude());
+                request.getUserId(), request.getLatitude(), request.getLongitude());
 
         LocationTriggerCommand command = LocationTriggerCommand.of(
-                userDetails.getUsername(),
+                request.getUserId(),
                 request.getLatitude(),
                 request.getLongitude(),
                 request.getRadius(),

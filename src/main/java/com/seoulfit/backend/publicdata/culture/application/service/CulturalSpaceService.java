@@ -38,25 +38,25 @@ public class CulturalSpaceService {
         log.info("Calling Seoul Cultural Space API with range: {} - {}", startIndex, endIndex);
         SeoulCulturalSpaceApiResponse response = fetchCulturalSpaceInfo(startIndex, endIndex);
 
-        if (response == null || !response.isValid()) {
+        if (response == null) {
             log.warn("Invalid response received from Seoul API");
             return null;
         }
 
-        if (!response.isSuccess()) {
-            String errorCode = response.getResult().getCode();
-            String errorMessage = response.getResult().getMessage();
+        if (!response.getCulturalSpaceInfo().isSuccess()) {
+            String errorCode = response.getCulturalSpaceInfo().getResult().getCode();
+            String errorMessage = response.getCulturalSpaceInfo().getResult().getMessage();
             log.error("Seoul API returned error: {} - {}", errorCode, errorMessage);
             throw new RuntimeException("Seoul API error: " + errorCode + " - " + errorMessage);
         }
 
-        if (!response.hasData()) {
+        if (!response.getCulturalSpaceInfo().hasData()) {
             log.info("No cultural events data received from API");
             return null;
         }
         entityManager.createNativeQuery("TRUNCATE TABLE cultural_spaces").executeUpdate();
 
-        List<SeoulCulturalSpaceApiResponse.CulturalSpaceData> data = response.getRow();
+        List<SeoulCulturalSpaceApiResponse.CulturalSpaceData> data = response.getCulturalSpaceInfo().getRow();
 
         List<CulturalSpace> culturalSpaces = culturalSpaceMapper.mapToEntity(data);
         culturalSpaceRepository.saveAll(culturalSpaces);
@@ -72,16 +72,16 @@ public class CulturalSpaceService {
 
         SeoulCulturalSpaceApiResponse response = restClientUtils.callGetApi(url, SeoulCulturalSpaceApiResponse.class);
 
-        if (response != null && response.getRow() != null) {
-            int totalCount = response.getListTotalCount();
-            int rowCount = response.getRow().size();
+        if (response != null && response.getCulturalSpaceInfo().getRow() != null) {
+            int totalCount = response.getCulturalSpaceInfo().getListTotalCount();
+            int rowCount = response.getCulturalSpaceInfo().getRow().size();
 
             log.info("Successfully fetched {} cultural spaces (total: {})", rowCount, totalCount);
 
             // API 응답 상태 확인
-            if (response.getResult() != null) {
-                String resultCode = response.getResult().getCode();
-                String resultMessage = response.getResult().getMessage();
+            if (response.getCulturalSpaceInfo().getResult() != null) {
+                String resultCode = response.getCulturalSpaceInfo().getResult().getCode();
+                String resultMessage = response.getCulturalSpaceInfo().getResult().getMessage();
 
                 if (!"INFO-000".equals(resultCode)) {
                     log.warn("Seoul API returned non-success code: {} - {}", resultCode, resultMessage);
@@ -96,7 +96,6 @@ public class CulturalSpaceService {
 
     private String buildApiUrl(int startIndex, int endIndex, String num, String subjCode, String addr) {
         StringBuilder urlBuilder = new StringBuilder();
-        // baseUrl에 이미 /json이 포함되어 있으므로 중복 제거
         urlBuilder.append(baseUrl)
                 .append("/").append(serviceName)
                 .append("/").append(startIndex)

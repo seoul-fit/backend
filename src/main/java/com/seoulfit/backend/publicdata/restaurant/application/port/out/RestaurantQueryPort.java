@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface RestaurantQueryPort {
     List<Restaurant> getAllRestaurant();
+
+    List<Restaurant> getRestaurantLocation(double latitude, double longitude);
 }
