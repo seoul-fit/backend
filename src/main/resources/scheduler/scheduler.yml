@@ -19,6 +19,19 @@ seoul-fit:
     traffic:
       bike:
         cron: "0 */5 * * * *" #5분 단위 배치
+    search:
+      poi-index:
+        cron: "0 0 8 * * *" # 매일 오전 08:00 - 전체 POI 인덱스 동기화
+      cooling-centers:
+        cron: "0 10 8 * * *" # 매일 오전 08:10 - 무더위쉼터 동기화
+      cultural-events:
+        cron: "0 15 8 * * *" # 매일 오전 08:15 - 문화행사 동기화
+      libraries:
+        cron: "0 20 8 * * *" # 매일 오전 08:20 - 도서관 동기화
+      parks:
+        cron: "0 25 8 * * *" # 매일 오전 08:25 - 공원 동기화
+      restaurants:
+        cron: "0 30 8 * * *" # 매일 오전 08:30 - 음식점 동기화
 
 
 --- # test
