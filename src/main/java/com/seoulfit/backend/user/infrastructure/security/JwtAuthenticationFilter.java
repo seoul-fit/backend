@@ -1,13 +1,15 @@
 package com.seoulfit.backend.user.infrastructure.security;
 
-import com.seoulfit.backend.user.infrastructure.jwt.JwtTokenProvider;
 import com.seoulfit.backend.user.adapter.out.persistence.UserRepository;
 import com.seoulfit.backend.user.domain.User;
 import com.seoulfit.backend.user.domain.UserStatus;
+import com.seoulfit.backend.user.infrastructure.jwt.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,9 +18,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import java.io.IOException;
-import java.util.Optional;
 
 @Slf4j
 @Component
@@ -30,28 +29,28 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                  FilterChain filterChain) throws ServletException, IOException {
-        
+            FilterChain filterChain) throws ServletException, IOException {
+
         String token = extractTokenFromRequest(request);
-        
-        if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token) && 
-            jwtTokenProvider.isAccessToken(token)) {
-            
+
+        if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token) &&
+                jwtTokenProvider.isAccessToken(token)) {
+
             Long userId = jwtTokenProvider.getUserIdFromToken(token);
             Optional<User> userOptional = userRepository.findById(userId);
-            
+
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
                 if (user.getStatus() == UserStatus.ACTIVE) {
                     CustomUserDetails userDetails = new CustomUserDetails(user);
-                    UsernamePasswordAuthenticationToken authentication = 
+                    UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }
         }
-        
+
         filterChain.doFilter(request, response);
     }
 

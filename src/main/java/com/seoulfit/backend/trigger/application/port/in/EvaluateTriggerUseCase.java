@@ -26,29 +26,6 @@ public interface EvaluateTriggerUseCase {
      */
     TriggerEvaluationResult evaluateLocationBasedTriggers(LocationTriggerCommand command);
 
-    /**
-     * 특정 타입 트리거 평가
-     * 
-     * @param command 위치 기반 트리거 명령
-     * @param triggerType 트리거 타입
-     * @return 트리거 평가 결과
-     */
-    TriggerEvaluationResult evaluateSpecificTrigger(LocationTriggerCommand command, String triggerType);
-
-    /**
-     * 모든 트리거 전략 정보 조회
-     * 
-     * @return 트리거 전략 정보 목록
-     */
-    List<TriggerStrategyInfoResponse> getAllTriggerStrategies();
-
-    /**
-     * 트리거 전략 활성화/비활성화
-     * 
-     * @param triggerType 트리거 타입
-     * @param enabled 활성화 여부
-     */
-    void toggleTriggerStrategy(String triggerType, boolean enabled);
 
     /**
      * 사용자 트리거 히스토리 조회

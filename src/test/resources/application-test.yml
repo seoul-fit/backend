@@ -5,9 +5,6 @@ server:
   port: 0  # 랜덤 포트 사용
 
 spring:
-  profiles:
-    active: test
-  
   application:
     name: seoul-fit-backend-test
   

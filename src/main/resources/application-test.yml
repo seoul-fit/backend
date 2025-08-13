@@ -26,8 +26,8 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        format_sql: false
-        show_sql: false
+        format_sql: true
+        show_sql: true
     defer-datasource-initialization: true
     open-in-view: false
 
@@ -138,6 +138,7 @@ logging:
   level:
     com.seoulfit.backend: DEBUG
     org.springframework.web.client: DEBUG
+    org.hibernate.type: trace
     # 트리거 시스템 로깅
     com.seoulfit.backend.trigger: INFO
     com.seoulfit.backend.scheduler: INFO

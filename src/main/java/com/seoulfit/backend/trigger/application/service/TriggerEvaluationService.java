@@ -130,42 +130,6 @@ public class TriggerEvaluationService implements EvaluateTriggerUseCase {
     }
 
     @Override
-    @Transactional
-    public TriggerEvaluationResult evaluateSpecificTrigger(LocationTriggerCommand command, String triggerType) {
-        log.info("특정 타입 트리거 평가: userId={}, type={}", command.getUserId(), triggerType);
-        
-        LocationTriggerCommand specificCommand = LocationTriggerCommand.builder()
-                .userId(command.getUserId())
-                .latitude(command.getLatitude())
-                .longitude(command.getLongitude())
-                .radius(command.getRadius())
-                .triggerTypes(List.of(triggerType))
-                .forceEvaluation(command.getForceEvaluation())
-                .build();
-        
-        return evaluateLocationBasedTriggers(specificCommand);
-    }
-
-    @Override
-    public List<TriggerStrategyInfoResponse> getAllTriggerStrategies() {
-        return triggerManager.getAllStrategiesInfo().stream()
-                .map(info -> TriggerStrategyInfoResponse.builder()
-                        .type(info.getType())
-                        .description(info.getDescription())
-                        .priority(info.getPriority())
-                        .enabled(info.isEnabled())
-                        .className(info.getClassName())
-                        .build())
-                .toList();
-    }
-
-    @Override
-    public void toggleTriggerStrategy(String triggerType, boolean enabled) {
-        // TODO: 트리거 전략 활성화/비활성화 구현
-        log.info("트리거 전략 토글: type={}, enabled={}", triggerType, enabled);
-    }
-
-    @Override
     public List<TriggerEvaluationResponse> getTriggerHistory(String userId, int page, int size) {
         User user = userPort.findByEmail(userId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다: " + userId));
