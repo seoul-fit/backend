@@ -1,6 +1,6 @@
 package com.seoulfit.backend.publicdata.park.adapter.out.persistence;
 
-import com.seoulfit.backend.location.infrastructure.ParkRepository;
+import com.seoulfit.backend.publicdata.park.adapter.out.persistence.repository.ParkRepository;
 import com.seoulfit.backend.publicdata.park.application.port.out.ParkCommandPort;
 import com.seoulfit.backend.publicdata.park.domain.Park;
 import jakarta.persistence.EntityManager;

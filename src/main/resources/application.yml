@@ -148,7 +148,12 @@ urbanping:
     park:
       daily-cron:
         - "0 0 3 * * ?" # 공원 정보 -> 03:00
+    restaurant:
+      daily-cron:
+        - "0 0 4 * * ?" # 식당 정보 -> 04:00
 
+google:
+  api-key: $SECRETYKEY
 
 logging:
   level:

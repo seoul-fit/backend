@@ -1,6 +1,6 @@
-package com.seoulfit.backend.location.infrastructure;
+package com.seoulfit.backend.publicdata.restaurant.adapter.out.persistence.repository;
 
-import com.seoulfit.backend.location.domain.Restaurant;
+import com.seoulfit.backend.publicdata.restaurant.domain.Restaurant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

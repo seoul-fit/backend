@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class SeoulParkQueryService implements ParkQueryUseCase {
+public class ParkQueryService implements ParkQueryUseCase {
     private final ParkQueryPort parkQueryPort;
 
     @Override

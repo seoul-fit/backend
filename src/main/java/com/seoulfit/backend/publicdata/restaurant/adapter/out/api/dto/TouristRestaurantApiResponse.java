@@ -1,4 +1,4 @@
-package com.seoulfit.backend.publicdata.restaurant.application.port.out.dto;
+package com.seoulfit.backend.publicdata.restaurant.adapter.out.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

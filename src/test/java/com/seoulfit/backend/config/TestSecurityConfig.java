@@ -4,7 +4,7 @@ import com.seoulfit.backend.user.adapter.out.persistence.UserRepository;
 import com.seoulfit.backend.user.infrastructure.jwt.JwtTokenProvider;
 import com.seoulfit.backend.user.infrastructure.security.JwtAuthenticationFilter;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 /**
  * 테스트용 Security 설정
@@ -13,12 +13,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 @TestConfiguration
 public class TestSecurityConfig {
 
-    @MockBean
+    @MockitoBean
     private JwtTokenProvider jwtTokenProvider;
     
-    @MockBean
+    @MockitoBean
     private UserRepository userRepository;
     
-    @MockBean
+    @MockitoBean
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 }

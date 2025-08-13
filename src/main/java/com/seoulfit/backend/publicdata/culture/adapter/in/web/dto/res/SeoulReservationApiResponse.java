@@ -14,7 +14,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SeoulReservationApiResponse {
 
-    @JsonProperty("ListPublicReservationSport")
+    @JsonProperty("ListPublicReservationCulture")
     private ReservationInfo reservationInfo;
 
     @Getter

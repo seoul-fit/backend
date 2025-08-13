@@ -55,6 +55,9 @@ dependencies {
     implementation 'org.locationtech.jts:jts-core:1.19.0'
     implementation 'com.opencsv:opencsv:5.9'
 
+    // google gson
+    implementation 'com.google.code.gson:gson:2.13.1'
+
     // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
