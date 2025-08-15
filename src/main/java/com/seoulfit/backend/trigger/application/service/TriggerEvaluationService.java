@@ -17,6 +17,7 @@ import com.seoulfit.backend.user.domain.InterestCategory;
 import com.seoulfit.backend.user.domain.User;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -46,6 +47,7 @@ public class TriggerEvaluationService implements EvaluateTriggerUseCase {
     private final UserInterestPort userInterestPort;
     private final TriggerHistoryRepository triggerHistoryRepository;
     private final ApplicationEventPublisher eventPublisher;
+    private final NotificationDuplicationService duplicationService;
 
     @Override
     @Transactional
@@ -85,9 +87,12 @@ public class TriggerEvaluationService implements EvaluateTriggerUseCase {
             if (result.isPresent() && result.get().isTriggered()) {
                 TriggerResult triggerResult = result.get();
 
-                // 중복 알림 방지 체크
-                if (!command.getForceEvaluation() && isRecentlyTriggered(user.getId(), "ALL", 30)) {
-                    log.debug("최근 30분 내 동일 트리거 발동으로 스킵: userId={}", user.getId());
+                // 통합 중복 알림 방지 체크
+                if (!command.getForceEvaluation() && 
+                    duplicationService.isDuplicateNotification(user.getId(), triggerResult, 
+                                                             command.getLatitude(), command.getLongitude())) {
+                    log.debug("중복 알림 방지로 스킵: userId={}, condition={}", 
+                            user.getId(), triggerResult.getTriggerCondition());
                 } else {
                     triggeredList.add(createTriggeredInfo(triggerResult));
                     saveAndPublishTrigger(user, triggerResult, command);
@@ -102,9 +107,12 @@ public class TriggerEvaluationService implements EvaluateTriggerUseCase {
                 if (result.isPresent() && result.get().isTriggered()) {
                     TriggerResult triggerResult = result.get();
 
-                    // 중복 알림 방지 체크
-                    if (!command.getForceEvaluation() && isRecentlyTriggered(user.getId(), triggerType, 30)) {
-                        log.debug("최근 30분 내 동일 트리거 발동으로 스킵: userId={}, type={}", user.getId(), triggerType);
+                    // 통합 중복 알림 방지 체크
+                    if (!command.getForceEvaluation() && 
+                        duplicationService.isDuplicateNotification(user.getId(), triggerResult, 
+                                                                 command.getLatitude(), command.getLongitude())) {
+                        log.debug("중복 알림 방지로 스킵: userId={}, condition={}, type={}", 
+                                user.getId(), triggerResult.getTriggerCondition(), triggerType);
                         continue;
                     }
 
@@ -153,14 +161,6 @@ public class TriggerEvaluationService implements EvaluateTriggerUseCase {
         }
     }
 
-    /**
-     * 최근 트리거 발동 여부 확인
-     */
-    private boolean isRecentlyTriggered(Long userId, String triggerType, int minutes) {
-        LocalDateTime since = LocalDateTime.now().minusMinutes(minutes);
-        return triggerHistoryRepository.existsByUserIdAndTriggerTypeAndTriggeredAtAfter(
-                userId, triggerType, since);
-    }
 
     /**
      * TriggerResult를 TriggeredInfo로 변환
@@ -181,6 +181,20 @@ public class TriggerEvaluationService implements EvaluateTriggerUseCase {
      */
     @Transactional
     private void saveAndPublishTrigger(User user, TriggerResult result, LocationTriggerCommand command) {
+        // 메타데이터 준비 (문화행사 정보 포함 가능)
+        Map<String, String> metadata = new HashMap<>();
+        metadata.put("source", "REALTIME_LOCATION");
+        
+        // TriggerResult에서 추가 메타데이터 가져오기 (문화행사 ID 등)
+        if (result.getAdditionalData() != null && result.getAdditionalData().containsKey("metadata")) {
+            Object metadataObj = result.getAdditionalData().get("metadata");
+            if (metadataObj instanceof Map) {
+                @SuppressWarnings("unchecked")
+                Map<String, String> eventMetadata = (Map<String, String>) metadataObj;
+                metadata.putAll(eventMetadata);
+            }
+        }
+        
         // 트리거 히스토리 저장
         TriggerHistory history = TriggerHistory.fromRealtime(
                 user.getId(),
@@ -193,7 +207,7 @@ public class TriggerEvaluationService implements EvaluateTriggerUseCase {
                 command.getLatitude(),
                 command.getLongitude(),
                 result.getPriority(),
-                Map.of("source", "REALTIME_LOCATION")
+                metadata
         );
         triggerHistoryRepository.save(history);
 
@@ -209,8 +223,9 @@ public class TriggerEvaluationService implements EvaluateTriggerUseCase {
                 .build();
         eventPublisher.publishEvent(event);
 
-        log.info("트리거 발동 및 알림 발송: userId={}, type={}, title={}",
-                user.getId(), result.getTriggerCondition(), result.getTitle());
+        log.info("트리거 발동 및 알림 발송: userId={}, type={}, title={}, metadata={}",
+                user.getId(), result.getTriggerCondition(), result.getTitle(), 
+                metadata.getOrDefault("cultural_event_id", "N/A"));
     }
 
     /**

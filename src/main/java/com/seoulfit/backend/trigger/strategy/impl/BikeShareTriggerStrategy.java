@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,14 +64,18 @@ public class BikeShareTriggerStrategy implements TriggerStrategy {
         // 자전거 부족 상태 체크 (주차된 자전거 수가 임계값 이하인 경우)
         for (BikeStationInfo station : nearbyStations) {
             if (station.parkingCount <= shortageThreshold && station.parkingCount > 0) {
-                return TriggerResult.triggered(
-                        NotificationType.BIKE_SHARING,
-                        TriggerCondition.BIKE_SHORTAGE,
-                        "따릉이 부족 알림",
-                        String.format("%s 대여소에 자전거가 %d대만 남았습니다. (거치율: %d%%, 거리: %.0fm)", 
-                                station.stationName, station.parkingCount, station.availabilityRate, station.distance),
-                        String.format("위도: %.6f, 경도: %.6f", station.latitude, station.longitude)
-                );
+                Map<String, String> metadata = createBikeStationMetadata(station);
+                return TriggerResult.builder()
+                        .triggered(true)
+                        .notificationType(NotificationType.BIKE_SHARING)
+                        .triggerCondition(TriggerCondition.BIKE_SHORTAGE)
+                        .title("따릉이 부족 알림")
+                        .message(String.format("%s 대여소에 자전거가 %d대만 남았습니다. (거치율: %d%%, 거리: %.0fm)", 
+                                station.stationName, station.parkingCount, station.availabilityRate, station.distance))
+                        .locationInfo(String.format("위도: %.6f, 경도: %.6f", station.latitude, station.longitude))
+                        .priority(30)
+                        .additionalData(Map.of("metadata", metadata))
+                        .build();
             }
         }
         
@@ -78,14 +83,18 @@ public class BikeShareTriggerStrategy implements TriggerStrategy {
         for (BikeStationInfo station : nearbyStations) {
             if (station.availabilityRate >= fullThreshold) {
                 int availableSlots = Math.max(0, station.rackCount - station.parkingCount);
-                return TriggerResult.triggered(
-                        NotificationType.BIKE_SHARING,
-                        TriggerCondition.BIKE_FULL,
-                        "따릉이 반납 주의",
-                        String.format("%s 대여소가 거의 만차입니다. (반납가능: %d대, 거치율: %d%%, 거리: %.0fm)", 
-                                station.stationName, availableSlots, station.availabilityRate, station.distance),
-                        String.format("위도: %.6f, 경도: %.6f", station.latitude, station.longitude)
-                );
+                Map<String, String> metadata = createBikeStationMetadata(station);
+                return TriggerResult.builder()
+                        .triggered(true)
+                        .notificationType(NotificationType.BIKE_SHARING)
+                        .triggerCondition(TriggerCondition.BIKE_FULL)
+                        .title("따릉이 반납 주의")
+                        .message(String.format("%s 대여소가 거의 만차입니다. (반납가능: %d대, 거치율: %d%%, 거리: %.0fm)", 
+                                station.stationName, availableSlots, station.availabilityRate, station.distance))
+                        .locationInfo(String.format("위도: %.6f, 경도: %.6f", station.latitude, station.longitude))
+                        .priority(30)
+                        .additionalData(Map.of("metadata", metadata))
+                        .build();
             }
         }
         
@@ -177,6 +186,22 @@ public class BikeShareTriggerStrategy implements TriggerStrategy {
     @Override
     public String getDescription() {
         return "따릉이 대여소의 자전거 부족 또는 포화 상태일 때 알림을 발송합니다.";
+    }
+    
+    /**
+     * 따릉이 대여소의 메타데이터를 생성합니다.
+     * 
+     * @param station 대여소 정보
+     * @return 메타데이터 맵
+     */
+    private Map<String, String> createBikeStationMetadata(BikeStationInfo station) {
+        Map<String, String> metadata = new HashMap<>();
+        metadata.put("bike_station_id", station.stationName != null ? station.stationName : "unknown");
+        metadata.put("station_name", station.stationName != null ? station.stationName : "");
+        metadata.put("parking_count", String.valueOf(station.parkingCount));
+        metadata.put("availability_rate", String.valueOf(station.availabilityRate));
+        metadata.put("source", "PUBLIC_API");
+        return metadata;
     }
     
     /**

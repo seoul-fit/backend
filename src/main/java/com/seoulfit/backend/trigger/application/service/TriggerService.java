@@ -59,7 +59,7 @@ public class TriggerService implements ManageTriggerUseCase {
 
     @Override
     public List<TriggerEvaluationResult> evaluateTriggersForUser(TriggerEvaluationCommand command) {
-        List<TriggerEvaluationResult> results = new ArrayList<>();
+        List<TriggerEvaluationResult.TriggeredInfo> triggeredInfos = new ArrayList<>();
 
         // 1. 사용자 정보 검증
         User user = userPort.findById(command.getUserId())
@@ -86,7 +86,7 @@ public class TriggerService implements ManageTriggerUseCase {
                 
                 if (result != null && result.isTriggered()) {
                     TriggerEvaluationResult.TriggeredInfo triggeredInfo = convertToTriggeredInfo(result, strategy);
-                    // Store triggered info for later processing - simplified for now
+                    triggeredInfos.add(triggeredInfo);
                     
                     log.info("트리거 발동: strategy={}, userId={}, condition={}", 
                         strategy.getClass().getSimpleName(), command.getUserId(), result.getTriggerCondition());
@@ -98,8 +98,22 @@ public class TriggerService implements ManageTriggerUseCase {
             }
         }
 
+        // 5. 결과 생성
+        TriggerEvaluationResult.LocationInfo locationInfo = TriggerEvaluationResult.LocationInfo.builder()
+                .latitude(command.getLatitude())
+                .longitude(command.getLongitude())
+                .address(command.getUserAddress())
+                .build();
+
+        List<TriggerEvaluationResult> results = new ArrayList<>();
+        if (!triggeredInfos.isEmpty()) {
+            results.add(TriggerEvaluationResult.triggered(triggeredInfos, sortedStrategies.size(), locationInfo));
+        } else {
+            results.add(TriggerEvaluationResult.notTriggered(sortedStrategies.size(), locationInfo));
+        }
+
         log.info("사용자 트리거 평가 완료: userId={}, 평가된 전략 수={}, 발동된 트리거 수={}", 
-            command.getUserId(), sortedStrategies.size(), results.size());
+            command.getUserId(), sortedStrategies.size(), triggeredInfos.size());
         
         return results;
     }
@@ -162,15 +176,15 @@ public class TriggerService implements ManageTriggerUseCase {
             Map<String, Object> bikeData = publicDataPort.getBikeShareData();
             Map<String, Object> airData = publicDataPort.getAirQualityData();
             Map<String, Object> rainData = publicDataPort.getRainfallData();
-            Map<String, Object> cultureData = publicDataPort.getCulturalEventData();
+            // 문화행사 데이터는 데이터베이스에서 직접 조회하므로 제거
             
             // 데이터 통합
             java.util.Map<String, Object> combinedData = new java.util.HashMap<>();
             if (cityData != null) combinedData.putAll(cityData);
-            if (bikeData != null) combinedData.put("SBIKE_STTS", bikeData);
+            if (bikeData != null) combinedData.put("BIKE_SHARE", bikeData); // 수정된 키명 사용
             if (airData != null) combinedData.put("WEATHER_STTS", airData);
             if (rainData != null) combinedData.put("rainInfo", rainData);
-            if (cultureData != null) combinedData.put("CULTURE_EVENTS", cultureData);
+            // 문화행사 데이터는 CulturalEventTriggerStrategy에서 데이터베이스에서 직접 조회
             
             return combinedData;
         } catch (Exception e) {

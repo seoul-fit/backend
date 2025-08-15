@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,28 +64,35 @@ public class LocationBasedBikeShareTriggerStrategy implements TriggerStrategy {
         // 부족 상황 체크
         BikeStation shortageStation = findShortageStation(nearbyStations);
         if (shortageStation != null) {
-            return TriggerResult.highPriorityTriggered(
-                    NotificationType.BIKE_SHARING,
-                    TriggerCondition.BIKE_SHORTAGE,
-                    "따릉이 부족 알림",
-                    String.format("%s 대여소에 자전거가 %d대만 남았습니다. 다른 대여소를 이용해보세요.",
-                            shortageStation.getName(), shortageStation.getAvailableBikes()),
-                    shortageStation.getAddress(),
-                    20 // 높은 우선순위
-            );
+            Map<String, String> metadata = createLocationBikeStationMetadata(shortageStation);
+            return TriggerResult.builder()
+                    .triggered(true)
+                    .notificationType(NotificationType.BIKE_SHARING)
+                    .triggerCondition(TriggerCondition.BIKE_SHORTAGE)
+                    .title("따릉이 부족 알림")
+                    .message(String.format("%s 대여소에 자전거가 %d대만 남았습니다. 다른 대여소를 이용해보세요.",
+                            shortageStation.getName(), shortageStation.getAvailableBikes()))
+                    .locationInfo(shortageStation.getAddress())
+                    .priority(20)
+                    .additionalData(Map.of("metadata", metadata))
+                    .build();
         }
 
         // 포화 상황 체크 (반납할 곳이 없는 경우)
         BikeStation fullStation = findFullStation(nearbyStations);
         if (fullStation != null) {
-            return TriggerResult.triggered(
-                    NotificationType.BIKE_SHARING,
-                    TriggerCondition.BIKE_FULL,
-                    "따릉이 반납 주의",
-                    String.format("%s 대여소가 거의 가득 찼습니다. 반납 공간이 %d개만 남았습니다.",
-                            fullStation.getName(), fullStation.getAvailableSlots()),
-                    fullStation.getAddress()
-            );
+            Map<String, String> metadata = createLocationBikeStationMetadata(fullStation);
+            return TriggerResult.builder()
+                    .triggered(true)
+                    .notificationType(NotificationType.BIKE_SHARING)
+                    .triggerCondition(TriggerCondition.BIKE_FULL)
+                    .title("따릉이 반납 주의")
+                    .message(String.format("%s 대여소가 거의 가득 찼습니다. 반납 공간이 %d개만 남았습니다.",
+                            fullStation.getName(), fullStation.getAvailableSlots()))
+                    .locationInfo(fullStation.getAddress())
+                    .priority(30)
+                    .additionalData(Map.of("metadata", metadata))
+                    .build();
         }
 
         log.debug("위치 기반 따릉이 트리거 조건 미충족: userId={}", context.getUser().getId());
@@ -190,6 +198,22 @@ public class LocationBasedBikeShareTriggerStrategy implements TriggerStrategy {
     @Override
     public String getDescription() {
         return "사용자 위치 주변의 따릉이 대여소 상황을 실시간으로 모니터링하여 자전거 부족이나 포화 상태를 알림합니다.";
+    }
+    
+    /**
+     * 위치 기반 따릉이 대여소의 메타데이터를 생성합니다.
+     * 
+     * @param station 대여소 정보
+     * @return 메타데이터 맵
+     */
+    private Map<String, String> createLocationBikeStationMetadata(BikeStation station) {
+        Map<String, String> metadata = new HashMap<>();
+        metadata.put("bike_station_id", station.getId() != null ? station.getId() : "unknown");
+        metadata.put("station_name", station.getName() != null ? station.getName() : "");
+        metadata.put("available_bikes", String.valueOf(station.getAvailableBikes()));
+        metadata.put("available_slots", String.valueOf(station.getAvailableSlots()));
+        metadata.put("source", "PUBLIC_API_LOCATION");
+        return metadata;
     }
 
     /**
