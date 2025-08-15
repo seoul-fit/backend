@@ -33,7 +33,7 @@ public class BikeShareTriggerStrategy implements TriggerStrategy {
     private int fullThreshold; // 거치율이 90% 이상일 때 포화 알림
     
     @Value("${urbanping.trigger.bike.location-radius:2000}")
-    private double locationRadius; // 미터 단위
+    private double locationRadius; // 미터 단위 (기본값: 2km)
     
     @Override
     public TriggerResult evaluate(TriggerContext context) {
@@ -110,20 +110,26 @@ public class BikeShareTriggerStrategy implements TriggerStrategy {
         List<Map<String, Object>> bikeStations = (List<Map<String, Object>>) bikeData;
         log.debug("전체 따릉이 대여소 수: {}", bikeStations.size());
         
-        return bikeStations.stream()
-                .map(this::mapToBikeStationInfo)
+        List<BikeStationInfo> nearbyStations = bikeStations.stream()
+                .map(stationData -> mapToBikeStationInfo(stationData, context))
                 .filter(station -> station != null)
-                .filter(station -> isWithinRadius(context, station))
+                .filter(station -> station.distance <= locationRadius)
                 .toList();
+                
+        log.debug("사용자 위치 기준 {}m 반경 내 따릉이 대여소: {}건 (전체 {}건 중)", 
+                locationRadius, nearbyStations.size(), bikeStations.size());
+                
+        return nearbyStations;
     }
     
     /**
      * Map 데이터를 BikeStationInfo로 변환합니다.
      * 
      * @param stationData 대여소 데이터
+     * @param context 트리거 컨텍스트 (사용자 위치 정보 포함)
      * @return BikeStationInfo 객체
      */
-    private BikeStationInfo mapToBikeStationInfo(Map<String, Object> stationData) {
+    private BikeStationInfo mapToBikeStationInfo(Map<String, Object> stationData, TriggerContext context) {
         try {
             String stationName = TriggerUtils.getStringValue(stationData, "stationName");
             Double latitude = TriggerUtils.getDoubleValue(stationData, "stationLatitude");
@@ -137,6 +143,12 @@ public class BikeShareTriggerStrategy implements TriggerStrategy {
                 return null;
             }
             
+            // 사용자 위치로부터의 거리 계산
+            double distance = TriggerUtils.calculateDistance(
+                    context.getUserLatitude(), context.getUserLongitude(),
+                    latitude, longitude
+            );
+            
             return BikeStationInfo.builder()
                     .stationName(stationName != null ? stationName : "")
                     .latitude(latitude)
@@ -144,30 +156,13 @@ public class BikeShareTriggerStrategy implements TriggerStrategy {
                     .availabilityRate(shared != null ? shared : 0) // 거치율
                     .parkingCount(parkingCount != null ? parkingCount : 0) // 주차된 자전거 수
                     .rackCount(rackCount != null ? rackCount : 0) // 총 거치대 수
+                    .distance(distance) // 사용자로부터의 거리
                     .build();
         } catch (Exception e) {
             log.warn("따릉이 대여소 데이터 파싱 실패: {}", stationData, e);
             return null;
         }
     }
-    
-    /**
-     * 대여소가 사용자 위치 반경 내에 있는지 확인합니다.
-     * 
-     * @param context 트리거 컨텍스트
-     * @param station 대여소 정보
-     * @return 반경 내 여부
-     */
-    private boolean isWithinRadius(TriggerContext context, BikeStationInfo station) {
-        double distance = TriggerUtils.calculateDistance(
-                context.getUserLatitude(), context.getUserLongitude(),
-                station.latitude, station.longitude
-        );
-        
-        station.distance = distance;
-        return distance <= locationRadius;
-    }
-    
     
     @Override
     public String getSupportedTriggerType() {
@@ -195,6 +190,6 @@ public class BikeShareTriggerStrategy implements TriggerStrategy {
         private final int availabilityRate;
         private final int parkingCount;
         private final int rackCount;
-        private double distance; // 사용자로부터의 거리
+        private final double distance; // 사용자로부터의 거리
     }
 }

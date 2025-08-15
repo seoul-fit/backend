@@ -105,12 +105,17 @@ public class LocationBasedBikeShareTriggerStrategy implements TriggerStrategy {
         double userLat = context.getUserLatitude();
         double userLng = context.getUserLongitude();
 
-        return stations.stream()
+        List<BikeStation> nearbyStations = stations.stream()
                 .map(this::mapToBikeStation)
                 .filter(station -> station != null)
                 .filter(station -> TriggerUtils.calculateDistance(userLat, userLng, 
                         station.getLatitude(), station.getLongitude()) <= searchRadius)
                 .toList();
+                
+        log.debug("사용자 위치 기준 {}m 반경 내 따릉이 대여소: {}건 (전체 {}건 중)", 
+                searchRadius, nearbyStations.size(), stations.size());
+                
+        return nearbyStations;
     }
 
     /**

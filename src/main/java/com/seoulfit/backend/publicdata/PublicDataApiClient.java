@@ -3,7 +3,9 @@ package com.seoulfit.backend.publicdata;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -103,7 +105,7 @@ public class PublicDataApiClient {
         CachedResponse cached = responseCache.get(cacheKey);
         if (cached != null && !cached.isExpired(Duration.ofMinutes(5))) {
             log.debug("캐시된 도시 데이터 반환: location={}", locationName);
-            return Mono.just(cached.data);
+            return Mono.just((Map<String, Object>) cached.data);
         }
 
         String url = String.format("%s/%s/json/citydata/1/5/%s", baseUrl, apiKey, locationName);
@@ -138,7 +140,7 @@ public class PublicDataApiClient {
         CachedResponse cached = responseCache.get(cacheKey);
         if (cached != null && !cached.isExpired(Duration.ofMinutes(3))) {
             log.debug("캐시된 따릉이 데이터 반환: start={}, end={}", startIndex, endIndex);
-            return Mono.just(cached.data);
+            return Mono.just((Map<String, Object>) cached.data);
         }
 
         String url = String.format("%s/%s/json/bikeList/%d/%d/", baseUrl, apiKey, startIndex, endIndex);
@@ -158,6 +160,76 @@ public class PublicDataApiClient {
     }
 
     /**
+     * 모든 따릉이 대여소 정보를 조회합니다.
+     * 
+     * <p>총 3000건의 데이터를 1000건씩 3번에 나누어 조회하며, 5분간 캐싱됩니다.</p>
+     * 
+     * @return 모든 따릉이 대여소 정보 리스트
+     */
+    @SuppressWarnings("unchecked")
+    public List<Map<String, Object>> getAllBikeStations() {
+        String cacheKey = "all_bike_stations";
+        
+        // 캐시 확인 (5분 캐시)
+        CachedResponse cached = responseCache.get(cacheKey);
+        if (cached != null && !cached.isExpired(Duration.ofMinutes(5))) {
+            log.debug("캐시된 모든 따릉이 데이터 반환: {}건", ((List<?>) cached.data).size());
+            return (List<Map<String, Object>>) cached.data;
+        }
+        
+        List<Map<String, Object>> allStations = new ArrayList<>();
+        
+        try {
+            // 3번에 나누어 조회 (1-1000, 1001-2000, 2001-3000)
+            for (int i = 0; i < 3; i++) {
+                int startIndex = i * 1000 + 1;
+                int endIndex = (i + 1) * 1000;
+                
+                log.debug("따릉이 데이터 조회 시작: {}-{}", startIndex, endIndex);
+                
+                Map<String, Object> bikeData = getBikeData(startIndex, endIndex).block();
+                if (bikeData != null && bikeData.containsKey("rentBikeStatus")) {
+                    Object rentBikeStatusData = bikeData.get("rentBikeStatus");
+                    if (rentBikeStatusData instanceof Map) {
+                        Map<String, Object> rentBikeStatusMap = (Map<String, Object>) rentBikeStatusData;
+                        Object rowData = rentBikeStatusMap.get("row");
+                        if (rowData instanceof List) {
+                            List<Map<String, Object>> stations = (List<Map<String, Object>>) rowData;
+                            allStations.addAll(stations);
+                            log.debug("따릉이 데이터 추가: {}건, 총 {}건", stations.size(), allStations.size());
+                        }
+                    }
+                }
+                
+                // API 호출 간격 조절 (0.5초 대기)
+                if (i < 2) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        log.warn("따릉이 데이터 조회 중 인터럽트 발생", e);
+                        break;
+                    }
+                }
+            }
+            
+            log.info("모든 따릉이 데이터 조회 완료: 총 {}건", allStations.size());
+            
+            // 캐시에 저장
+            if (!allStations.isEmpty()) {
+                responseCache.put(cacheKey, new CachedResponse(allStations));
+                log.debug("모든 따릉이 데이터 캐시 저장 완료: {}건", allStations.size());
+            }
+            
+            return allStations;
+            
+        } catch (Exception e) {
+            log.error("따릉이 데이터 조회 중 오류 발생", e);
+            return new ArrayList<>();
+        }
+    }
+
+    /**
      * 실시간 대기환경 현황을 조회합니다.
      * 
      * <p>서울시 각 구별 실시간 대기질 정보를 조회하며, 10분간 캐싱됩니다.</p>
@@ -173,7 +245,7 @@ public class PublicDataApiClient {
         CachedResponse cached = responseCache.get(cacheKey);
         if (cached != null && !cached.isExpired(Duration.ofMinutes(10))) {
             log.debug("캐시된 대기질 데이터 반환: start={}, end={}", startIndex, endIndex);
-            return Mono.just(cached.data);
+            return Mono.just((Map<String, Object>) cached.data);
         }
 
         String url = String.format("%s/%s/json/RealtimeCityAir/%d/%d/", baseUrl, apiKey, startIndex, endIndex);
@@ -208,7 +280,7 @@ public class PublicDataApiClient {
         CachedResponse cached = responseCache.get(cacheKey);
         if (cached != null && !cached.isExpired(Duration.ofMinutes(30))) {
             log.debug("캐시된 문화행사 데이터 반환: start={}, end={}", startIndex, endIndex);
-            return Mono.just(cached.data);
+            return Mono.just((Map<String, Object>) cached.data);
         }
 
         String url = String.format("%s/%s/json/culturalEventInfo/%d/%d/", baseUrl, apiKey, startIndex, endIndex);
@@ -281,7 +353,7 @@ public class PublicDataApiClient {
         CachedResponse cached = responseCache.get(cacheKey);
         if (cached != null && !cached.isExpired(cacheDuration)) {
             log.debug("캐시된 API 데이터 반환: service={}", serviceName);
-            return Mono.just(cached.data);
+            return Mono.just((Map<String, Object>) cached.data);
         }
 
         String url = String.format("%s/%s/json/%s/%d/%d/%s",
@@ -325,18 +397,10 @@ public class PublicDataApiClient {
                 realtimeData.put("CITY_DATA", cityData);
             }
             
-            // 따릉이 데이터 조회
-            Map<String, Object> bikeData = getBikeData(1, 1000).block();
-            if (bikeData != null && bikeData.containsKey("rentBikeStatus")) {
-                // API 응답에서 실제 데이터 부분만 추출
-                Object rentBikeStatusData = bikeData.get("rentBikeStatus");
-                if (rentBikeStatusData instanceof Map) {
-                    Map<String, Object> rentBikeStatusMap = (Map<String, Object>) rentBikeStatusData;
-                    Object rowData = rentBikeStatusMap.get("row");
-                    if (rowData != null) {
-                        realtimeData.put("BIKE_SHARE", rowData);
-                    }
-                }
+            // 따릉이 데이터 조회 (총 3000건을 3번에 나누어 조회)
+            List<Map<String, Object>> allBikeStations = getAllBikeStations();
+            if (!allBikeStations.isEmpty()) {
+                realtimeData.put("BIKE_SHARE", allBikeStations);
             }
             
             // 대기질 데이터 조회
@@ -419,7 +483,7 @@ public class PublicDataApiClient {
         /**
          * 캐시된 API 응답 데이터입니다.
          */
-        private final Map<String, Object> data;
+        private final Object data;
         
         /**
          * 캐시가 생성된 시간(밀리초)입니다.
@@ -431,7 +495,7 @@ public class PublicDataApiClient {
          * 
          * @param data 캐시할 API 응답 데이터
          */
-        public CachedResponse(Map<String, Object> data) {
+        public CachedResponse(Object data) {
             this.data = data;
             this.timestamp = System.currentTimeMillis();
         }
