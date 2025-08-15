@@ -4,6 +4,7 @@ import com.seoulfit.backend.user.application.port.in.ManageUserUseCase;
 import com.seoulfit.backend.user.application.port.in.dto.UpdateUserCommand;
 import com.seoulfit.backend.user.application.port.in.dto.UserResult;
 import com.seoulfit.backend.user.application.port.out.UserPort;
+import com.seoulfit.backend.user.domain.AuthProvider;
 import com.seoulfit.backend.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,8 +36,8 @@ public class UserService implements ManageUserUseCase {
     }
 
     @Override
-    public UserResult getUserByAuthUserId(Long authUserId) {
-        User user = userPort.findByOauthUserId(authUserId)
+    public UserResult getUserByOAuth(String oauthUserId, AuthProvider oauthProvider) {
+        User user = userPort.findByProviderAndOauthUserId(oauthProvider, oauthUserId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
         return UserResult.from(user);
     }

@@ -59,13 +59,6 @@ public class UserPersistenceAdapter implements UserPort {
     }
 
     @Override
-    public Optional<User> findByOauthUserId(Long authUserId) {
-        // 새로운 User 모델에서는 authUserId 필드가 제거되었으므로 
-        // 이 메서드는 더 이상 사용되지 않음
-        throw new UnsupportedOperationException("authUserId 필드가 제거되었습니다. findById를 사용하세요.");
-    }
-
-    @Override
     public List<User> findUsersByInterest(InterestCategory interestCategory) {
         return userJpaRepository.findUsersByInterest(interestCategory);
     }

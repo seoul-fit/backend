@@ -68,14 +68,6 @@ public interface UserPort {
     boolean existsByProviderAndOauthUserId(AuthProvider provider, String oauthUserId);
 
     /**
-     * 인증 사용자 ID로 사용자 조회
-     *
-     * @param authUserId 인증 사용자 ID
-     * @return 사용자
-     */
-    Optional<User> findByOauthUserId(Long authUserId);
-
-    /**
      * 관심사별 사용자 목록 조회
      *
      * @param interestCategory 관심사 카테고리

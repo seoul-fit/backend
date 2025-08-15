@@ -2,6 +2,7 @@ package com.seoulfit.backend.user.application.port.in;
 
 import com.seoulfit.backend.user.application.port.in.dto.UpdateUserCommand;
 import com.seoulfit.backend.user.application.port.in.dto.UserResult;
+import com.seoulfit.backend.user.domain.AuthProvider;
 
 /**
  * 사용자 관리 Use Case
@@ -22,12 +23,13 @@ public interface ManageUserUseCase {
     UserResult getUser(Long userId);
 
     /**
-     * 인증 사용자 ID로 사용자 조회
+     * OAuth 정보로 사용자 조회
      *
-     * @param authUserId 인증 사용자 ID
+     * @param oauthUserId OAuth 사용자 ID
+     * @param oauthProvider OAuth 제공자
      * @return 사용자 결과
      */
-    UserResult getUserByAuthUserId(Long authUserId);
+    UserResult getUserByOAuth(String oauthUserId, AuthProvider oauthProvider);
 
     /**
      * 사용자 정보 수정

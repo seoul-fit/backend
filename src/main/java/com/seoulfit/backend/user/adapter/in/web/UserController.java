@@ -4,6 +4,7 @@ import com.seoulfit.backend.user.application.port.in.ManageUserUseCase;
 import com.seoulfit.backend.user.application.port.in.dto.UpdateUserCommand;
 import com.seoulfit.backend.user.application.port.in.dto.UserResult;
 import com.seoulfit.backend.user.adapter.in.web.dto.UpdateUserRequest;
+import com.seoulfit.backend.user.domain.AuthProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -38,10 +39,13 @@ public class UserController {
         return ResponseEntity.ok(result);
     }
 
-    @Operation(summary = "내 정보 조회", description = "현재 로그인한 사용자의 정보를 조회합니다.")
+    @Operation(summary = "내 정보 조회", description = "OAuth 인증 정보로 사용자 정보를 조회합니다.")
     @GetMapping("/me")
-    public ResponseEntity<UserResult> getMyInfo(@RequestParam Long authUserId) {
-        UserResult result = manageUserUseCase.getUserByAuthUserId(authUserId);
+    public ResponseEntity<UserResult> getMyInfo(
+            @RequestParam String oauthUserId,
+            @RequestParam String oauthProvider) {
+        AuthProvider provider = AuthProvider.fromCode(oauthProvider);
+        UserResult result = manageUserUseCase.getUserByOAuth(oauthUserId, provider);
         return ResponseEntity.ok(result);
     }
 
