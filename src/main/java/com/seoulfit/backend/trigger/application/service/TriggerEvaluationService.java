@@ -1,6 +1,6 @@
 package com.seoulfit.backend.trigger.application.service;
 
-import com.seoulfit.backend.event.NotificationEvent;
+import com.seoulfit.backend.notification.domain.NotificationEvent;
 import com.seoulfit.backend.publicdata.PublicDataApiClient;
 import com.seoulfit.backend.trigger.TriggerManager;
 import com.seoulfit.backend.trigger.adapter.in.web.dto.TriggerEvaluationResponse;

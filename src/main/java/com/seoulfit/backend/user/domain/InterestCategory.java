@@ -13,8 +13,10 @@ import lombok.Getter;
  */
 @Getter
 public enum InterestCategory {
-    SPORTS("체육시설", "헬스장, 수영장, 테니스장 등 체육시설 정보", "🏃‍♂️"),
+    SPORTS("체육시설", "헬스장, 수영장, 테니스장 등 체육시설 정보", "🏃♂️"),
     CULTURE("문화시설", "공연장, 전시관, 미술관 등 문화시설 정보", "🏛️"),
+    CULTURAL_EVENT("문화행사", "공연, 전시회, 축제 등 문화행사 정보", "🎭"),
+    CULTURAL_RESERVATION("문화예약", "문화시설 및 행사 예약 정보", "🎫"),
     RESTAURANTS("맛집", "유명 음식점, 디저트 카페 등 맛집 정보", "🍽️"),
     LIBRARY("도서관", "공공도서관 현황, 운영시간, 예약 등", "📚"),
     PARK("공원", "주요 공원 현황, 시설 정보, 이용 안내", "🌳"),
@@ -47,7 +49,7 @@ public enum InterestCategory {
      * @return 위치 기반 서비스 여부
      */
     public boolean isLocationBased() {
-        return this == SPORTS || this == CULTURE ||
+        return this == SPORTS || this == CULTURE || this == CULTURAL_EVENT || this == CULTURAL_RESERVATION ||
                this == RESTAURANTS || this == LIBRARY ||
                this == PARK || this == BIKE;
     }
@@ -57,6 +59,6 @@ public enum InterestCategory {
      * @return 실시간 알림 필요 여부
      */
     public boolean isRealtimeNotificationRequired() {
-        return this == WEATHER || this == CONGESTION || this == BIKE;
+        return this == WEATHER || this == CONGESTION || this == BIKE || this == CULTURAL_EVENT || this == CULTURAL_RESERVATION;
     }
 }
