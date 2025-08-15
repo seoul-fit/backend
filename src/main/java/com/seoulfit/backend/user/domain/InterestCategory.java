@@ -5,9 +5,8 @@ import lombok.Getter;
 /**
  * 관심사 카테고리
  * <p>
- * UrbanPing 시스템에서 제공하는 도시 정보 카테고리
- * 사용자가 체크박스로 선택할 수 있는 관심사들
- * 
+ * UrbanPing 시스템에서 제공하는 도시 정보 카테고리 사용자가 체크박스로 선택할 수 있는 관심사들
+ *
  * @author Seoul Fit
  * @since 1.0.0
  */
@@ -24,9 +23,7 @@ public enum InterestCategory {
     BIKE("따릉이", "따릉이 대여소 현황, 자전거 이용 정보 등", "🚲"),
     WEATHER("날씨", "기상정보, 폭염, 한파, 미세먼지 등 날씨 관련 정보", "🌤️"),
     CONGESTION("인구혼잡도", "유동인구, 혼잡 지역 정보 등", "👥"),
-    COOLING_SHELTER("무더위 쉼터", "서울시 무더위 쉼터 정보", "❄️"),
-    CULTURAL_EVENT("문화행사", "콘서트, 공연, 전시회 등", "🎵"),
-    CULTURAL_RESERVATION("문화예약", "예약 가능한 문화 프로그램", "📅");
+    COOLING_SHELTER("무더위 쉼터", "서울시 무더위 쉼터 정보", "❄️");
 
     private final String displayName;
     private final String description;
@@ -40,6 +37,7 @@ public enum InterestCategory {
 
     /**
      * 이모지와 함께 표시명 반환
+     *
      * @return 이모지 포함 표시명
      */
     public String getDisplayNameWithEmoji() {
@@ -48,16 +46,18 @@ public enum InterestCategory {
 
     /**
      * 위치 기반 서비스 카테고리인지 확인
+     *
      * @return 위치 기반 서비스 여부
      */
     public boolean isLocationBased() {
         return this == SPORTS || this == CULTURE || this == CULTURAL_EVENT || this == CULTURAL_RESERVATION ||
-               this == RESTAURANTS || this == LIBRARY ||
-               this == PARK || this == BIKE;
+                this == RESTAURANTS || this == LIBRARY ||
+                this == PARK || this == BIKE;
     }
 
     /**
      * 실시간 알림이 필요한 카테고리인지 확인
+     *
      * @return 실시간 알림 필요 여부
      */
     public boolean isRealtimeNotificationRequired() {
