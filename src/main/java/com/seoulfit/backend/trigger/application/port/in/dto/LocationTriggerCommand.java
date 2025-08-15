@@ -34,7 +34,7 @@ public class LocationTriggerCommand {
      * @param triggerTypes 평가할 트리거 타입 목록
      * @return 위치 기반 트리거 명령
      */
-    public static LocationTriggerCommand of(String userId, Double latitude, Double longitude, 
+    public static LocationTriggerCommand of(String userId, Double latitude, Double longitude,
                                           Integer radius, List<String> triggerTypes) {
         return LocationTriggerCommand.builder()
                 .userId(userId)
@@ -49,7 +49,7 @@ public class LocationTriggerCommand {
     /**
      * 강제 평가 옵션을 포함한 위치 기반 트리거 명령 생성
      */
-    public static LocationTriggerCommand ofForced(String userId, Double latitude, Double longitude, 
+    public static LocationTriggerCommand ofForced(String userId, Double latitude, Double longitude,
                                                 Integer radius, List<String> triggerTypes, 
                                                 Boolean forceEvaluation) {
         return LocationTriggerCommand.builder()

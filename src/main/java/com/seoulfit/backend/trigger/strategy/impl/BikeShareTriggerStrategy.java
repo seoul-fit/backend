@@ -26,11 +26,11 @@ import java.util.Map;
 @Component
 public class BikeShareTriggerStrategy implements TriggerStrategy {
     
-    @Value("${urbanping.trigger.bike.shortage-threshold:10}")
-    private int shortageThreshold;
+    @Value("${urbanping.trigger.bike.shortage-threshold:3}")
+    private int shortageThreshold; // 자전거가 3대 이하일 때 부족 알림
     
-    @Value("${urbanping.trigger.bike.full-threshold:95}")
-    private int fullThreshold;
+    @Value("${urbanping.trigger.bike.full-threshold:90}")
+    private int fullThreshold; // 거치율이 90% 이상일 때 포화 알림
     
     @Value("${urbanping.trigger.bike.location-radius:2000}")
     private double locationRadius; // 미터 단위
@@ -58,29 +58,32 @@ public class BikeShareTriggerStrategy implements TriggerStrategy {
             return TriggerResult.notTriggered();
         }
         
-        // 자전거 부족 상태 체크
+        log.debug("주변 따릉이 대여소 {}개 발견: userId={}", nearbyStations.size(), context.getUser().getId());
+        
+        // 자전거 부족 상태 체크 (주차된 자전거 수가 임계값 이하인 경우)
         for (BikeStationInfo station : nearbyStations) {
-            if (station.availabilityRate <= shortageThreshold) {
+            if (station.parkingCount <= shortageThreshold && station.parkingCount > 0) {
                 return TriggerResult.triggered(
                         NotificationType.BIKE_SHARING,
                         TriggerCondition.BIKE_SHORTAGE,
                         "따릉이 부족 알림",
-                        String.format("%s 대여소의 자전거가 부족합니다. (이용가능: %d%%, 거리: %.0fm)", 
-                                station.stationName, station.availabilityRate, station.distance),
+                        String.format("%s 대여소에 자전거가 %d대만 남았습니다. (거치율: %d%%, 거리: %.0fm)", 
+                                station.stationName, station.parkingCount, station.availabilityRate, station.distance),
                         String.format("위도: %.6f, 경도: %.6f", station.latitude, station.longitude)
                 );
             }
         }
         
-        // 대여소 포화 상태 체크
+        // 대여소 포화 상태 체크 (거치율이 높아서 반납이 어려운 경우)
         for (BikeStationInfo station : nearbyStations) {
             if (station.availabilityRate >= fullThreshold) {
+                int availableSlots = Math.max(0, station.rackCount - station.parkingCount);
                 return TriggerResult.triggered(
                         NotificationType.BIKE_SHARING,
                         TriggerCondition.BIKE_FULL,
-                        "따릉이 대여소 포화 알림",
-                        String.format("%s 대여소가 거의 만차입니다. (이용가능: %d%%, 거리: %.0fm)", 
-                                station.stationName, station.availabilityRate, station.distance),
+                        "따릉이 반납 주의",
+                        String.format("%s 대여소가 거의 만차입니다. (반납가능: %d대, 거치율: %d%%, 거리: %.0fm)", 
+                                station.stationName, availableSlots, station.availabilityRate, station.distance),
                         String.format("위도: %.6f, 경도: %.6f", station.latitude, station.longitude)
                 );
             }
@@ -98,12 +101,14 @@ public class BikeShareTriggerStrategy implements TriggerStrategy {
      */
     @SuppressWarnings("unchecked")
     private List<BikeStationInfo> extractNearbyBikeStations(TriggerContext context) {
-        Object bikeData = context.getPublicApiData().get("SBIKE_STTS");
+        Object bikeData = context.getPublicApiData().get("BIKE_SHARE");
         if (!(bikeData instanceof List)) {
+            log.debug("따릉이 데이터가 List 형태가 아님: type={}", bikeData != null ? bikeData.getClass().getSimpleName() : "null");
             return List.of();
         }
         
         List<Map<String, Object>> bikeStations = (List<Map<String, Object>>) bikeData;
+        log.debug("전체 따릉이 대여소 수: {}", bikeStations.size());
         
         return bikeStations.stream()
                 .map(this::mapToBikeStationInfo)
@@ -120,12 +125,12 @@ public class BikeShareTriggerStrategy implements TriggerStrategy {
      */
     private BikeStationInfo mapToBikeStationInfo(Map<String, Object> stationData) {
         try {
-            String stationName = TriggerUtils.getStringValue(stationData, "SBIKE_SPOT_NM");
-            Double latitude = TriggerUtils.getDoubleValue(stationData, "SBIKE_Y");
-            Double longitude = TriggerUtils.getDoubleValue(stationData, "SBIKE_X");
-            Integer availabilityRate = TriggerUtils.getIntValue(stationData, "SBIKE_SHARED");
-            Integer parkingCount = TriggerUtils.getIntValue(stationData, "SBIKE_PARKING_CNT");
-            Integer rackCount = TriggerUtils.getIntValue(stationData, "SBIKE_RACK_CNT");
+            String stationName = TriggerUtils.getStringValue(stationData, "stationName");
+            Double latitude = TriggerUtils.getDoubleValue(stationData, "stationLatitude");
+            Double longitude = TriggerUtils.getDoubleValue(stationData, "stationLongitude");
+            Integer shared = TriggerUtils.getIntValue(stationData, "shared"); // 거치율(%)
+            Integer parkingCount = TriggerUtils.getIntValue(stationData, "parkingBikeTotCnt"); // 주차된 자전거 수
+            Integer rackCount = TriggerUtils.getIntValue(stationData, "rackTotCnt"); // 총 거치대 수
             
             if (latitude == null || longitude == null) {
                 log.warn("따릉이 대여소 데이터에 위치 정보 없음: {}", stationData);
@@ -133,12 +138,12 @@ public class BikeShareTriggerStrategy implements TriggerStrategy {
             }
             
             return BikeStationInfo.builder()
-                    .stationName(stationName)
+                    .stationName(stationName != null ? stationName : "")
                     .latitude(latitude)
                     .longitude(longitude)
-                    .availabilityRate(availabilityRate != null ? availabilityRate : 0)
-                    .parkingCount(parkingCount != null ? parkingCount : 0)
-                    .rackCount(rackCount != null ? rackCount : 0)
+                    .availabilityRate(shared != null ? shared : 0) // 거치율
+                    .parkingCount(parkingCount != null ? parkingCount : 0) // 주차된 자전거 수
+                    .rackCount(rackCount != null ? rackCount : 0) // 총 거치대 수
                     .build();
         } catch (Exception e) {
             log.warn("따릉이 대여소 데이터 파싱 실패: {}", stationData, e);

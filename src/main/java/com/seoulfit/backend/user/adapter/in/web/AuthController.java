@@ -97,6 +97,21 @@ public class AuthController {
         throw new IllegalArgumentException("OAuth 사용자 확인을 위해서는 oauthUserId가 필요합니다.");
     }
 
+    @Operation(summary = "03. OAuth 회원가입", description = "OAuth 정보로 회원가입합니다.")
+    @PostMapping("/oauth/signup")
+    public ResponseEntity<TokenResponse> oauthSignUp(@Valid @RequestBody OAuthSignUpRequest request) {
+        OAuthSignUpCommand command = OAuthSignUpCommand.of(
+                request.getProvider(),
+                request.getOauthUserId(),
+                request.getNickname(),
+                request.getEmail(),
+                request.getProfileImageUrl(),
+                request.getInterests()
+        );
+        TokenResult result = authenticateUserUseCase.oauthSignUp(command);
+        return ResponseEntity.ok(TokenResponse.from(result));
+    }
+
     @Operation(
             summary = "OAuth 로그인 (Authorization Code Flow)",
             description = "04. OAuth 권한부여 승인코드를 사용하여 로그인합니다.."
@@ -128,21 +143,6 @@ public class AuthController {
         }
 
         throw new IllegalArgumentException("authorizationCode와 redirectUri 또는 oauthUserId가 필요합니다.");
-    }
-
-    @Operation(summary = "03. OAuth 회원가입", description = "OAuth 정보로 회원가입합니다.")
-    @PostMapping("/oauth/signup")
-    public ResponseEntity<TokenResponse> oauthSignUp(@Valid @RequestBody OAuthSignUpRequest request) {
-        OAuthSignUpCommand command = OAuthSignUpCommand.of(
-                request.getProvider(),
-                request.getOauthUserId(),
-                request.getNickname(),
-                request.getEmail(),
-                request.getProfileImageUrl(),
-                request.getInterests()
-        );
-        TokenResult result = authenticateUserUseCase.oauthSignUp(command);
-        return ResponseEntity.ok(TokenResponse.from(result));
     }
 
     @Operation(summary = "토큰 갱신", description = "리프레시 토큰으로 새로운 액세스 토큰을 발급합니다.")

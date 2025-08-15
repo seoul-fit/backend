@@ -3,7 +3,6 @@ package com.seoulfit.backend.trigger.application.service;
 import com.seoulfit.backend.event.NotificationEvent;
 import com.seoulfit.backend.publicdata.PublicDataApiClient;
 import com.seoulfit.backend.trigger.TriggerManager;
-import com.seoulfit.backend.trigger.adapter.in.web.dto.TriggerStrategyInfoResponse;
 import com.seoulfit.backend.trigger.adapter.in.web.dto.TriggerEvaluationResponse;
 import com.seoulfit.backend.trigger.application.port.in.EvaluateTriggerUseCase;
 import com.seoulfit.backend.trigger.application.port.in.dto.LocationTriggerCommand;
@@ -16,23 +15,22 @@ import com.seoulfit.backend.user.adapter.out.persistence.UserInterestPort;
 import com.seoulfit.backend.user.adapter.out.persistence.UserPort;
 import com.seoulfit.backend.user.domain.InterestCategory;
 import com.seoulfit.backend.user.domain.User;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 /**
  * 트리거 평가 서비스
- * 
+ * <p>
  * 실시간 트리거 평가 및 관리를 담당하는 서비스
- * 
+ *
  * @author Seoul Fit
  * @since 1.0.0
  */
@@ -52,11 +50,11 @@ public class TriggerEvaluationService implements EvaluateTriggerUseCase {
     @Override
     @Transactional
     public TriggerEvaluationResult evaluateLocationBasedTriggers(LocationTriggerCommand command) {
-        log.info("위치 기반 트리거 평가 시작: userId={}, location=[{}, {}]", 
+        log.info("위치 기반 트리거 평가 시작: userId={}, location=[{}, {}]",
                 command.getUserId(), command.getLatitude(), command.getLongitude());
 
         // 사용자 조회
-        User user = userPort.findByEmail(command.getUserId())
+        User user = userPort.findById(Long.valueOf(command.getUserId()))
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다: " + command.getUserId()));
 
         // 사용자 관심사 조회
@@ -83,10 +81,10 @@ public class TriggerEvaluationService implements EvaluateTriggerUseCase {
             // 모든 트리거 평가
             Optional<TriggerResult> result = triggerManager.evaluateAll(context);
             totalEvaluated = (int) triggerManager.getEnabledStrategiesCount();
-            
+
             if (result.isPresent() && result.get().isTriggered()) {
                 TriggerResult triggerResult = result.get();
-                
+
                 // 중복 알림 방지 체크
                 if (!command.getForceEvaluation() && isRecentlyTriggered(user.getId(), "ALL", 30)) {
                     log.debug("최근 30분 내 동일 트리거 발동으로 스킵: userId={}", user.getId());
@@ -100,16 +98,16 @@ public class TriggerEvaluationService implements EvaluateTriggerUseCase {
             for (String triggerType : command.getTriggerTypes()) {
                 Optional<TriggerResult> result = triggerManager.evaluateByType(context, triggerType);
                 totalEvaluated++;
-                
+
                 if (result.isPresent() && result.get().isTriggered()) {
                     TriggerResult triggerResult = result.get();
-                    
+
                     // 중복 알림 방지 체크
                     if (!command.getForceEvaluation() && isRecentlyTriggered(user.getId(), triggerType, 30)) {
                         log.debug("최근 30분 내 동일 트리거 발동으로 스킵: userId={}, type={}", user.getId(), triggerType);
                         continue;
                     }
-                    
+
                     triggeredList.add(createTriggeredInfo(triggerResult));
                     saveAndPublishTrigger(user, triggerResult, command);
                 }
@@ -203,12 +201,15 @@ public class TriggerEvaluationService implements EvaluateTriggerUseCase {
         NotificationEvent event = NotificationEvent.builder()
                 .userId(user.getId())
                 .type(result.getNotificationType())
+                .triggerCondition(result.getTriggerCondition())
                 .title(result.getTitle())
                 .message(result.getMessage())
+                .locationInfo(result.getLocationInfo())
+                .priority(result.getPriority())
                 .build();
         eventPublisher.publishEvent(event);
 
-        log.info("트리거 발동 및 알림 발송: userId={}, type={}, title={}", 
+        log.info("트리거 발동 및 알림 발송: userId={}, type={}, title={}",
                 user.getId(), result.getTriggerCondition(), result.getTitle());
     }
 
@@ -216,7 +217,7 @@ public class TriggerEvaluationService implements EvaluateTriggerUseCase {
      * TriggerHistory를 TriggerEvaluationResponse로 변환
      */
     private TriggerEvaluationResponse convertToResponse(TriggerHistory history) {
-        TriggerEvaluationResponse.TriggeredInfo triggeredInfo = 
+        TriggerEvaluationResponse.TriggeredInfo triggeredInfo =
                 TriggerEvaluationResponse.TriggeredInfo.builder()
                         .triggerType(history.getTriggerType())
                         .title(history.getTitle())

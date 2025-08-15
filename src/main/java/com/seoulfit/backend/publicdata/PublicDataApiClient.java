@@ -326,9 +326,17 @@ public class PublicDataApiClient {
             }
             
             // 따릉이 데이터 조회
-            Map<String, Object> bikeData = getBikeData(1, 100).block();
-            if (bikeData != null) {
-                realtimeData.put("BIKE_SHARE", bikeData);
+            Map<String, Object> bikeData = getBikeData(1, 1000).block();
+            if (bikeData != null && bikeData.containsKey("rentBikeStatus")) {
+                // API 응답에서 실제 데이터 부분만 추출
+                Object rentBikeStatusData = bikeData.get("rentBikeStatus");
+                if (rentBikeStatusData instanceof Map) {
+                    Map<String, Object> rentBikeStatusMap = (Map<String, Object>) rentBikeStatusData;
+                    Object rowData = rentBikeStatusMap.get("row");
+                    if (rowData != null) {
+                        realtimeData.put("BIKE_SHARE", rowData);
+                    }
+                }
             }
             
             // 대기질 데이터 조회

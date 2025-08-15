@@ -46,7 +46,7 @@ public class LocationTriggerRequest {
     @Schema(description = "강제 평가 여부 (중복 알림 방지 무시)", example = "false")
     private Boolean forceEvaluation = false;
 
-    @Schema(description = "User 고유 ID", example = "false", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "User 고유 userID", example = "false", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull
     private String userId;
 
