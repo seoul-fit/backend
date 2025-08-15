@@ -35,7 +35,7 @@ public class UserInterest {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "interest_category", nullable = false)
+    @Column(name = "interest_category", nullable = false, length = 50)
     private InterestCategory interestCategory;
 
     @CreatedDate
