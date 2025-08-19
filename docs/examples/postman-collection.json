@@ -1,0 +1,777 @@
+{
+  "info": {
+    "name": "UrbanPing API Collection",
+    "description": "서울시 공공 데이터를 활용한 실시간 도시 정보 알림 시스템 API",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{jwt_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "user_id",
+      "value": "1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "OAuth Authorization Check",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"provider\": \"KAKAO\",\n  \"authorizationCode\": \"your-authorization-code\",\n  \"redirectUri\": \"http://localhost:3000/auth/callback\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/oauth/authorizecheck",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "oauth", "authorizecheck"]
+            }
+          }
+        },
+        {
+          "name": "OAuth Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"provider\": \"KAKAO\",\n  \"authorizationCode\": \"your-authorization-code\",\n  \"redirectUri\": \"http://localhost:3000/auth/callback\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/oauth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "oauth", "login"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('jwt_token', response.data.accessToken);",
+                  "    pm.collectionVariables.set('user_id', response.data.userId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{base_url}}/api/auth/refresh?refreshToken={{refresh_token}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "refresh"],
+              "query": [
+                {
+                  "key": "refreshToken",
+                  "value": "{{refresh_token}}"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get My Profile",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/users/me?oauthUserId=123&oauthProvider=KAKAO",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "me"],
+              "query": [
+                {
+                  "key": "oauthUserId",
+                  "value": "123"
+                },
+                {
+                  "key": "oauthProvider",
+                  "value": "KAKAO"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update User Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nickname\": \"새로운닉네임\",\n  \"profileImageUrl\": \"https://example.com/profile.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "{{user_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Get User Interests",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": {{user_id}}\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/interests",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "interests"]
+            }
+          }
+        },
+        {
+          "name": "Update User Interests",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": {{user_id}},\n  \"interests\": [\"CULTURE\", \"SPORTS\", \"ENVIRONMENT\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/interests",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "interests"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        {
+          "name": "Create Notification",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": {{user_id}},\n  \"notificationType\": \"AIR_QUALITY\",\n  \"title\": \"대기질 악화 알림\",\n  \"message\": \"현재 지역 미세먼지 농도가 높습니다.\",\n  \"triggerCondition\": {\n    \"threshold\": 80,\n    \"operator\": \"GREATER_THAN\"\n  },\n  \"locationInfo\": {\n    \"latitude\": 37.5665,\n    \"longitude\": 126.9780,\n    \"address\": \"서울특별시 중구 명동\",\n    \"radius\": 2000\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/notifications",
+              "host": ["{{base_url}}"],
+              "path": ["api", "notifications"]
+            }
+          }
+        },
+        {
+          "name": "Get Notification History",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/notifications?userId={{user_id}}&page=0&size=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "notifications"],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "{{user_id}}"
+                },
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "20"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Mark Notification as Read",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{base_url}}/api/notifications/123/read?userId={{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "notifications", "123", "read"],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "{{user_id}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Unread Count",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/notifications/unread-count?userId={{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "notifications", "unread-count"],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "{{user_id}}"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Triggers",
+      "item": [
+        {
+          "name": "Evaluate Location Triggers",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"user@example.com\",\n  \"latitude\": 37.5665,\n  \"longitude\": 126.9780,\n  \"radius\": 2000,\n  \"triggerTypes\": [\"AIR_QUALITY\", \"BIKE_SHARING\", \"CULTURAL_EVENT\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/triggers/evaluate/location",
+              "host": ["{{base_url}}"],
+              "path": ["api", "triggers", "evaluate", "location"]
+            }
+          }
+        },
+        {
+          "name": "Get Trigger History",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/triggers/history?page=0&size=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "triggers", "history"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "20"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Geocoding",
+      "item": [
+        {
+          "name": "Get Administrative District (GET)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v1/geocoding/administrative-district?latitude=37.5665&longitude=126.9780",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "geocoding", "administrative-district"],
+              "query": [
+                {
+                  "key": "latitude",
+                  "value": "37.5665"
+                },
+                {
+                  "key": "longitude",
+                  "value": "126.9780"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Administrative District (POST)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"latitude\": 37.5665,\n  \"longitude\": 126.9780\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/geocoding/administrative-district",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "geocoding", "administrative-district"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Location Services",
+      "item": [
+        {
+          "name": "Get Nearby Data",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/location/nearby?latitude=37.5665&longitude=126.9780&radius=2.0",
+              "host": ["{{base_url}}"],
+              "path": ["api", "location", "nearby"],
+              "query": [
+                {
+                  "key": "latitude",
+                  "value": "37.5665"
+                },
+                {
+                  "key": "longitude",
+                  "value": "126.9780"
+                },
+                {
+                  "key": "radius",
+                  "value": "2.0"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Personalized Nearby Data",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/location/nearby/personalized?latitude=37.5665&longitude=126.9780&userId={{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "location", "nearby", "personalized"],
+              "query": [
+                {
+                  "key": "latitude",
+                  "value": "37.5665"
+                },
+                {
+                  "key": "longitude",
+                  "value": "126.9780"
+                },
+                {
+                  "key": "userId",
+                  "value": "{{user_id}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Nearby Restaurants",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/location/restaurants?latitude=37.5665&longitude=126.9780&radius=1.0",
+              "host": ["{{base_url}}"],
+              "path": ["api", "location", "restaurants"],
+              "query": [
+                {
+                  "key": "latitude",
+                  "value": "37.5665"
+                },
+                {
+                  "key": "longitude",
+                  "value": "126.9780"
+                },
+                {
+                  "key": "radius",
+                  "value": "1.0"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "item": [
+        {
+          "name": "Unified Search",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/search?query=명동&latitude=37.5665&longitude=126.9780&radius=2.0&categories=RESTAURANT,CULTURE",
+              "host": ["{{base_url}}"],
+              "path": ["api", "search"],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "명동"
+                },
+                {
+                  "key": "latitude",
+                  "value": "37.5665"
+                },
+                {
+                  "key": "longitude",
+                  "value": "126.9780"
+                },
+                {
+                  "key": "radius",
+                  "value": "2.0"
+                },
+                {
+                  "key": "categories",
+                  "value": "RESTAURANT,CULTURE"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Autocomplete",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/search/autocomplete?query=명동&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "search", "autocomplete"],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "명동"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Advanced Search",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"한식\",\n  \"filters\": {\n    \"location\": {\n      \"latitude\": 37.5665,\n      \"longitude\": 126.9780,\n      \"radius\": 2.0\n    },\n    \"categories\": [\"RESTAURANT\"],\n    \"priceRange\": {\n      \"min\": 10000,\n      \"max\": 30000\n    },\n    \"rating\": {\n      \"min\": 4.0\n    },\n    \"openNow\": true\n  },\n  \"sort\": {\n    \"field\": \"distance\",\n    \"order\": \"ASC\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/search/advanced",
+              "host": ["{{base_url}}"],
+              "path": ["api", "search", "advanced"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Air Quality",
+      "item": [
+        {
+          "name": "Get Current Air Quality",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/air-quality/current",
+              "host": ["{{base_url}}"],
+              "path": ["api", "air-quality", "current"]
+            }
+          }
+        },
+        {
+          "name": "Get District Air Quality",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/air-quality/district/중구",
+              "host": ["{{base_url}}"],
+              "path": ["api", "air-quality", "district", "중구"]
+            }
+          }
+        },
+        {
+          "name": "Get Nearby Air Quality",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/air-quality/nearby?latitude=37.5665&longitude=126.9780",
+              "host": ["{{base_url}}"],
+              "path": ["api", "air-quality", "nearby"],
+              "query": [
+                {
+                  "key": "latitude",
+                  "value": "37.5665"
+                },
+                {
+                  "key": "longitude",
+                  "value": "126.9780"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cultural Events",
+      "item": [
+        {
+          "name": "Get Current Events",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/cultural-events/current?page=0&size=20&category=공연",
+              "host": ["{{base_url}}"],
+              "path": ["api", "cultural-events", "current"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "20"
+                },
+                {
+                  "key": "category",
+                  "value": "공연"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Nearby Events",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/cultural-events/nearby?latitude=37.5665&longitude=126.9780&radius=3.0",
+              "host": ["{{base_url}}"],
+              "path": ["api", "cultural-events", "nearby"],
+              "query": [
+                {
+                  "key": "latitude",
+                  "value": "37.5665"
+                },
+                {
+                  "key": "longitude",
+                  "value": "126.9780"
+                },
+                {
+                  "key": "radius",
+                  "value": "3.0"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Events",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/cultural-events/search?query=뮤지컬&category=공연",
+              "host": ["{{base_url}}"],
+              "path": ["api", "cultural-events", "search"],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "뮤지컬"
+                },
+                {
+                  "key": "category",
+                  "value": "공연"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Public Facilities",
+      "item": [
+        {
+          "name": "Get Libraries",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/public-facilities/libraries?district=중구&page=0&size=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "public-facilities", "libraries"],
+              "query": [
+                {
+                  "key": "district",
+                  "value": "중구"
+                },
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "20"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Parks",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/public-facilities/parks?type=근린공원&latitude=37.5665&longitude=126.9780&radius=3.0",
+              "host": ["{{base_url}}"],
+              "path": ["api", "public-facilities", "parks"],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "근린공원"
+                },
+                {
+                  "key": "latitude",
+                  "value": "37.5665"
+                },
+                {
+                  "key": "longitude",
+                  "value": "126.9780"
+                },
+                {
+                  "key": "radius",
+                  "value": "3.0"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Sports Facilities",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/public-facilities/sports?sport=수영&district=중구",
+              "host": ["{{base_url}}"],
+              "path": ["api", "public-facilities", "sports"],
+              "query": [
+                {
+                  "key": "sport",
+                  "value": "수영"
+                },
+                {
+                  "key": "district",
+                  "value": "중구"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// 요청 전 공통 처리",
+          "console.log('Request to:', pm.request.url.toString());"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// 응답 후 공통 처리",
+          "pm.test('Status code is 200', function () {",
+          "    pm.response.to.have.status(200);",
+          "});",
+          "",
+          "pm.test('Response has correct structure', function () {",
+          "    const jsonData = pm.response.json();",
+          "    pm.expect(jsonData).to.have.property('status');",
+          "    pm.expect(jsonData).to.have.property('timestamp');",
+          "});"
+        ]
+      }
+    }
+  ]
+}

@@ -33,7 +33,7 @@ UrbanPing은 서울시의 다양한 공공 데이터를 실시간으로 모니�
 
 - Java 21 이상
 - Maven 3.8 이상
-- 서울시 공공데이터 API 키 (선택사항)
+- 서울시 공공데이터 API 키
 
 ### 설치 및 실행
 
@@ -51,6 +51,58 @@ mvn spring-boot:run
 # 4. 브라우저에서 확인
 open http://localhost:8080/swagger-ui.html
 ```
+
+### 🔑 서울시 공공데이터 API 키 발급
+
+UrbanPing의 모든 기능을 사용하려면 서울시 공공데이터 포탈에서 API 키를 발급받아야 합니다.
+
+#### 1단계: 회원가입 및 로그인
+1. [서울시 공공데이터 포탈](https://data.seoul.go.kr/) 접속
+2. 우상단 "회원가입" 클릭하여 계정 생성
+3. 이메일 인증 완료 후 로그인
+
+#### 2단계: API 키 신청
+1. 로그인 후 인증키 신청
+   - 일반 인증키 신청
+   - 실시간 지하철 인증키 신청
+2. "API 키 신청" 버튼 클릭
+3. 다음 정보 입력:
+   - **사용URL**: 도메인 입력
+   - **관리용 대표 이메일**: 대표자 이메일
+   - **활용용도**: 서울시 도시 정보 알림 서비스
+   - **내용**: 서울시 도시 정보 알림 서비스
+
+위 내용 입력 후 약관 동의 후 인증키 신청 버튼 클릭시 인증키 발급 완료
+
+
+#### 3단계: API 키 확인
+- 승인 완료 후 "API 키 관리"에서 발급된 키 확인
+- 키는 영문자와 숫자로 구성된 32자리 문자열
+
+### ⚙️ API 인증키 환경 설정
+
+#### application.yml 설정
+`src/main/resources/application.yml` 파일 수정:
+
+```yaml
+# 서울시 공공데이터 API 설정
+seoul:
+  api:
+    key: ${SEOUL_API_KEY:your-seoul-api-key-here}
+    base-url: http://openapi.seoul.go.kr:8088
+    endpoints:
+      air-quality: /api/RealtimeCityAir/json/1/25/
+      bike-status: /api/bikeList/json/1/1000/
+      cultural-events: /api/culturalEventInfo/json/1/100/
+      population: /api/SPOP_LOCAL_RESD_DONG/json/1/100/
+```
+
+### 🚨 보안 주의사항
+- **API 키 노출 금지**: GitHub 등 공개 저장소에 API 키 업로드 금지
+- **환경 변수 사용**: 코드에 직접 하드코딩하지 말고 환경 변수 활용
+- **키 순환**: 정기적으로 API 키 재발급 권장
+- **.gitignore 확인**: `application-local.yml` 등 로컬 설정 파일 제외
+
 
 ### 환경 설정
 
@@ -166,7 +218,7 @@ UrbanPing은 오픈소스 프로젝트입니다. 여러분의 기여를 환영�
 - 🧪 **테스트 추가**: 기존 기능의 테스트 커버리지 향상
 - 🐛 **버그 수정**: 발견된 버그 수정
 
-자세한 내용은 [기여 가이드](CONTRIBUTING.md)를 참조하세요.
+자세한 내용은 [기여 가이드](docs/guides/contributing.md)를 참조하세요.
 
 ## 📊 프로젝트 현황
 
@@ -199,7 +251,7 @@ UrbanPing은 오픈소스 프로젝트입니다. 여러분의 기여를 환영�
 - API 요청 제한
 - 입력 데이터 검증
 
-보안 이슈 발견 시 [보안 정책](SECURITY.md)을 참조하여 신고해주세요.
+보안 이슈 발견 시 [보안 정책](docs/security/security-policy.md)을 참조하여 신고해주세요.
 
 ## 📄 라이선스
 
@@ -220,6 +272,59 @@ furnished to do so, subject to the following conditions:
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 ```
+
+### 데이터 출처 및 이용 조건
+
+이 프로젝트는 **서울시 공공데이터 포탈**의 데이터를 활용합니다:
+
+- **데이터 제공**: 서울특별시
+- **출처**: [서울시 공공데이터 포탈](https://data.seoul.go.kr/)
+- **이용 조건**: 서울시 공공데이터 포탈 이용약관 준수
+- **출처 표시**: "서울특별시에서 제공하는 데이터를 활용하였습니다"
+
+**사용 데이터**:
+- 실시간 대기환경 현황 (대기질 알림)
+- 서울자전거 따릉이 실시간 대여정보 (따릉이 현황 알림)
+- 문화행사 정보 (문화행사 알림)
+- 문화공간 정보 (문화공간 알림)
+- 문화행사예약 정보 (문화행사예약 알림)
+- 공공도서관 정보 (공공도서관 알림)
+- 무더위쉼터 정보 (무더위 쉼터 알림)
+- 실시간 인구 데이터 (혼잡도 알림)
+
+자세한 데이터 이용 조건은 [데이터 출처 문서](docs/security/data-attribution.md)를 참조하세요.
+
+**중요**: 이 프로젝트를 사용할 때는 서울시 공공데이터 포탈의 이용약관을 반드시 준수해야 합니다.
+
+## 📚 문서 가이드
+
+### 🚀 빠른 시작
+- **[전체 문서 가이드](docs/README.md)** - 모든 문서의 통합 인덱스
+- **[API 문서](docs/api/README.md)** - REST API 전체 가이드 및 엔드포인트
+- **[개발 가이드](docs/guides/README.md)** - 프로젝트 기여 및 개발 방법
+
+### 🔐 인증 및 보안
+- **[OAuth 설정 가이드](docs/guides/oauth/README.md)** - 카카오 OAuth 연동 설정
+- **[보안 정책](docs/security/README.md)** - 보안 및 데이터 정책
+
+### ⚡ 핵심 기능
+- **[트리거 시스템](docs/guides/triggers/README.md)** - 알림 트리거 개발 및 사용
+- **[위치 서비스](docs/api/location.md)** - 위치 기반 서비스 API
+- **[알림 시스템](docs/api/notifications.md)** - 실시간 알림 관리
+
+### 🏙️ 서울시 공공데이터 API
+- **[대기질 API](docs/api/air-quality.md)** - 실시간 대기환경 정보
+- **[문화행사 API](docs/api/cultural-events.md)** - 공연, 전시, 축제 정보
+- **[공공시설 API](docs/api/public-facilities.md)** - 도서관, 공원, 체육시설
+
+### 🛠️ 개발 도구
+- **[cURL 예제](docs/examples/curl-examples.md)** - 명령줄에서 API 호출 예제
+- **[Postman 컬렉션](docs/examples/postman-collection.json)** - API 테스트용 Postman 컬렉션
+
+### 📋 기여 및 정책
+- **[기여 가이드](docs/guides/contributing.md)** - 오픈소스 기여 방법
+- **[데이터 출처](docs/security/data-attribution.md)** - 서울시 공공데이터 이용 조건
+- **[보안 정책](docs/security/security-policy.md)** - 보안 취약점 신고 및 정책
 
 ## 🙏 감사의 말
 

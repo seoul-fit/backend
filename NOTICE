@@ -1,0 +1,87 @@
+
+UrbanPing
+Copyright 2025 Seoul Fit
+
+This product includes software and data from third parties:
+
+================================================================================
+SEOUL OPEN DATA PORTAL
+================================================================================
+
+This software uses data from Seoul Open Data Portal (서울시 공공데이터 포탈).
+
+Data Source: Seoul Metropolitan Government
+Website: https://data.seoul.go.kr/
+License: Seoul Open Data Portal Terms of Use
+
+Data Categories Used:
+- Real-time air quality data (실시간 대기환경 현황)
+- Seoul Bike (따릉이) station status
+- Cultural events and performances information
+- Population density and congestion data
+- Weather and environmental data
+
+Attribution Notice:
+"This service uses data from Seoul Open Data Portal provided by Seoul Metropolitan Government."
+"본 서비스는 서울특별시에서 제공하는 서울시 공공데이터 포탈의 데이터를 활용하였습니다."
+
+Data Usage Terms:
+- Data is provided for public use under Seoul Open Data Portal terms
+- Commercial use may be subject to additional restrictions
+- Data accuracy and availability are not guaranteed
+- Users must comply with Seoul Open Data Portal's terms of service
+
+================================================================================
+OPEN SOURCE LIBRARIES
+================================================================================
+
+This software includes the following open source libraries:
+
+Spring Framework
+- License: Apache License 2.0
+- Website: https://spring.io/
+
+Spring Boot
+- License: Apache License 2.0
+- Website: https://spring.io/projects/spring-boot
+
+Spring Security
+- License: Apache License 2.0
+- Website: https://spring.io/projects/spring-security
+
+Spring Data JPA
+- License: Apache License 2.0
+- Website: https://spring.io/projects/spring-data-jpa
+
+Jackson
+- License: Apache License 2.0
+- Website: https://github.com/FasterXML/jackson
+
+Lombok
+- License: MIT License
+- Website: https://projectlombok.org/
+
+H2 Database
+- License: MPL 2.0 or EPL 1.0
+- Website: https://www.h2database.com/
+
+Swagger/OpenAPI
+- License: Apache License 2.0
+- Website: https://swagger.io/
+
+================================================================================
+DISCLAIMER
+================================================================================
+
+This software is provided "as is" without warranty of any kind. The authors
+and contributors are not responsible for any damages or issues arising from
+the use of this software or the third-party data it accesses.
+
+Users are responsible for:
+- Complying with all applicable licenses and terms of service
+- Ensuring proper attribution when required
+- Verifying data accuracy for their specific use cases
+- Respecting rate limits and usage policies of external APIs
+
+For questions about licensing or data usage, please refer to the respective
+license files and terms of service of each component.
