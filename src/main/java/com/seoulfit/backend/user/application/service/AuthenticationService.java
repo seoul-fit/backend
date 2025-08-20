@@ -157,7 +157,7 @@ public class AuthenticationService implements AuthenticateUserUseCase {
         // 기존 사용자 조회
         return userPort.findByProviderAndOauthUserId(userInfo.getProvider(), userInfo.getOAuthId())
                 .map(existingUser -> {
-                    // 기존 사용자의 OAuth 토큰 업데이트
+                    // OAuth 토큰 업데이트
                     existingUser.updateOAuthToken(tokenResponse.getAccessToken(), expiresAt);
                     return userPort.save(existingUser);
                 })

@@ -77,7 +77,8 @@ public class UserService implements ManageUserUseCase {
         User user = userPort.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
-        user.delete();
-        userPort.save(user);
+        // 하드 삭제 - 데이터베이스에서 완전 삭제
+        userPort.deleteById(userId);
+        log.info("사용자 완전 삭제 완료: userId={}", userId);
     }
 }
