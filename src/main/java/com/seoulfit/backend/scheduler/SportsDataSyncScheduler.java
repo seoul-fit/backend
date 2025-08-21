@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 /**
  * 체육시설 데이터 동기화 스케줄러
  * 
- * 서울시 체육시설 정보를 주기적으로 동기화하고 지오코딩을 처리하는 스케줄러입니다.
+ * 서울시 체육시설 정보를 주기적으로 동기화하는 스케줄러입니다.
  * 
  * @author Seoul Fit
  * @since 1.0.0
@@ -37,11 +37,7 @@ public class SportsDataSyncScheduler {
             int syncedCount = sportsService.syncSportsData();
             log.info("체육시설 데이터 동기화 완료: {} 건", syncedCount);
             
-            // 2. 지오코딩 처리 (새로 추가된 데이터 또는 위경도 누락 데이터)
-            int geoCodedCount = sportsService.processGeoCoding();
-            log.info("체육시설 지오코딩 처리 완료: {} 건", geoCodedCount);
-            
-            // 3. 통계 정보 로깅
+            // 2. 통계 정보 로깅
             SportsService.SportsStats stats = sportsService.getSportsStats();
             log.info("체육시설 현황 - 전체: {} 건, 위경도 있음: {} 건, 위경도 없음: {} 건", 
                     stats.getTotalCount(), stats.getWithLocationCount(), stats.getWithoutLocationCount());
@@ -53,34 +49,6 @@ public class SportsDataSyncScheduler {
         log.info("=== 체육시설 데이터 동기화 스케줄러 종료 ===");
     }
 
-    /**
-     * 체육시설 지오코딩 처리 (매주 일요일 새벽 3시)
-     * 
-     * 위경도 정보가 누락된 체육시설들의 지오코딩을 재처리합니다.
-     * API 호출 제한을 고려하여 주 1회 실행합니다.
-     */
-    @Scheduled(cron = "0 0 3 * * SUN") // 매주 일요일 새벽 3시
-    public void processGeoCoding() {
-        log.info("=== 체육시설 지오코딩 처리 스케줄러 시작 ===");
-        
-        try {
-            int processedCount = sportsService.processGeoCoding();
-            log.info("체육시설 지오코딩 처리 완료: {} 건", processedCount);
-            
-            // 처리 후 통계 정보
-            SportsService.SportsStats stats = sportsService.getSportsStats();
-            double locationRate = stats.getTotalCount() > 0 ? 
-                    (double) stats.getWithLocationCount() / stats.getTotalCount() * 100 : 0;
-            
-            log.info("체육시설 위경도 정보 완성률: {:.2f}% ({}/{})", 
-                    locationRate, stats.getWithLocationCount(), stats.getTotalCount());
-            
-        } catch (Exception e) {
-            log.error("체육시설 지오코딩 처리 중 오류 발생", e);
-        }
-        
-        log.info("=== 체육시설 지오코딩 처리 스케줄러 종료 ===");
-    }
 
     /**
      * 체육시설 데이터 상태 모니터링 (매시간)

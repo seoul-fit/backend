@@ -12,6 +12,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * 문화행사 서비스
+ * <p>
+ * 서울시 문화행사 데이터를 동기화하고 관리하는 서비스입니다.
+ * 서울시 Open API로부터 데이터를 가져와 데이터베이스에 저장합니다.
+ * </p>
+ * 
+ * @author Seoul Fit
+ * @since 1.0.0
+ * @see SeoulCulturalApiService
+ * @see CulturalEventRepository
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -23,6 +35,16 @@ public class CulturalEventService {
 
     private final SeoulCulturalApiService seoulCulturalApiService;
 
+    /**
+     * 서울시 API로부터 문화행사 데이터를 가져와 저장합니다.
+     * <p>
+     * 기존 데이터를 모두 삭제하고 새로운 데이터로 대체합니다.
+     * API로부터 최대 4000개의 데이터를 가져옵니다.
+     * </p>
+     * 
+     * @return 저장된 문화행사 개수
+     * @throws RuntimeException API 호출 실패 또는 데이터 처리 오류 시
+     */
     @Transactional
     public int saveCultureEvents() {
         try {

@@ -4,12 +4,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * UrbanPing 백엔드 애플리케이션 통합 테스트 클래스입니다.
+ * Seoul Fit 백엔드 애플리케이션 통합 테스트 클래스입니다.
  * 
  * @author Seoul Fit
- * @since 2025-01-01
+ * @since 2025-08-21
  */
-@DisplayName("UrbanPing 백엔드 애플리케이션 통합 테스트")
+@DisplayName("Seoul Fit 백엔드 애플리케이션 통합 테스트")
 class BackendApplicationTests {
 
     @Test

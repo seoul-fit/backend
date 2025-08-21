@@ -1,6 +1,8 @@
 # 개발 가이드
 
-> UrbanPing 프로젝트 개발 및 기여를 위한 가이드 모음
+[홈으로 돌아가기](../../README.md) | [전체 문서](../README.md)
+
+> Seoul Fit 프로젝트 개발 및 기여를 위한 가이드 모음
 
 ## 📋 가이드 목록
 
@@ -9,6 +11,10 @@
   - 코드 기여 절차
   - 이슈 등록 및 PR 생성
   - 코딩 컨벤션 및 리뷰 프로세스
+- **[환경 설정 가이드](environment-setup.md)** - 로컬/개발/운영 환경 설정
+  - 환경변수 설정 방법
+  - 각 환경별 실행 방법
+  - 보안 고려사항
 
 ### 🔐 OAuth 인증 시스템
 OAuth 2.0 기반 소셜 로그인 구현 가이드
@@ -31,8 +37,8 @@ OAuth 2.0 기반 소셜 로그인 구현 가이드
 ### 1. 환경 설정
 ```bash
 # 1. 저장소 클론
-git clone https://github.com/your-org/urbanping.git
-cd urbanping
+git clone https://github.com/seoul-fit/backend.git
+cd seoul-fit
 
 # 2. 의존성 설치
 mvn clean install
@@ -88,5 +94,5 @@ export JWT_SECRET=your-jwt-secret
 
 ---
 
-**업데이트**: 2025-01-XX  
+**업데이트**: 2025-08-21  
 **버전**: v1.0.0

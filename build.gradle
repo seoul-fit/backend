@@ -57,6 +57,9 @@ dependencies {
 
     // google gson
     implementation 'com.google.code.gson:gson:2.13.1'
+    
+    // Environment variables (.env file support)
+    implementation 'me.paulschwarz:spring-dotenv:4.0.0'
 
     // Lombok
     compileOnly 'org.projectlombok:lombok'

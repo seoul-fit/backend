@@ -11,9 +11,9 @@ spring:
 
   datasource:
     driverClassName: org.h2.Driver
-    url: 'jdbc:h2:mem:seoul_fit'
-    username: hkjin
-    password: 1234
+    url: '${DATABASE_URL:jdbc:h2:mem:seoul_fit}'
+    username: ${DATABASE_USERNAME:hkjin}
+    password: ${DATABASE_PASSWORD:1234}
 
   h2:
     console:
@@ -36,8 +36,8 @@ spring:
       client:
         registration:
           kakao:
-            client-id: 349f89103b32e7135ad6f15e0a73509b
-            client-secret: EjPBG6mLShGzk0LShfo8ZWbeF1A6rS3W
+            client-id: ${KAKAO_CLIENT_ID:your-kakao-client-id}
+            client-secret: ${KAKAO_CLIENT_SECRET:your-kakao-client-secret}
             redirect-uri: ${KAKAO_REDIRECT_URI:http://localhost:8080/login/oauth2/code/kakao}
             authorization-grant-type: authorization_code
             scope: profile_nickname, profile_image, account_email
@@ -68,7 +68,7 @@ spring:
 
 
 seoul-api:
-  base-url: 'http://openapi.seoul.go.kr:8088/666e634468776c7339314668766844/json'
+  base-url: 'http://openapi.seoul.go.kr:8088/${SEOUL_API_KEY:your-seoul-api-key}/json'
   v1:
     culture:
       service-name:
@@ -78,7 +78,7 @@ seoul-api:
     environment:
       service-name:
         - RealtimeCityAir
-      api-key: ${SEOUL_API_KEY:666e634468776c7339314668766844}
+      api-key: ${SEOUL_API_KEY:your-seoul-api-key}
       batch-size: 1000
       retention-days: 30
     amenities:
@@ -100,13 +100,13 @@ seoul-api:
       batch-size: 1000
       retention-days: 3
 
-# UrbanPing 확장 설정 (오픈소스 기여자를 위한 설정)
-urbanping:
+# Seoul Fit 확장 설정 (오픈소스 기여자를 위한 설정)
+seoulfit:
   # 공공 API 설정
   api:
     seoul:
       base-url: http://openapi.seoul.go.kr:8088
-      api-key: ${SEOUL_API_KEY:666e634468776c7339314668766844}
+      api-key: ${SEOUL_API_KEY:your-seoul-api-key}
       timeout: 10
       retry-attempts: 3
   
@@ -153,7 +153,7 @@ urbanping:
         - "0 0 4 * * ?" # 식당 정보 -> 04:00
 
 google:
-  api-key: $SECRETYKEY
+  api-key: ${GOOGLE_API_KEY:your-google-api-key}
 
 logging:
   level:

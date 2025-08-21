@@ -4,7 +4,7 @@
 
 ## 📋 개요
 
-UrbanPing의 핵심 기능인 알림 시스템을 관리하는 API입니다. 사용자 맞춤형 알림 생성, 히스토리 조회, 읽음 상태 관리 등을 제공합니다.
+Seoul Fit의 핵심 기능인 알림 시스템을 관리하는 API입니다. 사용자 맞춤형 알림 생성, 히스토리 조회, 읽음 상태 관리 등을 제공합니다.
 
 **Base URL**: `/api/notifications`
 
@@ -528,5 +528,5 @@ const setupLocationBasedAlert = async (userId, alertType, location) => {
 
 ---
 
-**업데이트**: 2025-01-XX  
+**업데이트**: 2025-08-21  
 **버전**: v1.0.0

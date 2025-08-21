@@ -21,6 +21,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 문화행사 컨트롤러
+ * <p>
+ * 서울시 문화행사 정보 조회 API를 제공하는 REST 컨트롤러입니다.
+ * 헥사고날 아키텍처의 입력 어댑터로서 HTTP 요청을 처리하고
+ * 애플리케이션 서비스를 호출합니다.
+ * </p>
+ * 
+ * @author Seoul Fit
+ * @since 1.0.0
+ * @see QueryCulturalEventsUseCase
+ */
 @Tag(name = "서울시 문화행사 정보", description = "서울시 문화행사 정보 조회 API")
 @RestController
 @RequestMapping("/api/v1/cultural-events")
@@ -44,6 +56,11 @@ public class CulturalEventController {
         ),
         @ApiResponse(responseCode = "500", description = "서버 오류")
     })
+    /**
+     * 모든 문화행사 정보를 조회합니다.
+     * 
+     * @return 문화행사 요약 정보 목록
+     */
     @GetMapping("/all")
     public ResponseEntity<List<CulturalEventSummaryResponse>> getAllCulturalEvents() {
         log.info("문화행사 전체 조회 요청");
@@ -76,6 +93,14 @@ public class CulturalEventController {
         @ApiResponse(responseCode = "400", description = "잘못된 요청 파라미터"),
         @ApiResponse(responseCode = "500", description = "서버 오류")
     })
+    /**
+     * 지정된 위치 주변의 문화행사를 조회합니다.
+     * 
+     * @param latitude 위도 (WGS84 좌표계)
+     * @param longitude 경도 (WGS84 좌표계)
+     * @param radius 검색 반경 (미터 단위, 기본값 2000m)
+     * @return 주변 문화행사 정보 목록
+     */
     @GetMapping("/nearby")
     public ResponseEntity<List<CulturalEventResponse>> getNearbyEvents(
             @Parameter(description = "위도", example = "37.5665", required = true)

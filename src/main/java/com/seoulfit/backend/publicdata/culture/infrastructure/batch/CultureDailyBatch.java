@@ -16,17 +16,17 @@ public class CultureDailyBatch {
     private final CulturalReservationService culturalReservationService;
     private final CulturalSpaceService culturalSpaceService;
 
-    @Scheduled(cron = "${urbanping.scheduler.culture.daily-cron[0]}")
+    @Scheduled(cron = "${seoulfit.scheduler.culture.daily-cron[0]}")
     public void cultureEventDailyBatch() {
         culturalEventService.saveCultureEvents();
     }
 
-    @Scheduled(cron = "${urbanping.scheduler.culture.daily-cron[1]}")
+    @Scheduled(cron = "${seoulfit.scheduler.culture.daily-cron[1]}")
     public void cultureSpaceDailyBatch() {
         culturalSpaceService.saveCultureSpace(1,1000); //최대 1000건 제한
     }
 
-    @Scheduled(cron = "${urbanping.scheduler.culture.daily-cron[2]}")
+    @Scheduled(cron = "${seoulfit.scheduler.culture.daily-cron[2]}")
     public void cultureReservationDailyBatch() {
         int count = culturalReservationService.saveCulturalReservation(1, 1000);
         log.info("Count : {}", count);

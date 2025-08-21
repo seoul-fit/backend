@@ -1,6 +1,5 @@
 package com.seoulfit.backend.publicdata.sports.application;
 
-import com.seoulfit.backend.publicdata.restaurant.infrastructure.util.GeoCodingUtil;
 import com.seoulfit.backend.publicdata.sports.domain.Sports;
 import com.seoulfit.backend.publicdata.sports.infrastructure.SportsApiClient;
 import com.seoulfit.backend.publicdata.sports.infrastructure.SportsRepository;
@@ -11,7 +10,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -29,7 +27,6 @@ public class SportsService {
 
     private final SportsRepository sportsRepository;
     private final SportsApiClient sportsApiClient;
-    private final GeoCodingUtil geoCodingUtil;
 
     /**
      * 서울시 API에서 체육시설 데이터를 조회하여 DB에 저장
@@ -97,39 +94,6 @@ public class SportsService {
         }
     }
 
-    /**
-     * 위경도 정보가 없는 체육시설들의 지오코딩 처리
-     * 
-     * @return 지오코딩 처리된 체육시설 수
-     */
-    @Transactional
-    public int processGeoCoding() {
-        log.info("체육시설 지오코딩 처리 시작");
-
-        List<Sports> sportsWithoutLocation = sportsRepository.findByLatitudeIsNullOrLongitudeIsNull();
-        int processedCount = 0;
-
-        for (Sports sports : sportsWithoutLocation) {
-            try {
-                if (sports.getAddress() != null && !sports.getAddress().trim().isEmpty()) {
-                    Map<String, Double> geoData = geoCodingUtil.getGeoData(sports.getAddress());
-                    
-                    if (!geoData.isEmpty() && geoData.containsKey("latitude") && geoData.containsKey("longitude")) {
-                        sports.updateLocation(geoData.get("latitude"), geoData.get("longitude"));
-                        sportsRepository.save(sports);
-                        processedCount++;
-                        log.debug("지오코딩 완료: {} - ({}, {})", 
-                                sports.getFacilityName(), geoData.get("latitude"), geoData.get("longitude"));
-                    }
-                }
-            } catch (Exception e) {
-                log.error("지오코딩 처리 실패: {} - {}", sports.getFacilityName(), e.getMessage());
-            }
-        }
-
-        log.info("체육시설 지오코딩 처리 완료: {} 건 처리", processedCount);
-        return processedCount;
-    }
 
     /**
      * 모든 체육시설 조회

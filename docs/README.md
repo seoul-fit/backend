@@ -1,4 +1,6 @@
-# UrbanPing 문서 가이드
+# Seoul Fit 문서 가이드
+
+[홈으로 돌아가기](../README.md)
 
 > 서울시 공공 데이터를 활용한 실시간 도시 정보 알림 시스템 문서
 
@@ -62,11 +64,11 @@ REST API 엔드포인트 및 기술 문서
 
 ## 📞 문의 및 지원
 
-- **GitHub Issues**: [이슈 등록](https://github.com/your-org/urbanping/issues)
-- **GitHub Discussions**: [토론 참여](https://github.com/your-org/urbanping/discussions)
-- **Email**: urbanping-dev@example.com
+- **GitHub Issues**: [이슈 등록](https://github.com/your-org/seoul-fit/issues)
+- **GitHub Discussions**: [토론 참여](https://github.com/your-org/seoul-fit/discussions)
+- **Email**: gmavsks@gmail.com
 
 ---
 
-**업데이트**: 2025-01-XX  
+**업데이트**: 2025-08-21  
 **버전**: v1.0.0

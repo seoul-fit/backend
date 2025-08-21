@@ -1,10 +1,12 @@
-# UrbanPing API 문서
+# Seoul Fit API 문서
+
+[홈으로 돌아가기](../../README.md) | [전체 문서](../README.md)
 
 > 서울시 공공 데이터를 활용한 실시간 도시 정보 알림 시스템 API
 
 ## 📋 개요
 
-UrbanPing은 RESTful API를 통해 서울시의 다양한 공공 데이터와 사용자 맞춤형 알림 서비스를 제공합니다.
+Seoul Fit은 RESTful API를 통해 서울시의 다양한 공공 데이터와 사용자 맞춤형 알림 서비스를 제공합니다.
 
 ### API 버전
 - **현재 버전**: v1
@@ -139,11 +141,11 @@ Authorization: Bearer your-jwt-token
 
 ## 📞 지원
 
-- **GitHub Issues**: [이슈 등록](https://github.com/your-org/urbanping/issues)
-- **API 문의**: urbanping-api@example.com
+- **GitHub Issues**: [이슈 등록](https://github.com/seoul-fit/backend/issues)
+- **API 문의**: gmavsks@gmail.com
 - **문서 개선**: [기여 가이드](../../CONTRIBUTING.md)
 
 ---
 
-**업데이트**: 2025-01-XX  
+**업데이트**: 2025-08-21  
 **버전**: v1.0.0

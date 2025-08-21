@@ -2,7 +2,7 @@
 
 ## 지원되는 버전 (Supported Versions)
 
-현재 보안 업데이트를 받는 UrbanPing 버전:
+현재 보안 업데이트를 받는 Seoul Fit 버전:
 
 | 버전 | 지원 여부 |
 | --- | --- |
@@ -15,8 +15,8 @@
 
 보안 취약점을 발견하신 경우, 다음 방법으로 신고해주세요:
 
-1. **이메일**: urbanping-security@example.com
-2. **GitHub Security Advisory**: [보안 권고 생성](https://github.com/your-org/urbanping/security/advisories/new)
+1. **이메일**: gmavsks@gmail.com
+2. **GitHub Security Advisory**: [보안 권고 생성](https://github.com/seoul-fit/backend/security/advisories/new)
 
 ### 신고 시 포함할 정보
 
@@ -97,8 +97,8 @@
 ## 연락처
 
 보안 관련 문의:
-- 이메일: urbanping-security@example.com
-- GitHub: https://github.com/your-org/urbanping/security
+- 이메일: gmavsks@gmail.com
+- GitHub: https://github.com/seoul-fit/backend/security
 
 ---
 

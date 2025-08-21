@@ -4,7 +4,7 @@
 
 ## 📋 개요
 
-UrbanPing은 카카오 OAuth 2.0 Authorization Code Flow를 통한 소셜 로그인과 JWT 토큰 기반 인증을 제공합니다.
+Seoul Fit은 카카오 OAuth 2.0 Authorization Code Flow를 통한 소셜 로그인과 JWT 토큰 기반 인증을 제공합니다.
 
 **Base URL**: `/api/auth`
 
@@ -404,5 +404,5 @@ async function refreshToken(refreshToken) {
 
 ---
 
-**업데이트**: 2025-01-XX  
+**업데이트**: 2025-08-21  
 **버전**: v1.0.0

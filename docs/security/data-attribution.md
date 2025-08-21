@@ -90,14 +90,14 @@
 - 이메일: bigdata@seoul.go.kr
 - 전화: 02-2133-5000
 
-### UrbanPing 프로젝트
-- GitHub: https://github.com/your-org/urbanping
-- 이슈 등록: https://github.com/your-org/urbanping/issues
-- 이메일: urbanping-dev@example.com
+### Seoul Fit 프로젝트
+- GitHub: https://github.com/seoul-fit/backend
+- 이슈 등록: https://github.com/seoul-fit/backend/issues
+- 이메일: gmavsks@gmail.com
 
 ## 📅 업데이트 이력
 
-- 2025-01-XX: 초기 데이터 출처 문서 작성
+- 2025-08-21: 초기 데이터 출처 문서 작성
 - 향후 새로운 데이터 소스 추가 시 업데이트 예정
 
 ---

@@ -359,5 +359,5 @@ const recommendEvents = async (userId, preferences) => {
 
 ---
 
-**업데이트**: 2025-01-XX  
+**업데이트**: 2025-08-21  
 **버전**: v1.0.0

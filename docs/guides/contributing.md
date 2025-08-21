@@ -1,6 +1,6 @@
-# UrbanPing 기여 가이드 (Contributing Guide)
+# Seoul Fit 기여 가이드 (Contributing Guide)
 
-UrbanPing 프로젝트에 기여해주셔서 감사합니다! 이 문서는 프로젝트에 효과적으로 기여할 수 있도록 도와드립니다.
+Seoul Fit 프로젝트에 기여해주셔서 감사합니다! 이 문서는 프로젝트에 효과적으로 기여할 수 있도록 도와드립니다.
 
 ## 📋 목차
 
@@ -14,7 +14,7 @@ UrbanPing 프로젝트에 기여해주셔서 감사합니다! 이 문서는 프�
 
 ## 🎯 프로젝트 개요
 
-UrbanPing은 서울시 공공 데이터를 활용한 실시간 도시 정보 알림 시스템입니다.
+Seoul Fit은 서울시 공공 데이터를 활용한 실시간 도시 정보 알림 시스템입니다.
 
 ### 핵심 기능
 - **실시간 트리거 시스템**: 다양한 조건 기반 알림 발송
@@ -38,8 +38,8 @@ UrbanPing은 서울시 공공 데이터를 활용한 실시간 도시 정보 알
 ### 프로젝트 설정
 ```bash
 # 1. 저장소 클론
-git clone https://github.com/your-org/urbanping.git
-cd urbanping
+git clone https://github.com/seoul-fit/backend.git
+cd seoul-fit
 
 # 2. 의존성 설치
 mvn clean install
@@ -195,7 +195,7 @@ public class YourEntity {
 새로운 기능에 대한 설정을 `application.yml`에 추가:
 
 ```yaml
-urbanping:
+seoul-fit:
   trigger:
     your-feature:
       threshold: 100
@@ -282,7 +282,7 @@ class YourClassTest {
 ```java
 @SpringBootTest
 @TestPropertySource(properties = {
-    "urbanping.scheduler.enabled=false"
+    "seoul-fit.scheduler.enabled=false"
 })
 class YourIntegrationTest {
     
@@ -400,9 +400,9 @@ Closes #123
 
 ## 🆘 도움이 필요한 경우
 
-- **이슈 등록**: [GitHub Issues](https://github.com/your-org/urbanping/issues)
-- **토론**: [GitHub Discussions](https://github.com/your-org/urbanping/discussions)
-- **이메일**: urbanping-dev@example.com
+- **이슈 등록**: [GitHub Issues](https://github.com/seoul-fit/backend/issues)
+- **토론**: [GitHub Discussions](https://github.com/seoul-fit/backend/discussions)
+- **이메일**: gmavsks@gmail.com
 
 ## 📄 라이선스
 
@@ -410,6 +410,6 @@ Closes #123
 
 ---
 
-**함께 만들어가는 UrbanPing! 🚀**
+**함께 만들어가는 Seoul Fit! 🚀**
 
 여러분의 기여가 더 나은 도시 생활을 만들어갑니다.
