@@ -19,7 +19,10 @@ import java.time.LocalDateTime;
                 @Index(name = "idx_event_location", columnList = "latitude, longitude"),
                 @Index(name = "idx_event_date", columnList = "start_date, end_date"),
                 @Index(name = "idx_event_district", columnList = "district"),
-                @Index(name = "idx_event_category", columnList = "code_name")
+                @Index(name = "idx_event_category", columnList = "code_name"),
+                @Index(name = "idx_event_district_date", columnList = "district, start_date, end_date"),
+                @Index(name = "idx_event_category_free", columnList = "code_name, is_free"),
+                @Index(name = "idx_event_external_id", columnList = "external_id")
         })
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

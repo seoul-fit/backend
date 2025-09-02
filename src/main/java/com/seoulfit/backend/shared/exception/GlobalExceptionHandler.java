@@ -1,8 +1,12 @@
 package com.seoulfit.backend.shared.exception;
 
+import com.seoulfit.backend.shared.dto.ErrorResponse;
 import com.seoulfit.backend.user.domain.exception.OAuthUserAlreadyExistsException;
 import com.seoulfit.backend.user.domain.exception.OAuthUserNotFoundException;
+import io.swagger.v3.oas.annotations.Hidden;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,23 +20,34 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @RestControllerAdvice
+@Hidden
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, Object>> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, Object> response = new HashMap<>();
-        Map<String, String> errors = new HashMap<>();
+    public ResponseEntity<ErrorResponse> handleValidationExceptions(
+            MethodArgumentNotValidException ex,
+            HttpServletRequest request) {
+        
+        List<ErrorResponse.FieldError> fieldErrors = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(error -> ErrorResponse.FieldError.builder()
+                        .field(error.getField())
+                        .value(error.getRejectedValue() != null ? error.getRejectedValue().toString() : null)
+                        .message(error.getDefaultMessage())
+                        .build())
+                .toList();
 
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
+        ErrorResponse errorResponse = ErrorResponse.of(
+                "VALIDATION_FAILED",
+                "입력값 검증에 실패했습니다.",
+                400,
+                request.getRequestURI(),
+                fieldErrors
+        );
 
-        response.put("message", "입력값 검증에 실패했습니다.");
-        response.put("errors", errors);
-
-        return ResponseEntity.badRequest().body(response);
+        log.warn("Validation failed: {}", errorResponse.getMessage());
+        return ResponseEntity.badRequest().body(errorResponse);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

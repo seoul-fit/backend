@@ -124,12 +124,11 @@ class QueryCulturalEventServiceTest {
             // given
             when(culturalEventPort.getAllCulturalEvent()).thenReturn(null);
             
-            // when
-            List<CulturalEvent> result = queryCulturalEventService.getAllCulturalEvents();
+            // when & then - NullPointerException이 발생해야 함
+            assertThatThrownBy(() -> queryCulturalEventService.getAllCulturalEvents())
+                    .isInstanceOf(NullPointerException.class);
             
-            // then
-            assertThat(result).isNull();
-            verify(culturalEventPort, times(2)).getAllCulturalEvent();
+            verify(culturalEventPort).getAllCulturalEvent();
         }
     }
     

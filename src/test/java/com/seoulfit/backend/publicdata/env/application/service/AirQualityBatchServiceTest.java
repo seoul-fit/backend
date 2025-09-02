@@ -52,9 +52,9 @@ class AirQualityBatchServiceTest {
         
         // Mock Air Quality Rows 생성
         mockAirQualityRows = Arrays.asList(
-            createMockAirQualityRow("중구", "시청역", "2024-01-20 10:00", "35", "20", "0.030", "0.020", "0.5", "0.002", "55", "2", "40", "25"),
-            createMockAirQualityRow("강남구", "강남역", "2024-01-20 10:00", "45", "25", "0.035", "0.025", "0.6", "0.003", "65", "2", "50", "30"),
-            createMockAirQualityRow("서초구", "서초역", "2024-01-20 10:00", "40", "22", "0.032", "0.022", "0.55", "0.0025", "60", "2", "45", "27")
+            createMockAirQualityRow("중구", "시청역", "2024-01-20T10:00:00", "35", "20", "0.030", "0.020", "0.5", "0.002", "55", "2", "40", "25"),
+            createMockAirQualityRow("강남구", "강남역", "2024-01-20T10:00:00", "45", "25", "0.035", "0.025", "0.6", "0.003", "65", "2", "50", "30"),
+            createMockAirQualityRow("서초구", "서초역", "2024-01-20T10:00:00", "40", "22", "0.032", "0.022", "0.55", "0.0025", "60", "2", "45", "27")
         );
         
         // Mock Air Quality Entity
@@ -241,8 +241,8 @@ class AirQualityBatchServiceTest {
         void processRealTimeBatch_PartialProcessingFailure() {
             // given
             List<AirQualityApiResponse.AirQualityRow> mixedRows = Arrays.asList(
-                createMockAirQualityRow("중구", "시청역", "2024-01-20 10:00", "35", "20", "0.030", "0.020", "0.5", "0.002", "55", "2", "40", "25"),
-                createMockAirQualityRow("강남구", "강남역", "2024-01-20 10:00", "invalid", "25", "0.035", "0.025", "0.6", "0.003", "65", "2", "50", "30")
+                createMockAirQualityRow("중구", "시청역", "2024-01-20T10:00:00", "35", "20", "0.030", "0.020", "0.5", "0.002", "55", "2", "40", "25"),
+                createMockAirQualityRow("강남구", "강남역", "2024-01-20T10:00:00", "invalid", "25", "0.035", "0.025", "0.6", "0.003", "65", "2", "50", "30")
             );
             
             AirQualityApiResponse mixedResponse = mock(AirQualityApiResponse.class);

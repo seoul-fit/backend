@@ -1,0 +1,207 @@
+# 성능 최적화 설정
+spring:
+  # JPA 성능 설정
+  jpa:
+    properties:
+      hibernate:
+        # 배치 처리 최적화
+        jdbc:
+          batch_size: 25
+          batch_versioned_data: true
+          order_inserts: true
+          order_updates: true
+        # 쿼리 캐시
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
+        # 통계 수집 (프로덕션에서는 false)
+        generate_statistics: false
+        # 연결 최적화
+        connection:
+          provider_disables_autocommit: true
+        # ID 생성 최적화
+        id:
+          new_generator_mappings: true
+          optimizer:
+            pooled:
+              preferred: pooled-lo
+    # 데이터베이스 플랫폼별 최적화
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    # OSIV 비활성화 (성능 향상)
+    open-in-view: false
+
+  # 데이터소스 설정
+  datasource:
+    hikari:
+      # 커넥션 풀 크기
+      maximum-pool-size: 20
+      minimum-idle: 5
+      # 커넥션 타임아웃
+      connection-timeout: 20000
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      # 커넥션 검증
+      validation-timeout: 3000
+      connection-test-query: SELECT 1
+      # 성능 최적화
+      auto-commit: false
+      # 리크 감지
+      leak-detection-threshold: 60000
+      # 메트릭 수집
+      register-mbeans: true
+      
+  # 웹 서버 설정
+  web:
+    resources:
+      # 정적 리소스 캐싱
+      cache:
+        cachecontrol:
+          max-age: 3600
+          cache-public: true
+      # gzip 압축
+      chain:
+        compressed: true
+        enabled: true
+        
+  # 태스크 실행자 설정
+  task:
+    execution:
+      pool:
+        core-size: 8
+        max-size: 32
+        queue-capacity: 100
+        keep-alive: 60s
+        thread-name-prefix: async-executor-
+    scheduling:
+      pool:
+        size: 4
+        thread-name-prefix: scheduler-
+
+# 서버 설정
+server:
+  # Tomcat 최적화
+  tomcat:
+    # 스레드 풀
+    threads:
+      max: 200
+      min-spare: 10
+    # 커넥션
+    max-connections: 10000
+    accept-count: 100
+    # 타임아웃
+    connection-timeout: 20000
+    keep-alive-timeout: 60000
+    # 압축
+    compression:
+      enabled: true
+      mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+      min-response-size: 1024
+    # 액세스 로그
+    accesslog:
+      enabled: true
+      pattern: '%h %l %u %t "%r" %s %b %D'
+      directory: logs
+      prefix: access_log
+      suffix: .log
+      rotate: true
+      
+  # HTTP/2 활성화
+  http2:
+    enabled: true
+    
+  # 에러 처리
+  error:
+    include-message: never
+    include-stacktrace: never
+    include-exception: false
+
+# 액추에이터 설정
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,cache
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when-authorized
+      probes:
+        enabled: true
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+      environment: ${spring.profiles.active}
+    export:
+      prometheus:
+        enabled: true
+        step: 1m
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+        db.query.time: true
+      percentiles:
+        http.server.requests: 0.5,0.95,0.99
+        db.query.time: 0.5,0.95,0.99
+      slo:
+        http.server.requests: 100ms,500ms,1s,5s
+        
+  # 서킷 브레이커 설정
+  circuitbreaker:
+    instances:
+      external-api:
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 30s
+        permitted-number-of-calls-in-half-open-state: 3
+        
+# 로깅 설정
+logging:
+  level:
+    # 성능 관련 로깅
+    com.seoulfit.backend.shared.monitoring: DEBUG
+    # SQL 로깅 (개발 환경에서만)
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql: WARN
+    # 스프링 로깅
+    org.springframework.web: INFO
+    org.springframework.data: INFO
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n'
+    file: '%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n'
+  file:
+    name: logs/application.log
+    max-size: 100MB
+    max-history: 30
+    
+# 캐시 설정
+caffeine:
+  specs:
+    # 단기 캐시 (1분)
+    short-term: maximumSize=100,expireAfterWrite=1m,recordStats
+    # 중기 캐시 (5분)
+    medium-term: maximumSize=500,expireAfterWrite=5m,recordStats
+    # 장기 캐시 (1시간)
+    long-term: maximumSize=1000,expireAfterWrite=1h,recordStats
+    
+# 애플리케이션 설정
+app:
+  performance:
+    # 슬로우 쿼리 임계값
+    slow-query-threshold: 1000
+    # API 응답 시간 임계값
+    api-response-threshold: 3000
+    # 배치 크기
+    batch-size: 1000
+    # 페이지 크기
+    page-size: 20
+    # 비동기 처리 활성화
+    async-enabled: true
+    # 캐시 워밍업 활성화
+    cache-warmup-enabled: true

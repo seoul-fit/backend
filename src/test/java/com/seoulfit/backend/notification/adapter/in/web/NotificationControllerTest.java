@@ -16,8 +16,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -43,7 +45,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Seoul Fit
  * @since 1.0.0
  */
-@WebMvcTest(NotificationController.class)
+@WebMvcTest(controllers = NotificationController.class)
+@AutoConfigureMockMvc(addFilters = false)
 @DisplayName("NotificationController 단위 테스트")
 class NotificationControllerTest {
 
@@ -61,6 +64,7 @@ class NotificationControllerTest {
     class CreateNotificationTest {
         
         @Test
+        @WithMockUser
         @DisplayName("알림 생성 - 성공")
         void createNotification_Success() throws Exception {
             // given
@@ -90,6 +94,7 @@ class NotificationControllerTest {
         }
         
         @Test
+        @WithMockUser
         @DisplayName("알림 생성 - 필수 필드 누락")
         void createNotification_MissingRequiredFields() throws Exception {
             // given
@@ -108,6 +113,7 @@ class NotificationControllerTest {
         }
         
         @Test
+        @WithMockUser
         @DisplayName("알림 생성 - userId 누락")
         void createNotification_MissingUserId() throws Exception {
             // given
@@ -129,6 +135,7 @@ class NotificationControllerTest {
         }
         
         @Test
+        @WithMockUser
         @DisplayName("알림 생성 - 빈 제목")
         void createNotification_EmptyTitle() throws Exception {
             // given
@@ -156,6 +163,7 @@ class NotificationControllerTest {
     class CreateNotificationV2Test {
         
         @Test
+        @WithMockUser
         @DisplayName("V2 알림 생성 - 성공")
         void createNotificationV2_Success() throws Exception {
             // given
@@ -184,6 +192,7 @@ class NotificationControllerTest {
         }
         
         @Test
+        @WithMockUser
         @DisplayName("V2 알림 생성 - 우선순위 포함")
         void createNotificationV2_WithPriority() throws Exception {
             // given
@@ -211,6 +220,7 @@ class NotificationControllerTest {
         }
         
         @Test
+        @WithMockUser
         @DisplayName("V2 알림 생성 - 메타데이터 포함")
         void createNotificationV2_WithMetadata() throws Exception {
             // given
@@ -241,6 +251,7 @@ class NotificationControllerTest {
     class NotificationHistoryTest {
         
         @Test
+        @WithMockUser
         @DisplayName("알림 이력 조회 - 성공")
         void getNotificationHistory_Success() throws Exception {
             // given
@@ -270,6 +281,7 @@ class NotificationControllerTest {
         }
         
         @Test
+        @WithMockUser
         @DisplayName("알림 이력 조회 - 빈 결과")
         void getNotificationHistory_EmptyResult() throws Exception {
             // given
@@ -293,6 +305,7 @@ class NotificationControllerTest {
         }
         
         @Test
+        @WithMockUser
         @DisplayName("알림 이력 조회 - 페이징")
         void getNotificationHistory_WithPaging() throws Exception {
             // given
@@ -323,6 +336,7 @@ class NotificationControllerTest {
         }
         
         @Test
+        @WithMockUser
         @DisplayName("알림 이력 조회 - 상태 필터")
         void getNotificationHistory_WithStatusFilter() throws Exception {
             // given
@@ -347,6 +361,7 @@ class NotificationControllerTest {
         }
         
         @Test
+        @WithMockUser
         @DisplayName("알림 이력 조회 - 날짜 필터")
         void getNotificationHistory_WithDateFilter() throws Exception {
             // given
@@ -379,6 +394,7 @@ class NotificationControllerTest {
     class UpdateNotificationStatusTest {
         
         @Test
+        @WithMockUser
         @DisplayName("알림 읽음 처리 - 성공")
         void markAsRead_Success() throws Exception {
             // given
@@ -396,6 +412,7 @@ class NotificationControllerTest {
         }
         
         @Test
+        @WithMockUser
         @DisplayName("알림 읽음 처리 - 존재하지 않는 알림")
         void markAsRead_NotFound() throws Exception {
             // given
@@ -415,6 +432,7 @@ class NotificationControllerTest {
     class DeleteNotificationTest {
         
         @Test
+        @WithMockUser
         @DisplayName("알림 삭제 - 성공")
         void deleteNotification_Success() throws Exception {
             // given
@@ -433,6 +451,7 @@ class NotificationControllerTest {
         }
         
         @Test
+        @WithMockUser
         @DisplayName("알림 삭제 - 권한 없음")
         void deleteNotification_Unauthorized() throws Exception {
             // given
@@ -452,6 +471,7 @@ class NotificationControllerTest {
     class ExceptionHandlingTest {
         
         @Test
+        @WithMockUser
         @DisplayName("서비스 예외 발생")
         void handleServiceException() throws Exception {
             // given

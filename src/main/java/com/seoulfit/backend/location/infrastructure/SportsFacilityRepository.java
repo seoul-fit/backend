@@ -21,7 +21,7 @@ public interface SportsFacilityRepository extends JpaRepository<SportsFacility, 
      * 위치 기반 체육시설 조회 (반경 내)
      */
     @Query(value = """
-        SELECT * FROM sports_facilities sf
+        SELECT * FROM sports_reservation_facilities sf
         WHERE sf.latitude IS NOT NULL 
         AND sf.longitude IS NOT NULL
         AND (6371 * acos(cos(radians(:latitude)) * cos(radians(sf.latitude)) 
@@ -38,7 +38,7 @@ public interface SportsFacilityRepository extends JpaRepository<SportsFacility, 
     /**
      * 시설명으로 검색
      */
-    List<SportsFacility> findByNameContaining(String name);
+    List<SportsFacility> findByFacilityNameContaining(String name);
 
     /**
      * 자치구별 체육시설 조회
@@ -51,9 +51,9 @@ public interface SportsFacilityRepository extends JpaRepository<SportsFacility, 
     List<SportsFacility> findByFacilityTypeContaining(String facilityType);
 
     /**
-     * 운영 중인 시설만 조회
+     * 운영 중인 시설만 조회 (모든 시설 조회)
      */
-    @Query("SELECT sf FROM SportsFacility sf WHERE sf.operationStatus LIKE '%운영%'")
+    @Query("SELECT sf FROM SportsFacility sf")
     List<SportsFacility> findOperatingFacilities();
 
     /**

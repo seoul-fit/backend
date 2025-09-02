@@ -48,6 +48,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Seoul Fit
  * @since 1.0.0
  */
+@Tag(name = "인증", description = "사용자 인증 및 OAuth 관련 API")
 @Slf4j
 @RestController
 @RequestMapping("/api/auth")

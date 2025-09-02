@@ -346,14 +346,14 @@ public class AdvancedLocationResponse {
             SportsFacility facility = data.getPoint();
             return SportsFacilityWithDistance.builder()
                     .id(facility.getId())
-                    .name(facility.getName())
+                    .name(facility.getFacilityName())
                     .district(facility.getDistrict())
                     .address(facility.getAddress())
                     .latitude(facility.getLatitude())
                     .longitude(facility.getLongitude())
                     .distance(Math.round(data.getDistance() * 100.0) / 100.0)
                     .facilityType(facility.getFacilityType())
-                    .weekdayHours(facility.getWeekdayHours())
+                    .weekdayHours(facility.getOperatingHours())
                     .build();
         }
     }

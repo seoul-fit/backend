@@ -47,7 +47,7 @@ public interface SportsRepository extends JpaRepository<Sports, Long> {
      * @return 반경 내 체육시설 목록
      */
     @Query(value = """
-        SELECT s.* FROM sports_facilities s 
+        SELECT s.* FROM sports_reservation_facilities s 
         WHERE s.latitude IS NOT NULL 
         AND s.longitude IS NOT NULL
         AND (6371 * acos(cos(radians(:latitude)) 

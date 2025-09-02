@@ -1,5 +1,6 @@
 package com.seoulfit.backend.shared.exception;
 
+import com.seoulfit.backend.shared.dto.ErrorResponse;
 import com.seoulfit.backend.user.domain.exception.OAuthUserAlreadyExistsException;
 import com.seoulfit.backend.user.domain.exception.OAuthUserNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -47,23 +49,25 @@ class GlobalExceptionHandlerTest {
         void handleValidationExceptions_SingleFieldError() {
             // given
             MethodArgumentNotValidException exception = mock(MethodArgumentNotValidException.class);
+            HttpServletRequest request = mock(HttpServletRequest.class);
             BindingResult bindingResult = mock(BindingResult.class);
             FieldError fieldError = new FieldError("user", "email", "이메일 형식이 올바르지 않습니다");
             
             when(exception.getBindingResult()).thenReturn(bindingResult);
-            when(bindingResult.getAllErrors()).thenReturn(List.of(fieldError));
+            when(bindingResult.getFieldErrors()).thenReturn(List.of(fieldError));
+            when(request.getRequestURI()).thenReturn("/api/test");
             
             // when
-            ResponseEntity<Map<String, Object>> response = globalExceptionHandler.handleValidationExceptions(exception);
+            ResponseEntity<ErrorResponse> response = globalExceptionHandler.handleValidationExceptions(exception, request);
             
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
             assertThat(response.getBody()).isNotNull();
-            assertThat(response.getBody().get("message")).isEqualTo("입력값 검증에 실패했습니다.");
-            
-            @SuppressWarnings("unchecked")
-            Map<String, String> errors = (Map<String, String>) response.getBody().get("errors");
-            assertThat(errors).containsEntry("email", "이메일 형식이 올바르지 않습니다");
+            assertThat(response.getBody().getMessage()).isEqualTo("입력값 검증에 실패했습니다.");
+            assertThat(response.getBody().getCode()).isEqualTo("VALIDATION_FAILED");
+            assertThat(response.getBody().getErrors()).hasSize(1);
+            assertThat(response.getBody().getErrors().get(0).getField()).isEqualTo("email");
+            assertThat(response.getBody().getErrors().get(0).getMessage()).isEqualTo("이메일 형식이 올바르지 않습니다");
         }
         
         @Test
@@ -71,29 +75,32 @@ class GlobalExceptionHandlerTest {
         void handleValidationExceptions_MultipleFieldErrors() {
             // given
             MethodArgumentNotValidException exception = mock(MethodArgumentNotValidException.class);
+            HttpServletRequest request = mock(HttpServletRequest.class);
             BindingResult bindingResult = mock(BindingResult.class);
             
-            List<org.springframework.validation.ObjectError> fieldErrors = Arrays.asList(
+            List<FieldError> fieldErrors = Arrays.asList(
                 new FieldError("user", "email", "이메일은 필수입니다"),
                 new FieldError("user", "password", "비밀번호는 8자 이상이어야 합니다"),
                 new FieldError("user", "nickname", "닉네임은 필수입니다")
             );
             
             when(exception.getBindingResult()).thenReturn(bindingResult);
-            when(bindingResult.getAllErrors()).thenReturn(fieldErrors);
+            when(bindingResult.getFieldErrors()).thenReturn(fieldErrors);
+            when(request.getRequestURI()).thenReturn("/api/test");
             
             // when
-            ResponseEntity<Map<String, Object>> response = globalExceptionHandler.handleValidationExceptions(exception);
+            ResponseEntity<ErrorResponse> response = globalExceptionHandler.handleValidationExceptions(exception, request);
             
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-            
-            @SuppressWarnings("unchecked")
-            Map<String, String> errors = (Map<String, String>) response.getBody().get("errors");
-            assertThat(errors).hasSize(3);
-            assertThat(errors).containsEntry("email", "이메일은 필수입니다");
-            assertThat(errors).containsEntry("password", "비밀번호는 8자 이상이어야 합니다");
-            assertThat(errors).containsEntry("nickname", "닉네임은 필수입니다");
+            assertThat(response.getBody()).isNotNull();
+            assertThat(response.getBody().getErrors()).hasSize(3);
+            assertThat(response.getBody().getErrors().get(0).getField()).isEqualTo("email");
+            assertThat(response.getBody().getErrors().get(0).getMessage()).isEqualTo("이메일은 필수입니다");
+            assertThat(response.getBody().getErrors().get(1).getField()).isEqualTo("password");
+            assertThat(response.getBody().getErrors().get(1).getMessage()).isEqualTo("비밀번호는 8자 이상이어야 합니다");
+            assertThat(response.getBody().getErrors().get(2).getField()).isEqualTo("nickname");
+            assertThat(response.getBody().getErrors().get(2).getMessage()).isEqualTo("닉네임은 필수입니다");
         }
     }
     
@@ -259,9 +266,11 @@ class GlobalExceptionHandlerTest {
         void appropriateHttpStatusCodes() {
             // given
             MethodArgumentNotValidException validation = mock(MethodArgumentNotValidException.class);
+            HttpServletRequest request = mock(HttpServletRequest.class);
             BindingResult bindingResult = mock(BindingResult.class);
             when(validation.getBindingResult()).thenReturn(bindingResult);
-            when(bindingResult.getAllErrors()).thenReturn(List.of());
+            when(bindingResult.getFieldErrors()).thenReturn(List.of());
+            when(request.getRequestURI()).thenReturn("/api/test");
             
             IllegalArgumentException illegalArg = new IllegalArgumentException("테스트");
             OAuthUserAlreadyExistsException exists = new OAuthUserAlreadyExistsException("테스트");
@@ -271,7 +280,7 @@ class GlobalExceptionHandlerTest {
             Exception generic = new Exception("테스트");
             
             // when & then
-            assertThat(globalExceptionHandler.handleValidationExceptions(validation).getStatusCode())
+            assertThat(globalExceptionHandler.handleValidationExceptions(validation, request).getStatusCode())
                 .isEqualTo(HttpStatus.BAD_REQUEST);
             assertThat(globalExceptionHandler.handleIllegalArgumentException(illegalArg).getStatusCode())
                 .isEqualTo(HttpStatus.BAD_REQUEST);

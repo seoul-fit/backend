@@ -8,9 +8,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
@@ -28,7 +30,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Seoul Fit
  * @since 1.0.0
  */
-@WebMvcTest(SearchController.class)
+@WebMvcTest(controllers = SearchController.class)
+@AutoConfigureMockMvc(addFilters = false)
 @DisplayName("SearchController 단위 테스트")
 class SearchControllerTest {
 
@@ -42,6 +45,7 @@ class SearchControllerTest {
     private SearchUseCase searchUseCase;
     
     @Test
+    @WithMockUser
     @DisplayName("키워드 검색 - 성공")
     void searchByKeyword_Success() throws Exception {
         // given
@@ -75,6 +79,7 @@ class SearchControllerTest {
     }
     
     @Test
+    @WithMockUser
     @DisplayName("검색 결과 없음")
     void search_NoResults() throws Exception {
         // given
@@ -100,6 +105,7 @@ class SearchControllerTest {
     }
     
     @Test
+    @WithMockUser
     @DisplayName("인덱스 상세 조회")
     void getPublicDataByIndex_Success() throws Exception {
         // given

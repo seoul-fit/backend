@@ -40,7 +40,13 @@ import java.util.List;
  * @see InterestCategory
  */
 @Entity
-@Table(name = "users")
+@Table(name = "users", indexes = {
+    @Index(name = "idx_users_email", columnList = "email"),
+    @Index(name = "idx_users_oauth", columnList = "oauth_provider, oauth_user_id"),
+    @Index(name = "idx_users_status", columnList = "status"),
+    @Index(name = "idx_users_location", columnList = "location_latitude, location_longitude"),
+    @Index(name = "idx_users_created_at", columnList = "created_at")
+})
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)

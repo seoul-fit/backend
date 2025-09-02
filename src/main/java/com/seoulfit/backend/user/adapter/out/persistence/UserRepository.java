@@ -85,4 +85,40 @@ public interface UserRepository extends JpaRepository<User, Long> {
      */
     @Query("SELECT DISTINCT u FROM User u JOIN u.interests ui WHERE ui.interestCategory = :interestCategory AND u.status = 'ACTIVE'")
     List<User> findUsersByInterestCategory(@Param("interestCategory") InterestCategory interestCategory);
+
+    /**
+     * 모든 사용자를 관심사와 함께 조회 (N+1 문제 방지)
+     * @return 관심사가 포함된 사용자 목록
+     */
+    @Query("SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.interests WHERE u.status = 'ACTIVE'")
+    List<User> findAllActiveUsersWithInterests();
+
+    /**
+     * 상태별 사용자 조회
+     * @param status 사용자 상태
+     * @return 해당 상태의 사용자 목록
+     */
+    List<User> findByStatus(UserStatus status);
+
+    /**
+     * 위치 정보가 있는 활성 사용자 조회
+     * @return 위치 정보가 있는 사용자 목록
+     */
+    @Query("SELECT u FROM User u WHERE u.locationLatitude IS NOT NULL AND u.locationLongitude IS NOT NULL AND u.status = 'ACTIVE'")
+    List<User> findActiveUsersWithLocation();
+
+    /**
+     * 특정 위치 반경 내의 사용자 조회 (성능 최적화됨)
+     * @param minLat 최소 위도
+     * @param maxLat 최대 위도  
+     * @param minLng 최소 경도
+     * @param maxLng 최대 경도
+     * @return 반경 내 사용자 목록
+     */
+    @Query("SELECT u FROM User u WHERE u.locationLatitude BETWEEN :minLat AND :maxLat " +
+           "AND u.locationLongitude BETWEEN :minLng AND :maxLng AND u.status = 'ACTIVE'")
+    List<User> findUsersInBoundingBox(@Param("minLat") Double minLat, 
+                                      @Param("maxLat") Double maxLat,
+                                      @Param("minLng") Double minLng, 
+                                      @Param("maxLng") Double maxLng);
 }

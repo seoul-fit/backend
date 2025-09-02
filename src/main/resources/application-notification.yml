@@ -1,0 +1,146 @@
+# UrbanPing 알림 시스템 설정
+# 이 파일을 main application.yml에 포함하거나 별도 프로파일로 사용하세요
+
+urbanping:
+  # 서울시 공공데이터 API 설정
+  api:
+    seoul:
+      base-url: http://openapi.seoul.go.kr:8088
+      api-key: ${SEOUL_API_KEY:sample_key_please_replace}
+      timeout: 10
+      retry-attempts: 3
+
+  # 트리거 조건별 설정
+  trigger:
+    # 따릉이 관련 설정
+    bike:
+      shortage-threshold: 10        # 자전거 부족 임계값 (%)
+      full-threshold: 95           # 대여소 포화 임계값 (%)
+      location-radius: 2000        # 검색 반경 (미터)
+
+    # 온도 관련 설정
+    temperature:
+      high-threshold: 35.0         # 고온 경보 임계값 (°C)
+      low-threshold: 0.0           # 저온 경보 임계값 (°C)
+
+    # 강수량 관련 설정
+    rain:
+      heavy-threshold: 15.0        # 폭우 주의보 임계값 (mm/h)
+      warning-threshold: 30.0      # 폭우 경보 임계값 (mm/h)
+
+    # 혼잡도 관련 설정
+    congestion:
+      location-radius: 1000        # 검색 반경 (미터)
+
+    # 문화행사 관련 설정
+    cultural:
+      location-radius: 5000        # 검색 반경 (미터)
+      days-ahead: 7               # 며칠 전까지 알림할지
+
+  # 알림 발송 설정
+  notification:
+    # FCM 푸시 알림 설정
+    fcm:
+      server-key: ${FCM_SERVER_KEY:}
+      url: https://fcm.googleapis.com/fcm/send
+
+    # 웹훅 설정
+    webhook:
+      timeout: 10                  # 웹훅 타임아웃 (초)
+
+    # 이메일 설정 (향후 구현)
+    email:
+      enabled: false
+      smtp:
+        host: ${EMAIL_SMTP_HOST:smtp.gmail.com}
+        port: ${EMAIL_SMTP_PORT:587}
+        username: ${EMAIL_USERNAME:}
+        password: ${EMAIL_PASSWORD:}
+        auth: true
+        starttls:
+          enable: true
+
+    # SMS 설정 (향후 구현)
+    sms:
+      enabled: false
+      provider: twilio
+      account-sid: ${SMS_ACCOUNT_SID:}
+      auth-token: ${SMS_AUTH_TOKEN:}
+      from-number: ${SMS_FROM_NUMBER:}
+
+  # 스케줄러 설정
+  scheduler:
+    trigger:
+      interval: 300000             # 트리거 실행 간격 (밀리초, 5분)
+      thread-pool-size: 5          # 스레드 풀 크기
+    
+    # 데이터 동기화 설정
+    data-sync:
+      interval: 600000             # 데이터 동기화 간격 (밀리초, 10분)
+      batch-size: 100              # 배치 크기
+
+# Spring 설정
+spring:
+  # 비동기 처리 설정
+  task:
+    execution:
+      pool:
+        core-size: 5
+        max-size: 10
+        queue-capacity: 100
+      thread-name-prefix: "notification-"
+
+  # 데이터베이스 설정 (알림 관련 테이블)
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        # 알림 히스토리 테이블 인덱스 최적화
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        jdbc:
+          batch_size: 20
+
+  # 캐시 설정
+  cache:
+    type: redis
+    redis:
+      time-to-live: 300000         # 5분 캐시
+
+# 로깅 설정
+logging:
+  level:
+    com.seoulfit.backend.notification: DEBUG
+    com.seoulfit.backend.trigger: DEBUG
+    com.seoulfit.backend.external: INFO
+    com.seoulfit.backend.scheduler: INFO
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
+
+# 액추에이터 설정 (모니터링)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when-authorized
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: urbanping
+      service: notification
+
+# 환경변수 예시 (실제 배포시 설정 필요)
+# export SEOUL_API_KEY="your_seoul_api_key"
+# export FCM_SERVER_KEY="your_fcm_server_key"
+# export EMAIL_USERNAME="your_email@gmail.com"
+# export EMAIL_PASSWORD="your_app_password"
+# export SMS_ACCOUNT_SID="your_twilio_account_sid"
+# export SMS_AUTH_TOKEN="your_twilio_auth_token"
+# export SMS_FROM_NUMBER="+1234567890"

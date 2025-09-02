@@ -18,6 +18,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -35,6 +37,7 @@ import static org.mockito.Mockito.*;
  * @since 1.0.0
  */
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 @DisplayName("LocationBasedDataService 테스트")
 class LocationBasedDataServiceTest {
 
@@ -228,7 +231,7 @@ class LocationBasedDataServiceTest {
 
             // then
             assertThat(result).hasSize(2);
-            assertThat(result.get(0).getName()).isEqualTo("체육관1");
+            assertThat(result.get(0).getFacilityName()).isEqualTo("체육관1");
             verify(sportsFacilityRepository).findByLocationWithinRadius(testLatitude, testLongitude, testRadius);
         }
 
@@ -366,47 +369,47 @@ class LocationBasedDataServiceTest {
 
     // 헬퍼 메서드들
     private Restaurant createRestaurant(Long id, String name, Double latitude, Double longitude) {
-        Restaurant restaurant = mock(Restaurant.class);
-        when(restaurant.getId()).thenReturn(id);
-        when(restaurant.getName()).thenReturn(name);
-        when(restaurant.getLatitude()).thenReturn(latitude);
-        when(restaurant.getLongitude()).thenReturn(longitude);
-        return restaurant;
+        return Restaurant.builder()
+                .name(name)
+                .latitude(latitude)
+                .longitude(longitude)
+                .address("테스트 주소")
+                .build();
     }
 
     private Library createLibrary(Long id, String name, Double latitude, Double longitude) {
-        Library library = mock(Library.class);
-        when(library.getId()).thenReturn(id);
-        when(library.getLbrryName()).thenReturn(name);
-        when(library.getLatitude()).thenReturn(latitude);
-        when(library.getLongitude()).thenReturn(longitude);
-        return library;
+        return Library.builder()
+                .lbrryName(name)
+                .xcnts(latitude)
+                .ydnts(longitude)
+                .adres("테스트 주소")
+                .build();
     }
 
     private Park createPark(Long id, String name, Double latitude, Double longitude) {
-        Park park = mock(Park.class);
-        when(park.getId()).thenReturn(id);
-        when(park.getName()).thenReturn(name);
-        when(park.getLatitude()).thenReturn(latitude);
-        when(park.getLongitude()).thenReturn(longitude);
-        return park;
+        return Park.builder()
+                .name(name)
+                .latitude(latitude)
+                .longitude(longitude)
+                .address("테스트 주소")
+                .build();
     }
 
     private SportsFacility createSportsFacility(Long id, String name, Double latitude, Double longitude) {
-        SportsFacility facility = mock(SportsFacility.class);
-        when(facility.getId()).thenReturn(id);
-        when(facility.getName()).thenReturn(name);
-        when(facility.getLatitude()).thenReturn(latitude);
-        when(facility.getLongitude()).thenReturn(longitude);
-        return facility;
+        return SportsFacility.builder()
+                .facilityName(name)
+                .latitude(latitude)
+                .longitude(longitude)
+                .address("테스트 주소")
+                .build();
     }
 
     private CoolingCenter createCoolingCenter(Long id, String name, Double latitude, Double longitude) {
-        CoolingCenter center = mock(CoolingCenter.class);
-        when(center.getId()).thenReturn(id);
-        when(center.getName()).thenReturn(name);
-        when(center.getLatitude()).thenReturn(latitude);
-        when(center.getLongitude()).thenReturn(longitude);
-        return center;
+        return CoolingCenter.builder()
+                .name(name)
+                .latitude(latitude)
+                .longitude(longitude)
+                .lotAddress("테스트 주소")
+                .build();
     }
 }

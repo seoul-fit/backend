@@ -21,7 +21,7 @@ public class QueryCulturalSpaceAdapter implements QueryCulturalSpacePort {
 
     @Override
     public List<CulturalSpace> getCulturalSpaceLocation(double latitude, double longitude) {
-        double radiusKm = 2.0;
+        double radiusKm = 5.0; // 검색 반경 5km
         return culturalSpaceRepository.findWithInRadius(
                 BigDecimal.valueOf(latitude), BigDecimal.valueOf(longitude), radiusKm
         );

@@ -267,16 +267,16 @@ public class LocationDataResponse {
         public static SportsFacilityInfo from(SportsFacility facility) {
             return SportsFacilityInfo.builder()
                     .id(facility.getId())
-                    .name(facility.getName())
+                    .name(facility.getFacilityName())
                     .district(facility.getDistrict())
                     .address(facility.getAddress())
                     .latitude(facility.getLatitude())
                     .longitude(facility.getLongitude())
                     .facilityType(facility.getFacilityType())
-                    .phone(facility.getPhone())
-                    .weekdayHours(facility.getWeekdayHours())
-                    .weekendHours(facility.getWeekendHours())
-                    .usageFee(facility.getUsageFee())
+                    .phone(facility.getPhoneNumber())
+                    .weekdayHours(facility.getOperatingHours())
+                    .weekendHours(facility.getHoliday())
+                    .usageFee(facility.getFeeInfo())
                     .build();
         }
     }

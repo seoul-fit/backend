@@ -1,0 +1,782 @@
+서울시 문화공간 정보
+http://openapi.seoul.go.kr:8088/(인증키)/xml/culturalSpaceInfo/1/5/
+<?xml version="1.0" encoding="UTF-8"?>
+<culturalSpaceInfo>
+<list_total_count>949</list_total_count>
+<RESULT>
+<CODE>INFO-000</CODE>
+<MESSAGE>정상 처리되었습니다</MESSAGE>
+</RESULT>
+<row>
+<NUM>1</NUM>
+<SUBJCODE>기타</SUBJCODE>
+<FAC_NAME>DDP(동대문디자인플라자)</FAC_NAME>
+<ADDR>서울특별시 중구 을지로 281</ADDR>
+<X_COORD>37.56735731522952</X_COORD>
+<Y_COORD>127.00977973484339</Y_COORD>
+<PHNE>02-2153-0000</PHNE>
+<FAX>02-2153-0010</FAX>
+<HOMEPAGE>http://www.ddp.or.kr</HOMEPAGE>
+<OPENHOUR/>
+<ENTR_FEE/>
+<CLOSEDAY>1월 1일 / 설날 / 추석 당일 * 공간별 상이</CLOSEDAY>
+<OPEN_DAY/>
+<SEAT_CNT/>
+<MAIN_IMG>https://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=04ae3506f18f4fb39a8553095364f973&amp;thumb=Y</MAIN_IMG>
+<ETC_DESC/>
+<FAC_DESC>&lt;h5 class="tit_chapter" style="text-align: center; padding: 0px; margin: 0px 0px 20px;" arial,="" vernade,="" 돋움,="" dotum,="" noto="" kr?,="" sans-serif;?="" sans=""&gt;&lt;span style="font-size: 18pt;"&gt;‘Amazing! Tomorrow’DDP(동대문디자인플라자)에 오신 것을 환영합니다.&lt;/span&gt;&lt;/h5&gt;&lt;h5 class="tit_chapter" style="padding: 0px; margin: 0px 0px 20px;" arial,="" vernade,="" 돋움,="" dotum,="" noto="" kr?,="" sans-serif;?="" sans=""&gt;&lt;span style="font-size: 18px; font-weight: 300;"&gt;DDP는 대한민국 서울특별시 동대문역사문화공원역에 위치한 복합 문화 공간입니다. 2014년 3월 21일 개관한 이래 DDP에서는 각종 전시, 패션쇼, 신제품발표회, 포럼, 컨퍼런스 등 다양한 문화 행사가 진행되어 왔습니다. DDP는 디자인 트렌드가 시작되고 문화가 교류하는 장소입니다. 세계 최초 신제품과 패션 트렌드를 알리고, 새로운 전시를 통해 지식을 공유하며, 다양한 디자인 체험이 가능한 콘텐츠로 운영됩니다. 이러한 활동을 통해 DDP는 아시아로, 세계로 향하는 ‘디자인·패션산업의 발신지’의 역할을 할 것입니다.&lt;/span&gt;&lt;/h5&gt;&lt;div&gt;&lt;span style="font-size: 18px;"&gt;&lt;b&gt;개관 이후 DDP는&lt;/b&gt;&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;1. 연간 천만명 이상이 방문하는 &lt;b&gt;서울의 디자인 성지&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;- 2018년 이후 연간 천만명 이상 방문, 일평균 3만명&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;2. 뉴욕타임스 선정 &lt;b&gt;"꼭 가봐야 할 세계 명소"&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;- 한국관광공사 선정 한국관광지 100선, LA타임스 "서울의 대표 관광지"&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;3. 여성 최초 프리츠커 건축상 수상 &lt;b&gt;자하 하디드의 유작&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;- 칼 라거펠트, 알레산드로 멘디니, 장 폴고티에 등 세계적 디자인명사들의 사랑을 받은 공간&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;4. &lt;b&gt;매년 100건 이상의 전시, 행사 개최&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;- 샤넬, 루이비통 등 명품 브랜드가 예술 활동을 벌이는공간&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;- BMW, 벤츠 등 신차 런칭 발표의 주요 공간&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;5. &lt;b&gt;동대문상권과의 상생을 위한 끊임없는 노력과 변신&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;- 동대문 지역과 콜라보한 행사와 상품 지속개발&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;- 개관 이후 지하철 유동인구 12% 이상 상승(서울교통공사)&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;&lt;b&gt;DDP 베스트 플레이스&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;&lt;b&gt;1. DDP 뮤지엄&lt;/b&gt; :&amp;nbsp;&lt;/span&gt;&lt;span style="font-size: 18px;"&gt;디자인 가치를 전 세계에 알리는 구심점&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;DDP 뮤지엄이 ‘서울특별시 등록 미술관 제29020-01호’ 1종 공립미술관으로 등록되었습니다.&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;이번 공립미술관 등록은 대한민국 유일의 공립 디자인 뮤지엄으로서 서울의 디자인 가치를 발굴, 연구, 전시해 국내 디자인 영역을 확장하고 동시대 글로벌 디자인 콘텐츠를 선보이며 DDP가 창조 자원의 발신지로 자리하는 주요한 변곡점이 될 것입니다.&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;&lt;b&gt;2. 디자인 쇼룸, 디자인홀&lt;/b&gt; :&amp;nbsp;&lt;/span&gt;&lt;span style="font-size: 18px;"&gt;예술과 기술로 하나되는 스페이스 DDP 45133&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;동대문이 지닌 역사적·문화적·사회적·경제적 토대 위에 새로운 미래적 가치와 비전을 더한 새로운 시도를 시민과 함께 만듭니다.&amp;nbsp;&lt;/span&gt;&lt;span style="font-size: 18px;"&gt;DDP를 둘러싼 총 45,133개의 알루미늄 패널이 저마다 다른 모습을 하는 것은 마치 우주를 구성하는 모든 존재의 다양성과 유사합니다. 그리고, 이런 다양성과 조화는 시각적, 공간적 아름다움 뿐만 아니라, 똑같은 존재가 단 하나도 없는 우리 인간과 같은 구성원들이 만들어내는 거대한 우주를 닮았습니다.&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;서로 다른 다양성과 그 조화를 통해 만들어내는 우주는 바로 DDP 45133이 추구하고자 하는 새로운 공간이며 지향하는 가치입니다.&amp;nbsp;&lt;/span&gt;&lt;span style="font-size: 18px;"&gt;모든 존재가 어우러져 하나의 우주(Space)를 구성하듯 함께 참여하여 만들어가는 디지털 스페이스 DDP 45133 DDP 45133 NFT 전시는 DDP 온·오프라인 융합으로 예술과 기술로 하나되는 스페이스입니다.&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;첫 시작을 DDP의 철학이 담긴 고 자하하디드의 작품으로 시작합니다. (전시기간: '23.12.21.~'24.11.30.)&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;&lt;b&gt;3. DDP디자인스토어&lt;/b&gt; :&amp;nbsp;&lt;/span&gt;&lt;span style="font-size: 18px;"&gt;더 나은 서울 생활의 품격과 일상을 위한 곳&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;서울디자인재단에서 운영하는 DDP디자인스토어는 우수한 디자인 상품을 발굴하고, 온·오프라인 플랫폼을 통해서 디자이너들에게 마케팅과 홍보를 지원하는 사업입니다.서울 디자인의 우수성 확산 및 DDP디자인스토어 브랜드의 국제적 인지도 확립을 위해 서울 라이프스타일의 가치를 재발견하고 디자인을 통한 정체성을 확립하고 있습니다.&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;&lt;b&gt;4. 서울-온&lt;/b&gt; :&amp;nbsp;&lt;/span&gt;&lt;span style="font-size: 18px;"&gt;비대면 행사를 위한 공간&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;서울-온은 코로나19 장기화로 증가한 화상회의 및 비대면 행사를 위한 공간입니다. 초대형 디스플레이와 고해상도 영상장비, 최신 음향？조명 설비를 갖추고 있으며 부속시설로 일반대기실, VIP대기실, 라커룸, 통역실, 조정실, 라운지가 있습니다. 화상회의뿐만 아니라 토크쇼, 포럼, 강연 등 다양한 형태의 온·오프라인 행사를 개최할 수 있는 공간입니다.&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;&lt;b&gt;5. 서울라이트&lt;/b&gt; :&amp;nbsp;&lt;/span&gt;&lt;span style="font-size: 18px;"&gt;시민참여로 힐링과 위로의 디자인 감성을 담다&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;서울을 대표하는 건축물인 동대문디자인플라자(DDP)는 평소에는 은빛으로 자신만의 컬러로 존재감을 드러내지만 밤이 되면 굴곡진 은빛 표면이 캔버스가 됩니다. 압도적인 규모와 눈을 뗄 수 없는 역동성이 가득한 ‘서울라이트’는 지금 우리나라를 넘어 세계의 눈을 사로잡고 있습니다. DDP가 서울의 문화자산으로 성장하고 동대문을 중심으로 지역 경제와 경제 활성화에 기여하고 있습니다.&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=""&gt;&lt;span style="font-size: 18px;"&gt;&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div style="font-size: 18px; font-weight: 300;"&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;</FAC_DESC>
+<ENTRFREE>무료</ENTRFREE>
+<SUBWAY/>
+<BUSSTOP>동대문역사문화공원, 광희동, 을지로 6가 국립중앙의료원</BUSSTOP>
+<YELLOW/>
+<GREEN/>
+<BLUE>N13, 105,152,301,N13,N16,N30,105,144,261,301,407,420</BLUE>
+<RED/>
+<AIRPORT/>
+</row>
+<row>
+<NUM>2</NUM>
+<SUBJCODE>공연장</SUBJCODE>
+<FAC_NAME>우란2경</FAC_NAME>
+<ADDR>서울특별시 성동구 연무장7길 11 2층</ADDR>
+<X_COORD>37.5437897702564</X_COORD>
+<Y_COORD>127.054416929987</Y_COORD>
+<PHNE>070-4244-3812</PHNE>
+<FAX/>
+<HOMEPAGE>https://www.wooranfdn.org/about/space.jsp</HOMEPAGE>
+<OPENHOUR/>
+<ENTR_FEE>프로그램별 상이</ENTR_FEE>
+<CLOSEDAY>공연에 따라 다름</CLOSEDAY>
+<OPEN_DAY/>
+<SEAT_CNT/>
+<MAIN_IMG>https://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=d715fcc0463c4991a77ff3127836fb39&amp;thumb=Y</MAIN_IMG>
+<ETC_DESC/>
+<FAC_DESC>&lt;div&gt;&lt;span style="font-size: 12pt;"&gt;비움으로 완성한 채움의 공간&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style="font-size: 12pt;"&gt;볕 경, 그림자 영으로 불리는 한자어 ‘景’에는 사물을 조화롭게 비추는 ‘빛’과 그 빛이 만들어낸 ‘그림자’, 그리고 그들이 함께 어우러지는 ‘풍경’이라는 의미가 모두 담겨져 있습니다.&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style="font-size: 12pt;"&gt;우란문화재단은 각 공간명에 공간의 특성을 지우고 ‘경景’이라는 명칭을 사용하여 선입견 없이 각 공간에서 자유롭게 펼쳐질 예술적 풍경에 대한 기대감을 담았습니다.&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style="font-size: 12pt;"&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style="font-size: 12pt;"&gt;1층에서 3층까지 각 층에 위치한 우란문화재단의 주요 공간은 각각 우란1경, 우란2경, 우란3경, 우란4경, 우란5경으로 불리게 됩니다. 객석과 무대의 경계를 허물고, 전시와 공연이라는 기능마저 최소화한 이 ‘무제의 공간’은 매번 새롭게 해석되며, 무한한 가능성의 공간으로 거듭납니다.&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style="font-size: 12pt;"&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style="font-size: 12pt;"&gt;우란문화재단 2층에 위치한 우란2경은 무대와 객석이 고정되지 않아 자유로운 구획이 가능한 공간입니다.&amp;nbsp; (대관불가)&lt;/span&gt;&lt;/div&gt;</FAC_DESC>
+<ENTRFREE>유료</ENTRFREE>
+<SUBWAY/>
+<BUSSTOP/>
+<YELLOW/>
+<GREEN/>
+<BLUE/>
+<RED/>
+<AIRPORT/>
+</row>
+<row>
+<NUM>3</NUM>
+<SUBJCODE>도서관</SUBJCODE>
+<FAC_NAME>구립은평뉴타운도서관</FAC_NAME>
+<ADDR>서울특별시 은평구 진관2로 111-51</ADDR>
+<X_COORD>37.63723039689538</X_COORD>
+<Y_COORD>126.93311834754995</Y_COORD>
+<PHNE>(02) 6341-6400</PHNE>
+<FAX/>
+<HOMEPAGE>http://www.enlib.or.kr/</HOMEPAGE>
+<OPENHOUR/>
+<ENTR_FEE/>
+<CLOSEDAY>매주 금요일과 법정공휴일</CLOSEDAY>
+<OPEN_DAY/>
+<SEAT_CNT/>
+<MAIN_IMG>https://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=ATH_SPC_000000000000000000101433&amp;thumb=Y</MAIN_IMG>
+<ETC_DESC/>
+<FAC_DESC>&lt;div&gt;&lt;span style="font-size: 14pt;"&gt;은평구 진관동에 위치한 은평뉴타운도서관은 정보의 원활한 접근과 맞춤서비스, 평생교육, 창의적 독서 환경 제공 등 지역 주민 누구나 소통하고 정보를 나눌 수 있는 공간이자 시대의 변화에 발맞추어 새롭게 등장하는 미디어 정보를 제공하고 주민들의 퍼블릭 액세스를 실현하기 위한 도서관과 미디어센터가 결합한 복합 문화공간 기능을 수행하고 있습니다.&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style="font-size: 12px;"&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style="font-size: 14pt;"&gt;&amp;nbsp;개관연장사업을 통한 야간독서문화프로그램, 학교 연계 독서진흥사업, 1사서 1동아리, ‘미디어 리터러시 교육’, 지역주민들이 직접 만들어나가는 라디오 팟캐스트 은평FM, 새로운 형태의 북큐레이션 대책있는 사서들, 시니어 대상 콘텐츠 제작 교육 지원, 웹툰창작체험 교육, 어린이 꾸러기 기자단 등 어린이/ 청소년들에게는 전문교육을 통한 인재양성과 성인, 노인 및 정보소외계층에는 역량 강화를 통한 지역 커뮤니티 활성화를 위해 앞장서 나가고 있습니다.&lt;/span&gt;&lt;/div&gt;</FAC_DESC>
+<ENTRFREE>무료</ENTRFREE>
+<SUBWAY/>
+<BUSSTOP/>
+<YELLOW/>
+<GREEN>(지선) 7211, (지선) 7723</GREEN>
+<BLUE/>
+<RED/>
+<AIRPORT/>
+</row>
+<row>
+<NUM>4</NUM>
+<SUBJCODE>공연장</SUBJCODE>
+<FAC_NAME>씨어터쿰</FAC_NAME>
+<ADDR>서울특별시 종로구 창경궁로 253-7</ADDR>
+<X_COORD>37.5844227357062</X_COORD>
+<Y_COORD>126.999528450321</Y_COORD>
+<PHNE>02-6085-0015</PHNE>
+<FAX/>
+<HOMEPAGE>https://www.daehakroticket.com/ticket.do?command=hall_view&amp;tht_code=20200304001</HOMEPAGE>
+<OPENHOUR/>
+<ENTR_FEE/>
+<CLOSEDAY>없음</CLOSEDAY>
+<OPEN_DAY/>
+<SEAT_CNT/>
+<MAIN_IMG>https://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=43deea57057a4674bf968f5c10e0b29c&amp;thumb=Y</MAIN_IMG>
+<ETC_DESC/>
+<FAC_DESC>&lt;p style="text-align: center; " align="center"&gt;&lt;span style="font-size: 14pt;"&gt;연극, 뮤지컬, 다양한 창작활동을 위한 공연장입니다.&lt;/span&gt;&lt;br&gt;&lt;/p&gt;</FAC_DESC>
+<ENTRFREE>무료</ENTRFREE>
+<SUBWAY>12</SUBWAY>
+<BUSSTOP>13</BUSSTOP>
+<YELLOW>15</YELLOW>
+<GREEN>16</GREEN>
+<BLUE>17</BLUE>
+<RED>18</RED>
+<AIRPORT>14</AIRPORT>
+</row>
+<row>
+<NUM>5</NUM>
+<SUBJCODE>문화예술회관</SUBJCODE>
+<FAC_NAME>노원문화예술회관</FAC_NAME>
+<ADDR>서울 노원구 중계로 181 노원문화예술회관</ADDR>
+<X_COORD>37.6502368524442</X_COORD>
+<Y_COORD>127.080267103033</Y_COORD>
+<PHNE>02-2289-3425</PHNE>
+<FAX/>
+<HOMEPAGE>https://www.nowonarts.kr/</HOMEPAGE>
+<OPENHOUR/>
+<ENTR_FEE>행사별 상이</ENTR_FEE>
+<CLOSEDAY>행사 일정에 따름</CLOSEDAY>
+<OPEN_DAY/>
+<SEAT_CNT/>
+<MAIN_IMG>https://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=ATH_SPC_000000000000000000101437&amp;thumb=Y</MAIN_IMG>
+<ETC_DESC/>
+<FAC_DESC>&lt;div style="text-align: center;" align="center"&gt;&lt;span style="font-size: 14pt;"&gt;노원문화예술회관은 중계로 181 불암초등학교 맞은편에 위치하고 있으며 지상 6층, 지하 3층, 연면적 13,167㎡(3,983평) 규모에 608석(일반 600석, 장애인석 8석)의&lt;/span&gt;&lt;/div&gt;&lt;div style="text-align: center;" align="center"&gt;&lt;span style="font-size: 14pt;"&gt;대공연장, 288석(일반석 284석, 장애인석 4석)의 소공연장, 스카이라운지, 전시실, 다목적실, 잔디광장의 야외무대, 기타 공연부대시설 등을 갖춘 서울 동북부 최고의 문화예술공간입니다.&lt;/span&gt;&lt;/div&gt;</FAC_DESC>
+<ENTRFREE>유료</ENTRFREE>
+<SUBWAY>4호선 상계역 : 4번 출구 - 1143번, 1140번 버스(노원문화예술회관 하차) / 1142번, 1224번 버스(은행사거리 하차 후 도보)</SUBWAY>
+<BUSSTOP/>
+<YELLOW/>
+<GREEN/>
+<BLUE/>
+<RED/>
+<AIRPORT/>
+</row>
+</culturalSpaceInfo>
+
+
+
+요청인자
+변수명	타입	변수설명	값설명
+KEY	String(필수)	인증키	OpenAPI 에서 발급된 인증키
+TYPE	String(필수)	요청파일타입	xml : xml, xml파일 : xmlf, 엑셀파일 : xls, json파일 : json
+SERVICE	String(필수)	서비스명	culturalSpaceInfo
+START_INDEX	INTEGER(필수)	요청시작위치	정수 입력 (페이징 시작번호 입니다 : 데이터 행 시작번호)
+END_INDEX	INTEGER(필수)	요청종료위치	정수 입력 (페이징 끝번호 입니다 : 데이터 행 끝번호)
+NUM	STRING(선택)	번호
+SUBJCODE	STRING(선택)	주제분류
+ADDR	STRING(선택)	주소
+출력값
+No	출력명	출력설명
+공통	list_total_count	총 데이터 건수 (정상조회 시 출력됨)
+공통	RESULT.CODE	요청결과 코드 (하단 메세지설명 참고)
+공통	RESULT.MESSAGE	요청결과 메시지 (하단 메세지설명 참고)
+1	NUM	번호
+2	SUBJCODE	주제분류
+3	FAC_NAME	문화시설명
+4	ADDR	주소
+5	X_COORD	위도
+6	Y_COORD	경도
+7	PHNE	전화번호
+8	FAX	팩스번호
+9	HOMEPAGE	홈페이지
+10	OPENHOUR	관람시간
+11	ENTR_FEE	관람료
+12	CLOSEDAY	휴관일
+13	OPEN_DAY	개관일자
+14	SEAT_CNT	객석수
+15	MAIN_IMG	대표이미지
+16	ETC_DESC	기타사항
+17	FAC_DESC	시설소개
+18	ENTRFREE	무료구분
+19	SUBWAY	지하철
+20	BUSSTOP	버스정거장
+21	YELLOW	YELLOW
+22	GREEN	GREEN
+23	BLUE	BLUE
+24	RED	RED
+25	AIRPORT	공항버스
+
+
+	서울문화포털 문화행사
+http://openapi.seoul.go.kr:8088/(인증키)/xml/culturalEventInfo/1/5/
+<?xml version="1.0" encoding="UTF-8"?>
+<culturalEventInfo>
+<list_total_count>5095</list_total_count>
+<RESULT>
+<CODE>INFO-000</CODE>
+<MESSAGE>정상 처리되었습니다</MESSAGE>
+</RESULT>
+<row>
+<CODENAME>전시/미술</CODENAME>
+<GUNAME>강남구</GUNAME>
+<TITLE>K-핸드메이드페어 2025</TITLE>
+<DATE>2025-12-18~2025-12-21</DATE>
+<PLACE>서울 삼성동 코엑스 1층  B홀</PLACE>
+<ORG_NAME>기타</ORG_NAME>
+<USE_TRGT>누구나</USE_TRGT>
+<USE_FEE>사전 예매가: 8,000원, 현장 구매가: 10,000원</USE_FEE>
+<PLAYER/>
+<PROGRAM/>
+<ETC_DESC/>
+<ORG_LINK>https://k-handmade.com/</ORG_LINK>
+<MAIN_IMG>https://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=42afe00583eb4b0983dba37a04a41222&amp;thumb=Y</MAIN_IMG>
+<RGSTDATE>2025-01-10</RGSTDATE>
+<TICKET>기관</TICKET>
+<STRTDATE>2025-12-18 00:00:00.0</STRTDATE>
+<END_DATE>2025-12-21 00:00:00.0</END_DATE>
+<THEMECODE>기타</THEMECODE>
+<LOT>37.5118239121138</LOT>
+<LAT>127.059159043842</LAT>
+<IS_FREE>유료</IS_FREE>
+<HMPG_ADDR>https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=152033&amp;menuNo=200009</HMPG_ADDR>
+</row>
+<row>
+<CODENAME>콘서트</CODENAME>
+<GUNAME>용산구</GUNAME>
+<TITLE>2025 카즈미 타테이시 트리오 내한공연 [지브리, 재즈를 만나다-서울]</TITLE>
+<DATE>2025-12-13~2025-12-13</DATE>
+<PLACE>용산아트홀 대극장 미르</PLACE>
+<ORG_NAME>기타</ORG_NAME>
+<USE_TRGT>성인, 청소년</USE_TRGT>
+<USE_FEE>VIP석 77,000원 R석 66,000원 A석 55,000원</USE_FEE>
+<PLAYER/>
+<PROGRAM/>
+<ETC_DESC/>
+<ORG_LINK>https://tickets.interpark.com/goods/25009778</ORG_LINK>
+<MAIN_IMG>https://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=311fd9815943420c808f1a00933ae9fb&amp;thumb=Y</MAIN_IMG>
+<RGSTDATE>2025-07-11</RGSTDATE>
+<TICKET>시민</TICKET>
+<STRTDATE>2025-12-13 00:00:00.0</STRTDATE>
+<END_DATE>2025-12-13 00:00:00.0</END_DATE>
+<THEMECODE>기타</THEMECODE>
+<LOT>37.5324522944579</LOT>
+<LAT>126.990478820837</LAT>
+<IS_FREE>유료</IS_FREE>
+<HMPG_ADDR>https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=154341&amp;menuNo=200008</HMPG_ADDR>
+</row>
+<row>
+<CODENAME>클래식</CODENAME>
+<GUNAME>마포구</GUNAME>
+<TITLE>[마포문화재단] M 아티스트 2025 바리톤 박주성 리사이틀 Ⅱ</TITLE>
+<DATE>2025-12-06~2025-12-06</DATE>
+<PLACE>마포아트센터 아트홀맥</PLACE>
+<ORG_NAME>마포문화재단</ORG_NAME>
+<USE_TRGT>8세이상 관람가능(미취학아동입장불가)</USE_TRGT>
+<USE_FEE>R석 40,000원, S석 25,000원</USE_FEE>
+<PLAYER/>
+<PROGRAM>대한민국 성악가 최초 오스트리아 빈 국립 오페라 극장 전속 솔리스트로 활동 중인 사계 성악계의 떠오르는 별 '바리톤 박주성'</PROGRAM>
+<ETC_DESC/>
+<ORG_LINK>https://www.mfac.or.kr/performance/whole_view.jsp?sc_b_category=17&amp;sc_b_code=BOARD_1207683401&amp;pk_seq=2474&amp;page=1</ORG_LINK>
+<MAIN_IMG>https://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=4561e62e2eca40e49c603db1855b06a4&amp;thumb=Y</MAIN_IMG>
+<RGSTDATE>2025-05-07</RGSTDATE>
+<TICKET>기관</TICKET>
+<STRTDATE>2025-12-06 00:00:00.0</STRTDATE>
+<END_DATE>2025-12-06 00:00:00.0</END_DATE>
+<THEMECODE>기타</THEMECODE>
+<LOT>37.5499060881738</LOT>
+<LAT>126.945533810385</LAT>
+<IS_FREE>유료</IS_FREE>
+<HMPG_ADDR>https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=153461&amp;menuNo=200008</HMPG_ADDR>
+</row>
+<row>
+<CODENAME>클래식</CODENAME>
+<GUNAME>마포구</GUNAME>
+<TITLE>[마포문화재단] 제10회 M 클래식 축제 로맨틱 리사이틀 #4. [소프라노 임선혜]</TITLE>
+<DATE>2025-11-12~2025-11-12</DATE>
+<PLACE>마포아트센터 아트홀맥</PLACE>
+<ORG_NAME>마포문화재단</ORG_NAME>
+<USE_TRGT>8세이상 관람가능(미취학아동입장불가)</USE_TRGT>
+<USE_FEE>R석 30,000원, S석 20,000원</USE_FEE>
+<PLAYER/>
+<PROGRAM/>
+<ETC_DESC/>
+<ORG_LINK>https://www.mfac.or.kr/performance/whole_view.jsp?sc_b_category=17&amp;sc_b_code=BOARD_1207683401&amp;pk_seq=2516&amp;page=1</ORG_LINK>
+<MAIN_IMG>https://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=e9024ec395564021a50cfef589484967&amp;thumb=Y</MAIN_IMG>
+<RGSTDATE>2025-07-23</RGSTDATE>
+<TICKET>기관</TICKET>
+<STRTDATE>2025-11-12 00:00:00.0</STRTDATE>
+<END_DATE>2025-11-12 00:00:00.0</END_DATE>
+<THEMECODE>기타</THEMECODE>
+<LOT>37.5499060881738</LOT>
+<LAT>126.945533810385</LAT>
+<IS_FREE>유료</IS_FREE>
+<HMPG_ADDR>https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=154480&amp;menuNo=200008</HMPG_ADDR>
+</row>
+<row>
+<CODENAME>클래식</CODENAME>
+<GUNAME>마포구</GUNAME>
+<TITLE>[마포문화재단] 제10회 M 클래식 축제 로맨틱 리사이틀 #3. [피아니스트 백혜선]</TITLE>
+<DATE>2025-11-11~2025-11-11</DATE>
+<PLACE>마포아트센터 아트홀맥</PLACE>
+<ORG_NAME>마포문화재단</ORG_NAME>
+<USE_TRGT>8세이상 관람가능(미취학아동입장불가)</USE_TRGT>
+<USE_FEE>R석 30,000원, S석 20,000원</USE_FEE>
+<PLAYER/>
+<PROGRAM/>
+<ETC_DESC/>
+<ORG_LINK>https://www.mfac.or.kr/performance/whole_view.jsp?sc_b_category=17&amp;sc_b_code=BOARD_1207683401&amp;pk_seq=2515&amp;page=1</ORG_LINK>
+<MAIN_IMG>https://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=efad9e8aad6b4fa3b44369a8747869c5&amp;thumb=Y</MAIN_IMG>
+<RGSTDATE>2025-07-23</RGSTDATE>
+<TICKET>기관</TICKET>
+<STRTDATE>2025-11-11 00:00:00.0</STRTDATE>
+<END_DATE>2025-11-11 00:00:00.0</END_DATE>
+<THEMECODE>기타</THEMECODE>
+<LOT>37.5499060881738</LOT>
+<LAT>126.945533810385</LAT>
+<IS_FREE>유료</IS_FREE>
+<HMPG_ADDR>https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=154478&amp;menuNo=200008</HMPG_ADDR>
+</row>
+</culturalEventInfo>
+
+요청인자
+변수명	타입	변수설명	값설명
+KEY	String(필수)	인증키	OpenAPI 에서 발급된 인증키
+TYPE	String(필수)	요청파일타입	xml : xml, xml파일 : xmlf, 엑셀파일 : xls, json파일 : json
+SERVICE	String(필수)	서비스명	culturalEventInfo
+START_INDEX	INTEGER(필수)	요청시작위치	정수 입력 (페이징 시작번호 입니다 : 데이터 행 시작번호)
+END_INDEX	INTEGER(필수)	요청종료위치	정수 입력 (페이징 끝번호 입니다 : 데이터 행 끝번호)
+CODENAME	STRING(선택)	분류
+TITLE	STRING(선택)	공연/행사명
+DATE	STRING(선택)	날짜/시간	YYYY-MM-DD
+출력값
+No	출력명	출력설명
+공통	list_total_count	총 데이터 건수 (정상조회 시 출력됨)
+공통	RESULT.CODE	요청결과 코드 (하단 메세지설명 참고)
+공통	RESULT.MESSAGE	요청결과 메시지 (하단 메세지설명 참고)
+1	CODENAME	분류
+2	GUNAME	자치구
+3	TITLE	공연/행사명
+4	DATE	날짜/시간
+5	PLACE	장소
+6	ORG_NAME	기관명
+7	USE_TRGT	이용대상
+8	USE_FEE	이용요금
+10	PLAYER	출연자정보
+11	PROGRAM	프로그램소개
+12	ETC_DESC	기타내용
+13	ORG_LINK	홈페이지 주소
+14	MAIN_IMG	대표이미지
+15	RGSTDATE	신청일
+16	TICKET	시민/기관
+17	STRTDATE	시작일
+18	END_DATE	종료일
+19	THEMECODE	테마분류
+20	LOT	위도(Y좌표)
+21	LAT	경도(X좌표)
+22	IS_FREE	유무료
+23	HMPG_ADDR	문화포털상세URL
+
+
+서울시 무더위쉼터
+http://openapi.seoul.go.kr:8088/(인증키)/xml/TbGtnHwcwP/1/5/
+<?xml version="1.0" encoding="UTF-8"?>
+<TbGtnHwcwP>
+<list_total_count>4055</list_total_count>
+<RESULT>
+<CODE>INFO-000</CODE>
+<MESSAGE>정상 처리되었습니다</MESSAGE>
+</RESULT>
+<row>
+<YEAR>2025</YEAR>
+<AREA_CD>1117063000</AREA_CD>
+<FACILITY_TYPE1>공공시설</FACILITY_TYPE1>
+<FACILITY_TYPE2>공공청사</FACILITY_TYPE2>
+<R_AREA_NM>이촌1동주민센터</R_AREA_NM>
+<R_DETL_ADD>서울특별시 용산구 이촌로71길 24</R_DETL_ADD>
+<LOTNO_ADDR>서울특별시 용산구 이촌동 301-82</LOTNO_ADDR>
+<R_AREA_SQR>581.00</R_AREA_SQR>
+<USE_PRNB>30</USE_PRNB>
+<RMRK/>
+<LON>126.9730570</LON>
+<LAT>37.5211982</LAT>
+<MAP_COORD_X>197618.22690543</MAP_COORD_X>
+<MAP_COORD_Y>546857.19419542</MAP_COORD_Y>
+</row>
+<row>
+<YEAR>2025</YEAR>
+<AREA_CD>1117064000</AREA_CD>
+<FACILITY_TYPE1>공공시설</FACILITY_TYPE1>
+<FACILITY_TYPE2>스마트쉼터</FACILITY_TYPE2>
+<R_AREA_NM>냉온사랑방(이촌2동주민센터)</R_AREA_NM>
+<R_DETL_ADD/>
+<LOTNO_ADDR>서울특별시 용산구 이촌동 209-5</LOTNO_ADDR>
+<R_AREA_SQR>30.00</R_AREA_SQR>
+<USE_PRNB>5</USE_PRNB>
+<RMRK/>
+<LON>126.9547710</LON>
+<LAT>37.5278250</LAT>
+<MAP_COORD_X>196002.09000297</MAP_COORD_X>
+<MAP_COORD_Y>547593.30628736</MAP_COORD_Y>
+</row>
+<row>
+<YEAR>2025</YEAR>
+<AREA_CD>1117064000</AREA_CD>
+<FACILITY_TYPE1>특정계층이용시설</FACILITY_TYPE1>
+<FACILITY_TYPE2>회원이용시설</FACILITY_TYPE2>
+<R_AREA_NM>이촌2동할머니경로당</R_AREA_NM>
+<R_DETL_ADD>서울특별시 용산구 이촌로2가길 122</R_DETL_ADD>
+<LOTNO_ADDR>서울특별시 용산구 이촌동 395</LOTNO_ADDR>
+<R_AREA_SQR>69.00</R_AREA_SQR>
+<USE_PRNB>20</USE_PRNB>
+<RMRK/>
+<LON>126.9547534</LON>
+<LAT>37.5254220</LAT>
+<MAP_COORD_X>196000.40600016</MAP_COORD_X>
+<MAP_COORD_Y>547326.60395944</MAP_COORD_Y>
+</row>
+<row>
+<YEAR>2025</YEAR>
+<AREA_CD>1117064000</AREA_CD>
+<FACILITY_TYPE1>공공시설</FACILITY_TYPE1>
+<FACILITY_TYPE2>공공청사</FACILITY_TYPE2>
+<R_AREA_NM>이촌2동주민센터</R_AREA_NM>
+<R_DETL_ADD>서울특별시 용산구 이촌로18길 20</R_DETL_ADD>
+<LOTNO_ADDR>서울특별시 용산구 이촌동 206-2</LOTNO_ADDR>
+<R_AREA_SQR>3,183.00</R_AREA_SQR>
+<USE_PRNB>100</USE_PRNB>
+<RMRK/>
+<LON>126.9546720</LON>
+<LAT>37.5262199</LAT>
+<MAP_COORD_X>195993.25328389</MAP_COORD_X>
+<MAP_COORD_Y>547415.16437561</MAP_COORD_Y>
+</row>
+<row>
+<YEAR>2025</YEAR>
+<AREA_CD>1117065000</AREA_CD>
+<FACILITY_TYPE1>공공시설</FACILITY_TYPE1>
+<FACILITY_TYPE2>공공청사</FACILITY_TYPE2>
+<R_AREA_NM>용산구청(응급대피소겸용)</R_AREA_NM>
+<R_DETL_ADD>서울특별시 용산구 녹사평대로 150  (이태원동)</R_DETL_ADD>
+<LOTNO_ADDR>서울특별시 용산구 이태원동 34-87</LOTNO_ADDR>
+<R_AREA_SQR/>
+<USE_PRNB>80</USE_PRNB>
+<RMRK/>
+<LON>126.9902372</LON>
+<LAT>37.5324884</LAT>
+<MAP_COORD_X>199137.09423603</MAP_COORD_X>
+<MAP_COORD_Y>548109.96945868</MAP_COORD_Y>
+</row>
+</TbGtnHwcwP>
+
+요청인자
+변수명	타입	변수설명	값설명
+KEY	String(필수)	인증키	OpenAPI 에서 발급된 인증키
+TYPE	String(필수)	요청파일타입	xml : xml, xml파일 : xmlf, 엑셀파일 : xls, json파일 : json
+SERVICE	String(필수)	서비스명	TbGtnHwcwP
+START_INDEX	INTEGER(필수)	요청시작위치	정수 입력 (페이징 시작번호 입니다 : 데이터 행 시작번호)
+END_INDEX	INTEGER(필수)	요청종료위치	정수 입력 (페이징 끝번호 입니다 : 데이터 행 끝번호)
+출력값
+No	출력명	출력설명
+공통	list_total_count	총 데이터 건수 (정상조회 시 출력됨)
+공통	RESULT.CODE	요청결과 코드 (하단 메세지설명 참고)
+공통	RESULT.MESSAGE	요청결과 메시지 (하단 메세지설명 참고)
+1	YEAR	시설년도
+2	AREA_CD	위치코드
+3	FACILITY_TYPE1	시설구분1
+4	FACILITY_TYPE2	시설구분2
+5	R_AREA_NM	쉼터명칭
+6	R_DETL_ADD	도로명주소
+7	LOTNO_ADDR	지번주소
+8	R_AREA_SQR	시설면적
+9	USE_PRNB	이용가능인원
+10	RMRK	비고
+11	LON	경도
+12	LAT	위도
+13	MAP_COORD_X	X좌표(EPSG:5186)
+14	MAP_COORD_Y	Y좌표(EPSG:5186)
+
+서울시 관광 음식
+http://openapi.seoul.go.kr:8088/(인증키)/xml/TbVwRestaurants/1/5/
+
+<?xml version="1.0" encoding="UTF-8"?>
+<TbVwRestaurants>
+<list_total_count>6614</list_total_count>
+<RESULT>
+<CODE>INFO-000</CODE>
+<MESSAGE>정상 처리되었습니다</MESSAGE>
+</RESULT>
+<row>
+<POST_SN>49884</POST_SN>
+<LANG_CODE_ID>ja</LANG_CODE_ID>
+<POST_SJ>EPI</POST_SJ>
+<POST_URL>https://japanese.visitseoul.net/restaurants/EPI/JPP9vr5hz?utm_source=seoulopendata&amp;utm_medium=restaurants&amp;utm_content=JPP9vr5hz</POST_URL>
+<ADDRESS> ソウル市カンナム(江南)区ソンルンロ518 1階 </ADDRESS>
+<NEW_ADDRESS>06161 ソウル市カンナム(江南)区ソンルンロ518 1階 </NEW_ADDRESS>
+<CMMN_TELNO>+82-507-1308-3035</CMMN_TELNO>
+<CMMN_HMPG_URL>https://www.instagram.com/epi.kr</CMMN_HMPG_URL>
+<CMMN_USE_TIME>07:00-21:00</CMMN_USE_TIME>
+<SUBWAY_INFO>地下鉄2号線/スイン・プンダン(水仁・盆唐)線「ソンルン」駅8番出口 100m</SUBWAY_INFO>
+<CMMN_HMPG_LANG>韓国語</CMMN_HMPG_LANG>
+<FD_REPRSNT_MENU/>
+</row>
+<row>
+<POST_SN>49885</POST_SN>
+<LANG_CODE_ID>zh-CN</LANG_CODE_ID>
+<POST_SJ>EPI</POST_SJ>
+<POST_URL>https://chinese.visitseoul.net/restaurants/EPI/CNP9vr5hz?utm_source=seoulopendata&amp;utm_medium=restaurants&amp;utm_content=CNP9vr5hz</POST_URL>
+<ADDRESS> 首尔市江南区宣陵路518 1楼 </ADDRESS>
+<NEW_ADDRESS>06161 首尔市江南区宣陵路518 1楼 </NEW_ADDRESS>
+<CMMN_TELNO>+82-507-1308-3035</CMMN_TELNO>
+<CMMN_HMPG_URL>https://www.instagram.com/epi.kr</CMMN_HMPG_URL>
+<CMMN_USE_TIME>07:00-21:00</CMMN_USE_TIME>
+<SUBWAY_INFO>地铁2号线/水仁盆唐线宣陵站8号出口，100m</SUBWAY_INFO>
+<CMMN_HMPG_LANG>韩语</CMMN_HMPG_LANG>
+<FD_REPRSNT_MENU/>
+</row>
+<row>
+<POST_SN>49900</POST_SN>
+<LANG_CODE_ID>en</LANG_CODE_ID>
+<POST_SJ>Summer Lane</POST_SJ>
+<POST_URL>https://english.visitseoul.net/restaurants/Summer-Lane/ENPk3ob8d?utm_source=seoulopendata&amp;utm_medium=restaurants&amp;utm_content=ENPk3ob8d</POST_URL>
+<ADDRESS> Summer Lane, 1F, 49 Itaewon-ro 55ga-gil, Yongsan-gu, Seoul </ADDRESS>
+<NEW_ADDRESS>04348 Summer Lane, 1F, 49 Itaewon-ro 55ga-gil, Yongsan-gu, Seoul </NEW_ADDRESS>
+<CMMN_TELNO>+82-2-792-8114</CMMN_TELNO>
+<CMMN_HMPG_URL>http://instagram.com/summerlane_brunch</CMMN_HMPG_URL>
+<CMMN_USE_TIME>07:30-18:00</CMMN_USE_TIME>
+<SUBWAY_INFO>Subway Line 6 Hangangjin Station Exit 1, 563m</SUBWAY_INFO>
+<CMMN_HMPG_LANG>KOR,ENG</CMMN_HMPG_LANG>
+<FD_REPRSNT_MENU/>
+</row>
+<row>
+<POST_SN>49903</POST_SN>
+<LANG_CODE_ID>zh-TW</LANG_CODE_ID>
+<POST_SJ>Summer Lane 咖啡廳</POST_SJ>
+<POST_URL>https://tchinese.visitseoul.net/restaurants/Summer-Lane/TCPk3ob8d?utm_source=seoulopendata&amp;utm_medium=restaurants&amp;utm_content=TCPk3ob8d</POST_URL>
+<ADDRESS> 首爾特別市龍山區梨泰院路55甲街49，1樓，Summer Lane </ADDRESS>
+<NEW_ADDRESS>04348 首爾特別市龍山區梨泰院路55甲街49，1樓，Summer Lane </NEW_ADDRESS>
+<CMMN_TELNO>+82-2-792-8114</CMMN_TELNO>
+<CMMN_HMPG_URL>http://instagram.com/summerlane_brunch</CMMN_HMPG_URL>
+<CMMN_USE_TIME>07:30-18:00</CMMN_USE_TIME>
+<SUBWAY_INFO>地鐵6號線漢江鎮站1號出口，563m</SUBWAY_INFO>
+<CMMN_HMPG_LANG>韓文,英文</CMMN_HMPG_LANG>
+<FD_REPRSNT_MENU/>
+</row>
+<row>
+<POST_SN>1692</POST_SN>
+<LANG_CODE_ID>zh-TW</LANG_CODE_ID>
+<POST_SJ>Apple House</POST_SJ>
+<POST_URL/>
+<ADDRESS>137-811 首爾市瑞草區盤浦洞978 </ADDRESS>
+<NEW_ADDRESS>06548 首爾市瑞草區新盤浦路50 </NEW_ADDRESS>
+<CMMN_TELNO>+82-2-595-1629</CMMN_TELNO>
+<CMMN_HMPG_URL/>
+<CMMN_USE_TIME>10:00 ~ 21:30</CMMN_USE_TIME>
+<SUBWAY_INFO>地鐵9號線舊盤浦站3號出口 </SUBWAY_INFO>
+<CMMN_HMPG_LANG/>
+<FD_REPRSNT_MENU/>
+</row>
+</TbVwRestaurants>
+
+요청인자
+변수명	타입	변수설명	값설명
+KEY	String(필수)	인증키	OpenAPI 에서 발급된 인증키
+TYPE	String(필수)	요청파일타입	xml : xml, xml파일 : xmlf, 엑셀파일 : xls, json파일 : json
+SERVICE	String(필수)	서비스명	TbVwRestaurants
+START_INDEX	INTEGER(필수)	요청시작위치	정수 입력 (페이징 시작번호 입니다 : 데이터 행 시작번호)
+END_INDEX	INTEGER(필수)	요청종료위치	정수 입력 (페이징 끝번호 입니다 : 데이터 행 끝번호)
+출력값
+No	출력명	출력설명
+공통	list_total_count	총 데이터 건수 (정상조회 시 출력됨)
+공통	RESULT.CODE	요청결과 코드 (하단 메세지설명 참고)
+공통	RESULT.MESSAGE	요청결과 메시지 (하단 메세지설명 참고)
+2	POST_SN	고유번호
+3	LANG_CODE_ID	언어
+4	POST_SJ	상호명
+5	POST_URL	콘텐츠URL
+6	ADDRESS	주소
+7	NEW_ADDRESS	신주소
+8	CMMN_TELNO	전화번호
+9	CMMN_HMPG_URL	웹사이트
+10	CMMN_USE_TIME	운영시간
+11	SUBWAY_INFO	교통정보
+12	CMMN_HMPG_LANG	홈페이지 언어
+13	FD_REPRSNT_MENU	대표메뉴
+
+서울시 공공체육시설 정보
+http://openapi.seoul.go.kr:8088/(인증키)/xml/facilities/1/5/
+<?xml version="1.0" encoding="UTF-8"?>
+<facilities>
+<list_total_count>897</list_total_count>
+<RESULT>
+<CODE>INFO-000</CODE>
+<MESSAGE>정상 처리되었습니다</MESSAGE>
+</RESULT>
+<row>
+<FT_IDX>828</FT_IDX>
+<AR_CD_NAME>구로</AR_CD_NAME>
+<FT_TITLE>50플러스 수영장</FT_TITLE>
+<BK_CD_NAME>공공체육시설</BK_CD_NAME>
+<FT_POST>08350</FT_POST>
+<FT_ADDR>서울특별시 구로구 오류로 36-25</FT_ADDR>
+<FT_ADDR_DETAIL>남부캠퍼스 지하 2층</FT_ADDR_DETAIL>
+<FT_SIZE>성인풀 5레인 / 면적 5,714.8m² </FT_SIZE>
+<FT_ORG>구로구시설관리공단</FT_ORG>
+<FT_PHONE>02-2066-1515</FT_PHONE>
+<FT_WD_TIME>06:00~21:30</FT_WD_TIME>
+<FT_WE_TIME>토요일 10:00~18:30 / 일요일 및 공휴일 휴관</FT_WE_TIME>
+<FT_INFO_TIME>성수기(7~8월)에는 일요일 자유 수영 운영</FT_INFO_TIME>
+<RT_CD_NAME>불가능</RT_CD_NAME>
+<FT_MONEY>운영 프로그램에 따라 이용 요금 상이&#13;
+</FT_MONEY>
+<FT_PARK>- 만차일 경우, 천왕역 환승센터 주차장 이용&#13;
+- 가급적 대중교통 이용&#13;
+</FT_PARK>
+<FT_HOMEPAGE>https://www.gurosisul.or.kr/mod.asp?m=business&amp;s=b07</FT_HOMEPAGE>
+<FT_KIND_NAME>수영장</FT_KIND_NAME>
+<FT_OPERATION_NAME>운영</FT_OPERATION_NAME>
+<FT_SI>샤워실, 탈의실, 관람실, 개인사물함</FT_SI>
+<FT_BIGO/>
+</row>
+<row>
+<FT_IDX>761</FT_IDX>
+<AR_CD_NAME>강서</AR_CD_NAME>
+<FT_TITLE>가곡초등학교</FT_TITLE>
+<BK_CD_NAME>학교체육시설</BK_CD_NAME>
+<FT_POST/>
+<FT_ADDR>서울특별시 강서구 공항대로36길 74</FT_ADDR>
+<FT_ADDR_DETAIL/>
+<FT_SIZE>체육장 6,946㎡</FT_SIZE>
+<FT_ORG>가곡초등학교</FT_ORG>
+<FT_PHONE>02-2661-5995</FT_PHONE>
+<FT_WD_TIME>06:30~08:00, 17:00~보안관 근무 종료시까지</FT_WD_TIME>
+<FT_WE_TIME>토요일 06:30~08:00, 14:00~일몰 시까지</FT_WE_TIME>
+<FT_INFO_TIME>일요일 및 공휴일 06:30~일몰 시까지</FT_INFO_TIME>
+<RT_CD_NAME>가능</RT_CD_NAME>
+<FT_MONEY>체육관 : 15,000~60,000원&#13;
+운동장 : 20,000~100,000원</FT_MONEY>
+<FT_PARK>주차 불가</FT_PARK>
+<FT_HOMEPAGE>http://gagok.sen.es.kr/index.do</FT_HOMEPAGE>
+<FT_KIND_NAME>초등학교</FT_KIND_NAME>
+<FT_OPERATION_NAME>운영</FT_OPERATION_NAME>
+<FT_SI>샤워실, 탈의실, 창고</FT_SI>
+<FT_BIGO/>
+</row>
+<row>
+<FT_IDX>762</FT_IDX>
+<AR_CD_NAME>강서</AR_CD_NAME>
+<FT_TITLE>가양레포츠센터</FT_TITLE>
+<BK_CD_NAME>공공체육시설</BK_CD_NAME>
+<FT_POST>07531</FT_POST>
+<FT_ADDR>서울특별시 강서구 양천로61길 101</FT_ADDR>
+<FT_ADDR_DETAIL/>
+<FT_SIZE>지하 1층, 지상 2층 (면적 4,627.8㎡)</FT_SIZE>
+<FT_ORG>강서구시설관리공단</FT_ORG>
+<FT_PHONE>02-6229-6680</FT_PHONE>
+<FT_WD_TIME>09:00~20:00</FT_WD_TIME>
+<FT_WE_TIME>주말 및 신정, 설, 추석 연휴 및 공휴일 휴관&#13;
+</FT_WE_TIME>
+<FT_INFO_TIME>시설 별 운영시간 상이</FT_INFO_TIME>
+<RT_CD_NAME>가능</RT_CD_NAME>
+<FT_MONEY>(이용 시간 120분 기준)&#13;
+인조잔디축구장 : 평일 60,500원 / 주말 78,650원&#13;
+어린이야구연습장 : 평일 22,000원 / 주말 28,600원&#13;
+족구장 : 무료 대관</FT_MONEY>
+<FT_PARK>주차 가능 (45면)</FT_PARK>
+<FT_HOMEPAGE>https://sport.gssi.or.kr/page/sisul/02/</FT_HOMEPAGE>
+<FT_KIND_NAME>생활체육관</FT_KIND_NAME>
+<FT_OPERATION_NAME>운영</FT_OPERATION_NAME>
+<FT_SI>샤워실, 탈의실, 매점, 관람석 (417석)</FT_SI>
+<FT_BIGO/>
+</row>
+<row>
+<FT_IDX>1372</FT_IDX>
+<AR_CD_NAME>강서</AR_CD_NAME>
+<FT_TITLE>가양레포츠센터 어린이야구장</FT_TITLE>
+<BK_CD_NAME>공공체육시설</BK_CD_NAME>
+<FT_POST>07531</FT_POST>
+<FT_ADDR>서울특별시 강서구 양천로61길 101</FT_ADDR>
+<FT_ADDR_DETAIL/>
+<FT_SIZE>외야거리 : 62m × 65m</FT_SIZE>
+<FT_ORG>강서구시설관리공단</FT_ORG>
+<FT_PHONE>02-3662-9081</FT_PHONE>
+<FT_WD_TIME>동절기 09:00~17:00, 춘추기 09:00~18:00, 하절기 09:00~19:00</FT_WD_TIME>
+<FT_WE_TIME>동절기 08:00~17:00, 춘추기 08:00~18:00, 하절기 08:00~19:00</FT_WE_TIME>
+<FT_INFO_TIME>.신정, 설, 추석 연휴 및 공휴일 휴관</FT_INFO_TIME>
+<RT_CD_NAME>가능</RT_CD_NAME>
+<FT_MONEY>운영 프로그램에 따라 이용 요금 상이</FT_MONEY>
+<FT_PARK>주차 가능 (45대)</FT_PARK>
+<FT_HOMEPAGE>https://sport.gssi.or.kr/page/sisul/02/</FT_HOMEPAGE>
+<FT_KIND_NAME>야구장</FT_KIND_NAME>
+<FT_OPERATION_NAME>운영</FT_OPERATION_NAME>
+<FT_SI>샤워실, 탈의실, 관람석</FT_SI>
+<FT_BIGO/>
+</row>
+<row>
+<FT_IDX>764</FT_IDX>
+<AR_CD_NAME>강서</AR_CD_NAME>
+<FT_TITLE>가양레포츠센터 축구장</FT_TITLE>
+<BK_CD_NAME>공공체육시설</BK_CD_NAME>
+<FT_POST>07531</FT_POST>
+<FT_ADDR>서울특별시 강서구 양천로61길 101</FT_ADDR>
+<FT_ADDR_DETAIL/>
+<FT_SIZE>65m x 97m (인조잔디)</FT_SIZE>
+<FT_ORG>강서구시설관리공단</FT_ORG>
+<FT_PHONE>02-3662-9081</FT_PHONE>
+<FT_WD_TIME>09:00~22:00</FT_WD_TIME>
+<FT_WE_TIME>주말 06:00~22:00 / 공휴일 휴관</FT_WE_TIME>
+<FT_INFO_TIME>평일 기준 동절기, 춘추기, 하절기 별 운영시간 상이</FT_INFO_TIME>
+<RT_CD_NAME>가능</RT_CD_NAME>
+<FT_MONEY>(이용 시간 120분 기준)&#13;
+평일 60,500원 / 주말 78,650원</FT_MONEY>
+<FT_PARK>주차 가능 (45면)</FT_PARK>
+<FT_HOMEPAGE>https://sport.gssi.or.kr/page/sisul/02/</FT_HOMEPAGE>
+<FT_KIND_NAME>축구장</FT_KIND_NAME>
+<FT_OPERATION_NAME>운영</FT_OPERATION_NAME>
+<FT_SI>샤워실, 탈의실, 매점, 관람석 (417석)</FT_SI>
+<FT_BIGO/>
+</row>
+</facilities>
+
+요청인자
+변수명	타입	변수설명	값설명
+KEY	String(필수)	인증키	OpenAPI 에서 발급된 인증키
+TYPE	String(필수)	요청파일타입	xml : xml, xml파일 : xmlf, 엑셀파일 : xls, json파일 : json
+SERVICE	String(필수)	서비스명	facilities
+START_INDEX	INTEGER(필수)	요청시작위치	정수 입력 (페이징 시작번호 입니다 : 데이터 행 시작번호)
+END_INDEX	INTEGER(필수)	요청종료위치	정수 입력 (페이징 끝번호 입니다 : 데이터 행 끝번호)
+출력값
+No	출력명	출력설명
+공통	list_total_count	총 데이터 건수 (정상조회 시 출력됨)
+공통	RESULT.CODE	요청결과 코드 (하단 메세지설명 참고)
+공통	RESULT.MESSAGE	요청결과 메시지 (하단 메세지설명 참고)
+1	FT_IDX	체육시설일련번호
+2	AR_CD_NAME	자치구
+3	FT_TITLE	시설명
+4	BK_CD_NAME	시설유형
+5	FT_POST	시설우편번호
+6	FT_ADDR	시설주소
+7	FT_ADDR_DETAIL	시설상세주소
+8	FT_SIZE	시설규모
+9	FT_ORG	운영기관
+10	FT_PHONE	연락처
+11	FT_WD_TIME	운영시간_평일
+12	FT_WE_TIME	운영시간_주말
+13	FT_INFO_TIME	운영시간_공휴일
+14	RT_CD_NAME	시설대관여부
+15	FT_MONEY	시설사용료
+16	FT_PARK	주차정보
+17	FT_HOMEPAGE	홈페이지
+18	FT_KIND_NAME	시설종류
+19	FT_OPERATION_NAME	시설운영상태
+20	FT_SI	시설편의시설
+21	FT_BIGO	비고
+
+
+서울특별시 공공자전거 실시간 대여정보
+http://openapi.seoul.go.kr:8088/(인증키)/json/bikeList/1/5/
+{"rentBikeStatus":{"list_total_count":5,"RESULT":{"CODE":"INFO-000","MESSAGE":"정상 처리되었습니다."},"row":[{"rackTotCnt":"15","stationName":"102. 망원역 1번출구 앞","parkingBikeTotCnt":"10","shared":"67","stationLatitude":"37.55564880","stationLongitude":"126.91062927","stationId":"ST-4"},{"rackTotCnt":"14","stationName":"103. 망원역 2번출구 앞","parkingBikeTotCnt":"9","shared":"64","stationLatitude":"37.55495071","stationLongitude":"126.91083527","stationId":"ST-5"},{"rackTotCnt":"13","stationName":"104. 합정역 1번출구 앞","parkingBikeTotCnt":"8","shared":"62","stationLatitude":"37.55073929","stationLongitude":"126.91508484","stationId":"ST-6"},{"rackTotCnt":"5","stationName":"105. 합정역 5번출구 앞","parkingBikeTotCnt":"0","shared":"0","stationLatitude":"37.55000687","stationLongitude":"126.91482544","stationId":"ST-7"},{"rackTotCnt":"12","stationName":"106. 합정역 7번출구 앞","parkingBikeTotCnt":"0","shared":"0","stationLatitude":"37.54864502","stationLongitude":"126.91282654","stationId":"ST-8"}]}}
+요청인자
+변수명	타입	변수설명	값설명
+KEY	String(필수)	인증키	OpenAPI 에서 발급된 인증키
+TYPE	String(필수)	요청파일타입
+xml : xml
+
+json파일 : json
+
+SERVICE	String(필수)	서비스명	bikeList
+START_INDEX	INTEGER(필수)	요청시작위치	정수 입력 (페이징 시작번호 입니다 : 데이터 행 시작번호)
+END_INDEX	INTEGER(필수)	요청종료위치	정수 입력 (페이징 끝번호 입니다 : 데이터 행 끝번호)
+stationId	STRING(선택)	대여소ID
+출력값
+No	출력명	출력설명
+공통	list_total_count	총 데이터 건수 (정상조회 시 출력됨)
+공통	RESULT.CODE	요청결과 코드 (하단 메세지설명 참고)
+공통	RESULT.MESSAGE	요청결과 메시지 (하단 메세지설명 참고)
+1	rackTotCnt	거치대개수
+3	parkingBikeTotCnt	자전거주차총건수
+4	shared	거치율
+5	stationLatitude	위도
+6	stationLongitude	경도
+7	stationId	대여소ID
+8	stationName	대여소이름

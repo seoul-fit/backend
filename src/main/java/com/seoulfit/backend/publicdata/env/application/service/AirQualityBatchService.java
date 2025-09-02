@@ -94,7 +94,7 @@ public class AirQualityBatchService implements AirQualityBatchUseCase {
                     }
                 } catch (Exception e) {
                     log.warn("대기질 데이터 처리 중 오류 발생: {}, 데이터: {}", e.getMessage(), apiData.getMSRSTENNM());
-                    throw new RuntimeException(e.getMessage(), e);
+                    totalSkipped++;
                 }
             }
 

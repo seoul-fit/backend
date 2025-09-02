@@ -67,6 +67,27 @@ public class JwtTokenProvider {
                 .signWith(secretKey)
                 .compact();
     }
+    
+    /**
+     * 테스트용 토큰 생성 (역할 포함)
+     *
+     * @param email 사용자 이메일
+     * @param role 사용자 역할
+     * @return 액세스 토큰
+     */
+    public String generateToken(String email, String role) {
+        Date now = new Date();
+        Date validity = new Date(now.getTime() + accessTokenValidityInMilliseconds);
+
+        return Jwts.builder()
+                .subject(email)
+                .claim("type", "access")
+                .claim("role", role)
+                .issuedAt(now)
+                .expiration(validity)
+                .signWith(secretKey)
+                .compact();
+    }
 
     /**
      * 토큰에서 사용자 ID 추출

@@ -18,10 +18,10 @@ import java.time.LocalDateTime;
  * @since 1.0.0
  */
 @Entity
-@Table(name = "sports_facilities", indexes = {
-    @Index(name = "idx_sports_facilities_location", columnList = "latitude, longitude"),
-    @Index(name = "idx_sports_facilities_name", columnList = "name"),
-    @Index(name = "idx_sports_facilities_district", columnList = "district")
+@Table(name = "sports_reservation_facilities", indexes = {
+    @Index(name = "idx_sports_res_facilities_location", columnList = "latitude, longitude"),
+    @Index(name = "idx_sports_res_facilities_name", columnList = "facility_name"),
+    @Index(name = "idx_sports_res_facilities_district", columnList = "district")
 })
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -31,68 +31,54 @@ public class SportsFacility implements GeoUtils.GeoPoint {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "facility_idx")
-    private String facilityIdx; // 체육시설일련번호
+    @Column(name = "service_id")
+    private String serviceId; // 서비스ID
 
     @Column(name = "district", length = 50)
     private String district; // 자치구
 
-    @Column(name = "name", nullable = false, length = 200)
-    private String name; // 시설명
+    @Column(name = "facility_name", nullable = false, length = 200)
+    private String facilityName; // 시설명
 
     @Column(name = "facility_type", length = 100)
     private String facilityType; // 시설유형
 
-    @Column(name = "postal_code", length = 10)
-    private String postalCode; // 시설우편번호
+    @Column(name = "x_coordinate", length = 50)
+    private String xCoordinate; // X좌표
 
     @Column(name = "address", length = 300)
     private String address; // 시설주소
 
-    @Column(name = "address_detail", length = 300)
-    private String addressDetail; // 시설상세주소
+    @Column(name = "y_coordinate", length = 50)
+    private String yCoordinate; // Y좌표
 
-    @Column(name = "facility_size", length = 200)
-    private String facilitySize; // 시설규모
+    @Column(name = "facility_scale", length = 200)
+    private String facilityScale; // 시설규모
 
-    @Column(name = "operating_org", length = 200)
-    private String operatingOrg; // 운영기관
+    @Column(name = "detail_content", length = 2000)
+    private String detailContent; // 상세내용
 
-    @Column(name = "phone", length = 50)
-    private String phone; // 연락처
+    @Column(name = "phone_number", length = 50)
+    private String phoneNumber; // 전화번호
 
-    @Column(name = "weekday_hours", length = 200)
-    private String weekdayHours; // 운영시간_평일
+    @Column(name = "operating_hours", length = 200)
+    private String operatingHours; // 운영시간
 
-    @Column(name = "weekend_hours", length = 200)
-    private String weekendHours; // 운영시간_주말
+    @Column(name = "holiday", length = 100)
+    private String holiday; // 휴무일
 
-    @Column(name = "holiday_hours", length = 200)
-    private String holidayHours; // 운영시간_공휴일
+    @Column(name = "fee_info", length = 500)
+    private String feeInfo; // 이용료 정보
 
-    @Column(name = "rental_available", length = 50)
-    private String rentalAvailable; // 시설대관여부
+    @Column(name = "homepage_url", length = 500)
+    private String homepageUrl; // 홈페이지 URL
 
-    @Column(name = "usage_fee", length = 300)
-    private String usageFee; // 시설사용료
+    @Column(name = "image_url", length = 500)
+    private String imageUrl; // 이미지URL
 
     @Column(name = "parking_info", length = 300)
     private String parkingInfo; // 주차정보
 
-    @Column(name = "homepage", length = 500)
-    private String homepage; // 홈페이지
-
-    @Column(name = "facility_kind", length = 100)
-    private String facilityKind; // 시설종류
-
-    @Column(name = "operation_status", length = 50)
-    private String operationStatus; // 시설운영상태
-
-    @Column(name = "amenities", columnDefinition = "TEXT")
-    private String amenities; // 시설편의시설
-
-    @Column(name = "remarks", columnDefinition = "TEXT")
-    private String remarks; // 비고
 
     @Column(name = "latitude")
     private Double latitude; // 위도
@@ -107,33 +93,27 @@ public class SportsFacility implements GeoUtils.GeoPoint {
     private LocalDateTime updatedAt;
 
     @Builder
-    public SportsFacility(String facilityIdx, String district, String name, String facilityType,
-                         String postalCode, String address, String addressDetail, String facilitySize,
-                         String operatingOrg, String phone, String weekdayHours, String weekendHours,
-                         String holidayHours, String rentalAvailable, String usageFee, String parkingInfo,
-                         String homepage, String facilityKind, String operationStatus, String amenities,
-                         String remarks, Double latitude, Double longitude) {
-        this.facilityIdx = facilityIdx;
+    public SportsFacility(String serviceId, String district, String facilityName, String facilityType,
+                         String address, String facilityScale, String phoneNumber, String operatingHours,
+                         String holiday, String feeInfo, String parkingInfo, String homepageUrl,
+                         String detailContent, String imageUrl, String xCoordinate, String yCoordinate,
+                         Double latitude, Double longitude) {
+        this.serviceId = serviceId;
         this.district = district;
-        this.name = name;
+        this.facilityName = facilityName;
         this.facilityType = facilityType;
-        this.postalCode = postalCode;
         this.address = address;
-        this.addressDetail = addressDetail;
-        this.facilitySize = facilitySize;
-        this.operatingOrg = operatingOrg;
-        this.phone = phone;
-        this.weekdayHours = weekdayHours;
-        this.weekendHours = weekendHours;
-        this.holidayHours = holidayHours;
-        this.rentalAvailable = rentalAvailable;
-        this.usageFee = usageFee;
+        this.facilityScale = facilityScale;
+        this.phoneNumber = phoneNumber;
+        this.operatingHours = operatingHours;
+        this.holiday = holiday;
+        this.feeInfo = feeInfo;
         this.parkingInfo = parkingInfo;
-        this.homepage = homepage;
-        this.facilityKind = facilityKind;
-        this.operationStatus = operationStatus;
-        this.amenities = amenities;
-        this.remarks = remarks;
+        this.homepageUrl = homepageUrl;
+        this.detailContent = detailContent;
+        this.imageUrl = imageUrl;
+        this.xCoordinate = xCoordinate;
+        this.yCoordinate = yCoordinate;
         this.latitude = latitude;
         this.longitude = longitude;
         this.createdAt = LocalDateTime.now();
@@ -167,34 +147,34 @@ public class SportsFacility implements GeoUtils.GeoPoint {
      * 연락처 정보가 있는지 확인
      */
     public boolean hasContact() {
-        return phone != null && !phone.trim().isEmpty();
+        return phoneNumber != null && !phoneNumber.trim().isEmpty();
     }
 
     /**
      * 홈페이지가 있는지 확인
      */
     public boolean hasWebsite() {
-        return homepage != null && !homepage.trim().isEmpty();
+        return homepageUrl != null && !homepageUrl.trim().isEmpty();
     }
 
     /**
      * 운영 중인지 확인
      */
     public boolean isOperating() {
-        return "운영".equals(operationStatus) || "정상운영".equals(operationStatus);
+        return true; // sports_reservation_facilities 테이블은 운영 상태 컬럼이 없음
     }
 
     /**
      * 엔티티 업데이트
      */
-    public void update(String name, String address, String phone, String weekdayHours,
-                      String weekendHours, String usageFee, Double latitude, Double longitude) {
-        this.name = name;
+    public void update(String facilityName, String address, String phoneNumber, String operatingHours,
+                      String holiday, String feeInfo, Double latitude, Double longitude) {
+        this.facilityName = facilityName;
         this.address = address;
-        this.phone = phone;
-        this.weekdayHours = weekdayHours;
-        this.weekendHours = weekendHours;
-        this.usageFee = usageFee;
+        this.phoneNumber = phoneNumber;
+        this.operatingHours = operatingHours;
+        this.holiday = holiday;
+        this.feeInfo = feeInfo;
         this.latitude = latitude;
         this.longitude = longitude;
         this.updatedAt = LocalDateTime.now();

@@ -146,6 +146,9 @@ urbanping:
       daily-cron:
         - "0 30 2 * * ?"
         - "0 31 2 * * ?"
+    park:
+      daily-cron:
+        - "0 15 2 * * ?"
 
 # JWT 설정 (테스트용)
 jwt:
