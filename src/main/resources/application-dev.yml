@@ -1,3 +1,8 @@
+# Gateway/Traefik 프록시 뒤 TLS 종단 — X-Forwarded-* 를 신뢰해야 OAuth
+# redirect·swagger 링크가 https 외부 호스트로 생성된다.
+server:
+  forward-headers-strategy: framework
+
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver

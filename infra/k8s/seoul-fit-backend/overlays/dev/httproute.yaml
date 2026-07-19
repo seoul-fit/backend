@@ -1,0 +1,35 @@
+# =============================================================================
+# seoul-fit backend HTTPRoute (dev) — seoulfit.dev.damecasol.com (ADR-037)
+# =============================================================================
+# homelab-gateway websecure-dev listener(*.dev 존, TLS 는 Gateway 의
+# wildcard-dev 로 종단 — 앱 ns 인증서 불필요). atlas HTTPRoute 전례 미러링.
+# 단일 도메인 경로 분기: /api·/login/oauth2·/oauth2 → backend, 나머지 → FE
+# (FE HTTPRoute 는 seoul-fit-fe 레포 소유). Gateway API 는 최장 prefix 우선이라
+# 룰 순서 의존 없음.
+# =============================================================================
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: seoul-fit-backend
+  labels:
+    app.kubernetes.io/part-of: seoul-fit
+spec:
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: homelab-gateway
+      namespace: kube-system
+      sectionName: websecure-dev
+  hostnames:
+    - seoulfit.dev.damecasol.com
+  rules:
+    - matches:
+        - path: {type: PathPrefix, value: /api}
+        - path: {type: PathPrefix, value: /login/oauth2}
+        - path: {type: PathPrefix, value: /oauth2}
+        - path: {type: PathPrefix, value: /actuator/health}
+        - path: {type: PathPrefix, value: /swagger-ui}
+        - path: {type: PathPrefix, value: /v3/api-docs}
+      backendRefs:
+        - name: seoul-fit-backend
+          port: 8080

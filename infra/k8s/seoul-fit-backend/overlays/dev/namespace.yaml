@@ -4,4 +4,6 @@ metadata:
   name: seoul-fit-dev
   labels:
     app.kubernetes.io/part-of: seoul-fit
+    # homelab-gateway allowedRoutes 셀렉터 (traefik-config/gateway.yaml)
+    gateway.homelab.damecasol.com/allowed: "true"
     app.kubernetes.io/environment: dev

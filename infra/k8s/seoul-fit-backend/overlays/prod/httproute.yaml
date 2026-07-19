@@ -1,0 +1,32 @@
+# =============================================================================
+# seoul-fit backend HTTPRoute (prod) — seoulfit.damecasol.com (ADR-037)
+# =============================================================================
+# homelab-gateway websecure-seoulfit-public listener (전용 인증서
+# seoulfit-public-tls, infra traefik-config/gateway.yaml). 외부 공개는
+# Cloudflare Tunnel public hostname 등록(reconcile-public-hostname.sh)이
+# 별도 게이트. prod 는 swagger·h2 없음 — 공개 경로 최소.
+# =============================================================================
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: seoul-fit-backend
+  labels:
+    app.kubernetes.io/part-of: seoul-fit
+spec:
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: homelab-gateway
+      namespace: kube-system
+      sectionName: websecure-seoulfit-public
+  hostnames:
+    - seoulfit.damecasol.com
+  rules:
+    - matches:
+        - path: {type: PathPrefix, value: /api}
+        - path: {type: PathPrefix, value: /login/oauth2}
+        - path: {type: PathPrefix, value: /oauth2}
+        - path: {type: PathPrefix, value: /actuator/health}
+      backendRefs:
+        - name: seoul-fit-backend
+          port: 8080

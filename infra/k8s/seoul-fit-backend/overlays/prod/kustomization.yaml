@@ -4,8 +4,8 @@ namespace: seoul-fit-prod
 resources:
   - ../../base
   - namespace.yaml
-  # Domain is undecided. Enable only after replacing PLACEHOLDER-PROD-HOST.
-  # - ingressroute.yaml
+  # host: seoulfit.damecasol.com (websecure-seoulfit-public listener)
+  - httproute.yaml
 images:
   - name: registry.damecasol.com/seoul-fit/backend
     newName: registry.damecasol.com/seoul-fit/backend

@@ -4,8 +4,8 @@ namespace: seoul-fit-dev
 resources:
   - ../../base
   - namespace.yaml
-  # Domain is undecided. Enable only after replacing PLACEHOLDER-DEV-HOST.
-  # - ingressroute.yaml
+  # host: seoulfit.dev.damecasol.com (websecure-dev listener, TLS는 Gateway 종단)
+  - httproute.yaml
 images:
   - name: registry.damecasol.com/seoul-fit/backend
     newName: registry.damecasol.com/seoul-fit/backend
