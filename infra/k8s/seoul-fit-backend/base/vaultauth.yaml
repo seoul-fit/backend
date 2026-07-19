@@ -1,0 +1,17 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultAuth
+metadata:
+  name: seoul-fit-backend
+  labels:
+    app.kubernetes.io/name: seoul-fit-backend
+    app.kubernetes.io/part-of: seoul-fit
+spec:
+  vaultConnectionRef: seoul-fit-backend-vault
+  method: kubernetes
+  mount: kubernetes
+  kubernetes:
+    role: PLACEHOLDER
+    serviceAccount: seoul-fit-backend-vso
+    tokenExpirationSeconds: 600
+    audiences:
+      - vault

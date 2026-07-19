@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seoul-fit-backend
+  labels:
+    app.kubernetes.io/name: seoul-fit-backend
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: seoul-fit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: seoul-fit-backend
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: seoul-fit-backend
+        app.kubernetes.io/component: backend
+        app.kubernetes.io/part-of: seoul-fit
+    spec:
+      imagePullSecrets:
+        - name: seoul-fit-backend-harbor-pull
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: backend
+          image: registry.damecasol.com/seoul-fit/backend@sha256:PLACEHOLDER
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: seoul-fit-backend-env
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+            initialDelaySeconds: 30
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+            initialDelaySeconds: 40
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL

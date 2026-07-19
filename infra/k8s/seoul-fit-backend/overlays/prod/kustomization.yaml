@@ -1,0 +1,44 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: seoul-fit-prod
+resources:
+  - ../../base
+  - namespace.yaml
+  # Domain is undecided. Enable only after replacing PLACEHOLDER-PROD-HOST.
+  # - ingressroute.yaml
+images:
+  - name: registry.damecasol.com/seoul-fit/backend
+    newName: registry.damecasol.com/seoul-fit/backend
+    digest: sha256:PLACEHOLDER
+patches:
+  - target:
+      kind: Deployment
+      name: seoul-fit-backend
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 1
+      # pg-prod NetworkPolicy pg-prod-allow-seoul-fit 계약: 이 라벨이 없으면
+      # DB 5432 인입이 차단된다 (infra pg-prod/networkpolicy.yaml).
+      - op: add
+        path: /spec/template/metadata/labels/needs-pg-prod
+        value: "true"
+  - target:
+      kind: VaultAuth
+      name: seoul-fit-backend
+    patch: |-
+      - op: replace
+        path: /spec/kubernetes/role
+        value: seoul-fit-prod
+  - target:
+      kind: VaultStaticSecret
+      name: seoul-fit-backend-env
+    patch: |-
+      - op: replace
+        path: /spec/path
+        value: projects/seoul-fit/backend-prod
+      - op: add
+        path: /spec/destination/transformation/templates/SPRING_PROFILES_ACTIVE
+        value:
+          text: |-
+            prod

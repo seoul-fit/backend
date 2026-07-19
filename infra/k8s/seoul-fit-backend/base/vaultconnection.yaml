@@ -1,0 +1,9 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultConnection
+metadata:
+  name: seoul-fit-backend-vault
+  labels:
+    app.kubernetes.io/name: seoul-fit-backend
+    app.kubernetes.io/part-of: seoul-fit
+spec:
+  address: https://vault.homelab.damecasol.com

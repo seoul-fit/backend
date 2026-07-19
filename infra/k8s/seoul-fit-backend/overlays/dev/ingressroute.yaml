@@ -1,0 +1,14 @@
+# Disabled in kustomization.yaml until the public domain and TLS policy are set.
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: seoul-fit-backend
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`PLACEHOLDER-DEV-HOST`)
+      services:
+        - name: seoul-fit-backend
+          port: 8080

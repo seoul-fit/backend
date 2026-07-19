@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: seoul-fit-dev
+  labels:
+    app.kubernetes.io/part-of: seoul-fit
+    app.kubernetes.io/environment: dev
