@@ -1,4 +1,4 @@
-# 🎯 UrbanPing 트리거 개발 가이드
+# 🎯 Seoul Fit 트리거 개발 가이드
 
 ## 📋 목차
 
@@ -84,7 +84,7 @@ public class CustomTriggerStrategy implements TriggerStrategy {
 ### 2. 설정 관리 추가
 
 ```java
-@ConfigurationProperties(prefix = "urbanping.trigger.custom")
+@ConfigurationProperties(prefix = "seoulfit.trigger.custom")
 @Component
 @Getter
 @Setter
@@ -124,7 +124,7 @@ class CustomTriggerStrategyTest {
 ### 설정 파일 (application.yml)
 
 ```yaml
-urbanping:
+seoulfit:
   trigger:
     enabled: true
     scheduler:

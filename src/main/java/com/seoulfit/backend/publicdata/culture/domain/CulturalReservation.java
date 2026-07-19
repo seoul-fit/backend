@@ -77,7 +77,7 @@ public class CulturalReservation {
     @Column(name = "img_url")
     private String imgUrl; // 이미지경로
 
-    @Column(name = "dtl_cont", columnDefinition = "LONGTEXT")
+    @Column(name = "dtl_cont", columnDefinition = "TEXT")
     private String dtlCont; // 상세내용
 
     @Column(name = "tel_no", length = 50)

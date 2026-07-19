@@ -23,10 +23,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class HeavyRainTriggerStrategy implements TriggerStrategy {
     
-    @Value("${urbanping.trigger.rain.heavy-threshold:15.0}")
+    @Value("${seoulfit.trigger.rain.heavy-threshold:15.0}")
     private double heavyRainThreshold; // mm/h
     
-    @Value("${urbanping.trigger.rain.warning-threshold:30.0}")
+    @Value("${seoulfit.trigger.rain.warning-threshold:30.0}")
     private double warningRainThreshold; // mm/h
     
     @Override

@@ -37,10 +37,10 @@ public class CulturalEventTriggerStrategy implements TriggerStrategy {
     private final CulturalEventRepository culturalEventRepository;
     private final TriggerHistoryRepository triggerHistoryRepository;
     
-    @Value("${urbanping.trigger.cultural-event.search-radius:2.0}")
+    @Value("${seoulfit.trigger.cultural-event.search-radius:2.0}")
     private double searchRadius; // 검색 반경 (기본값: 2km)
     
-    @Value("${urbanping.trigger.cultural-event.upcoming-days:3}")
+    @Value("${seoulfit.trigger.cultural-event.upcoming-days:3}")
     private int upcomingDays; // 앞으로 며칠 내의 행사를 알림할지 (기본값: 3일)
     
     @Override

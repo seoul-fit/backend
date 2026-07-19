@@ -3,13 +3,16 @@ package com.seoulfit.backend.publicdata.culture.adapter.in.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seoulfit.backend.publicdata.culture.application.port.in.QueryCulturalEventsUseCase;
 import com.seoulfit.backend.publicdata.culture.domain.CulturalEvent;
+import com.seoulfit.backend.config.TestSecurityConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
@@ -24,11 +27,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(value = CulturalEventController.class, excludeAutoConfiguration = {
-    org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
-    org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration.class
-})
+@WebMvcTest(CulturalEventController.class)
+@AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
+@Import(TestSecurityConfig.class)
 @DisplayName("CulturalEventController 테스트")
 class CulturalEventControllerTest {
 

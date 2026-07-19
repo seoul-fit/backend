@@ -34,7 +34,7 @@ public class AsyncConfig {
         executor.setCorePoolSize(5);
         executor.setMaxPoolSize(10);
         executor.setQueueCapacity(100);
-        executor.setThreadNamePrefix("UrbanPing-Async-");
+        executor.setThreadNamePrefix("Seoul Fit-Async-");
         executor.setRejectedExecutionHandler((r, executor1) -> {
             log.warn("비동기 작업 거부됨: {}", r.toString());
         });

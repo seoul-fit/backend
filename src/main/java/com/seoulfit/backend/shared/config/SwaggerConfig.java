@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Swagger/OpenAPI 설정 클래스입니다.
  * 
- * <p>UrbanPing API의 문서화를 위한 Swagger UI 설정을 담당합니다.
+ * <p>Seoul Fit API의 문서화를 위한 Swagger UI 설정을 담당합니다.
  * API 문서는 개발자들이 API를 쉽게 이해하고 테스트할 수 있도록 도와줍니다.</p>
  * 
  * <p>주요 기능:</p>
@@ -40,7 +40,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @OpenAPIDefinition(
-        info = @Info(title = "UrbanPing API Documentation", version = "1.0")
+        info = @Info(title = "Seoul Fit API Documentation", version = "1.0")
 )
 public class SwaggerConfig {
 
@@ -67,7 +67,7 @@ public class SwaggerConfig {
         
         // API 정보
         io.swagger.v3.oas.models.info.Info info = new io.swagger.v3.oas.models.info.Info()
-                .title("UrbanPing API")
+                .title("Seoul Fit API")
                 .version("1.0.0")
                 .description("서울시 공공 데이터를 활용한 실시간 도시 정보 알림 시스템 API\n\n" +
                            "## 🏙️ 주요 기능\n" +

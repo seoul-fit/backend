@@ -1,0 +1,84 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: ${DATABASE_URL:jdbc:h2:mem:seoul_fit;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE}
+    username: ${DATABASE_USERNAME:sa}
+    password: ${DATABASE_PASSWORD:}
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true
+  flyway:
+    enabled: false
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: ${KAKAO_CLIENT_ID:local-kakao-client-id}
+            client-secret: ${KAKAO_CLIENT_SECRET:local-kakao-client-secret}
+            redirect-uri: ${KAKAO_REDIRECT_URI:http://localhost:8080/login/oauth2/code/kakao}
+            authorization-grant-type: authorization_code
+            scope: profile_nickname,profile_image,account_email
+            client-name: Kakao
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:local-google-client-id}
+            client-secret: ${GOOGLE_CLIENT_SECRET:local-google-client-secret}
+            redirect-uri: ${GOOGLE_REDIRECT_URI:http://localhost:8080/login/oauth2/code/google}
+            scope: profile,email
+          naver:
+            client-id: ${NAVER_CLIENT_ID:local-naver-client-id}
+            client-secret: ${NAVER_CLIENT_SECRET:local-naver-client-secret}
+            redirect-uri: ${NAVER_REDIRECT_URI:http://localhost:8080/login/oauth2/code/naver}
+            authorization-grant-type: authorization_code
+            scope: name,email,profile_image
+            client-name: Naver
+
+seoul-api:
+  base-url: http://openapi.seoul.go.kr:8088/${SEOUL_API_KEY:local-seoul-api-key}/json
+  v1:
+    environment:
+      api-key: ${SEOUL_API_KEY:local-seoul-api-key}
+
+seoulfit:
+  api:
+    seoul:
+      api-key: ${SEOUL_API_KEY:local-seoul-api-key}
+
+google:
+  api-key: ${GOOGLE_API_KEY:local-google-api-key}
+
+jwt:
+  secret: ${JWT_SECRET:local-jwt-secret-key-for-development-only-at-least-256-bits-long}
+
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000}
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,scheduledtasks
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.seoulfit.backend: DEBUG
+    org.springframework.web.client: DEBUG
+    org.springframework.security: DEBUG

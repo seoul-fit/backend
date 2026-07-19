@@ -49,7 +49,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@ConditionalOnProperty(name = "urbanping.scheduler.enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(name = "seoulfit.scheduler.enabled", havingValue = "true", matchIfMissing = true)
 public class TriggerSchedulerService {
     
     /**
@@ -93,7 +93,7 @@ public class TriggerSchedulerService {
      *   <li>인구 혼잡도 트리거</li>
      * </ul>
      */
-    @Scheduled(fixedRateString = "${urbanping.scheduler.realtime-interval:300000}")
+    @Scheduled(fixedRateString = "${seoulfit.scheduler.realtime-interval:300000}")
     public void evaluateRealtimeTriggers() {
         log.info("실시간 트리거 평가 시작");
         
@@ -126,7 +126,7 @@ public class TriggerSchedulerService {
      *   <li>위치 기반 문화행사 추천</li>
      * </ul>
      */
-    @Scheduled(fixedRateString = "${urbanping.scheduler.cultural-interval:1800000}")
+    @Scheduled(fixedRateString = "${seoulfit.scheduler.cultural-interval:1800000}")
     public void evaluateCulturalEventTriggers() {
         log.info("문화행사 트리거 평가 시작");
         

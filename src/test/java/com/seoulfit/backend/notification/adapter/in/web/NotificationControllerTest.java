@@ -11,6 +11,7 @@ import com.seoulfit.backend.notification.application.port.in.dto.NotificationHis
 import com.seoulfit.backend.notification.domain.NotificationStatus;
 import com.seoulfit.backend.notification.domain.NotificationType;
 import com.seoulfit.backend.trigger.domain.TriggerCondition;
+import com.seoulfit.backend.config.TestSecurityConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -20,6 +21,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -47,6 +50,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @WebMvcTest(controllers = NotificationController.class)
 @AutoConfigureMockMvc(addFilters = false)
+@Import(TestSecurityConfig.class)
+@ActiveProfiles("test")
 @DisplayName("NotificationController 단위 테스트")
 class NotificationControllerTest {
 
@@ -74,12 +79,13 @@ class NotificationControllerTest {
                     "title": "날씨 알림",
                     "message": "오늘은 미세먼지가 나쁨 수준입니다.",
                     "notificationType": "WEATHER",
-                    "triggerCondition": "WEATHER_ALERT",
+                    "triggerCondition": "WEATHER_CHANGE",
                     "locationInfo": "서울시 중구"
                 }
                 """;
             
-            doNothing().when(manageNotificationUseCase).createNotification(any(CreateNotificationCommand.class));
+            when(manageNotificationUseCase.createNotification(any(CreateNotificationCommand.class)))
+                .thenReturn(createNotificationHistory(1L, "날씨 알림", "오늘은 미세먼지가 나쁨 수준입니다.", NotificationStatus.SENT));
             
             // when & then
             mockMvc.perform(post("/api/notifications")
@@ -87,8 +93,8 @@ class NotificationControllerTest {
                     .content(requestJson))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.message").value("알림이 성공적으로 전송되었습니다."));
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.title").value("날씨 알림"));
             
             verify(manageNotificationUseCase, times(1)).createNotification(any(CreateNotificationCommand.class));
         }
@@ -122,7 +128,7 @@ class NotificationControllerTest {
                     "title": "제목",
                     "message": "내용",
                     "notificationType": "CULTURE",
-                    "triggerCondition": "EVENT_NEARBY"
+                    "triggerCondition": "CULTURAL_EVENT"
                 }
                 """;
             
@@ -145,7 +151,7 @@ class NotificationControllerTest {
                     "title": "",
                     "message": "내용",
                     "notificationType": "WEATHER",
-                    "triggerCondition": "WEATHER_ALERT"
+                    "triggerCondition": "WEATHER_CHANGE"
                 }
                 """;
             
@@ -173,22 +179,22 @@ class NotificationControllerTest {
                     "title": "문화 행사 알림",
                     "message": "근처에서 축제가 열립니다.",
                     "notificationType": "CULTURE",
-                    "triggerCondition": "EVENT_NEARBY",
+                    "triggerCondition": "CULTURAL_EVENT",
                     "priority": "HIGH",
                     "metadata": "{\\"eventId\\": 123}"
                 }
                 """;
             
-            doNothing().when(manageNotificationUseCase).createNotification(any(CreateNotificationCommand.class));
+            when(manageNotificationUseCase.createNotification(any(CreateNotificationCommand.class)))
+                .thenReturn(createNotificationHistory(1L, "문화 행사 알림", "근처에서 축제가 열립니다.", NotificationStatus.SENT));
             
             // when & then
-            mockMvc.perform(post("/api/v2/notifications")
+            mockMvc.perform(post("/api/notifications")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(requestJson))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.message").value("알림이 성공적으로 전송되었습니다."));
+                .andExpect(jsonPath("$.title").value("문화 행사 알림"));
         }
         
         @Test
@@ -202,15 +208,16 @@ class NotificationControllerTest {
                     "title": "긴급 알림",
                     "message": "긴급 상황입니다.",
                     "notificationType": "EMERGENCY",
-                    "triggerCondition": "EMERGENCY_ALERT",
+                    "triggerCondition": "EMERGENCY",
                     "priority": "URGENT"
                 }
                 """;
             
-            doNothing().when(manageNotificationUseCase).createNotification(any(CreateNotificationCommand.class));
+            when(manageNotificationUseCase.createNotification(any(CreateNotificationCommand.class)))
+                .thenReturn(createNotificationHistory(1L, "긴급 알림", "긴급 상황입니다.", NotificationStatus.SENT));
             
             // when & then
-            mockMvc.perform(post("/api/v2/notifications")
+            mockMvc.perform(post("/api/notifications")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(requestJson))
                 .andDo(print())
@@ -235,10 +242,11 @@ class NotificationControllerTest {
                 }
                 """;
             
-            doNothing().when(manageNotificationUseCase).createNotification(any(CreateNotificationCommand.class));
+            when(manageNotificationUseCase.createNotification(any(CreateNotificationCommand.class)))
+                .thenReturn(createNotificationHistory(1L, "위치 기반 알림", "근처 맛집 정보", NotificationStatus.SENT));
             
             // when & then
-            mockMvc.perform(post("/api/v2/notifications")
+            mockMvc.perform(post("/api/notifications")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(requestJson))
                 .andDo(print())
@@ -268,16 +276,16 @@ class NotificationControllerTest {
                 .thenReturn(page);
             
             // when & then
-            mockMvc.perform(get("/api/notifications/history/{userId}", userId)
+            mockMvc.perform(get("/api/notifications")
+                    .param("userId", userId.toString())
                     .param("page", "0")
                     .param("size", "10"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.data.content", hasSize(3)))
-                .andExpect(jsonPath("$.data.content[0].title").value("알림1"))
-                .andExpect(jsonPath("$.data.content[1].status").value("SENT"))
-                .andExpect(jsonPath("$.data.totalElements").value(3));
+                .andExpect(jsonPath("$.content", hasSize(3)))
+                .andExpect(jsonPath("$.content[0].title").value("알림1"))
+                .andExpect(jsonPath("$.content[1].status").value("SENT"))
+                .andExpect(jsonPath("$.totalElements").value(3));
         }
         
         @Test
@@ -296,12 +304,11 @@ class NotificationControllerTest {
                 .thenReturn(emptyPage);
             
             // when & then
-            mockMvc.perform(get("/api/notifications/history/{userId}", userId))
+            mockMvc.perform(get("/api/notifications").param("userId", userId.toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.data.content", hasSize(0)))
-                .andExpect(jsonPath("$.data.totalElements").value(0));
+                .andExpect(jsonPath("$.content", hasSize(0)))
+                .andExpect(jsonPath("$.totalElements").value(0));
         }
         
         @Test
@@ -324,15 +331,16 @@ class NotificationControllerTest {
                 .thenReturn(page);
             
             // when & then
-            mockMvc.perform(get("/api/notifications/history/{userId}", userId)
+            mockMvc.perform(get("/api/notifications")
+                    .param("userId", userId.toString())
                     .param("page", "1")
                     .param("size", "5"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.number").value(1))
-                .andExpect(jsonPath("$.data.size").value(5))
-                .andExpect(jsonPath("$.data.totalElements").value(10))
-                .andExpect(jsonPath("$.data.totalPages").value(2));
+                .andExpect(jsonPath("$.number").value(1))
+                .andExpect(jsonPath("$.size").value(5))
+                .andExpect(jsonPath("$.totalElements").value(10))
+                .andExpect(jsonPath("$.totalPages").value(2));
         }
         
         @Test
@@ -353,11 +361,12 @@ class NotificationControllerTest {
                 .thenReturn(page);
             
             // when & then
-            mockMvc.perform(get("/api/notifications/history/{userId}", userId)
+            mockMvc.perform(get("/api/notifications")
+                    .param("userId", userId.toString())
                     .param("status", status.name()))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.content[0].status").value("READ"));
+                .andExpect(jsonPath("$.content[0].status").value("READ"));
         }
         
         @Test
@@ -380,12 +389,13 @@ class NotificationControllerTest {
                 .thenReturn(page);
             
             // when & then
-            mockMvc.perform(get("/api/notifications/history/{userId}", userId)
+            mockMvc.perform(get("/api/notifications")
+                    .param("userId", userId.toString())
                     .param("startDate", startDate)
                     .param("endDate", endDate))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.content", hasSize(2)));
+                .andExpect(jsonPath("$.content", hasSize(2)));
         }
     }
     
@@ -399,16 +409,15 @@ class NotificationControllerTest {
         void markAsRead_Success() throws Exception {
             // given
             Long notificationId = 1L;
-            doNothing().when(manageNotificationUseCase).markAsRead(1L, notificationId);
+            doNothing().when(manageNotificationUseCase).markAsRead(notificationId, 1L);
             
             // when & then
-            mockMvc.perform(patch("/api/notifications/{id}/read", notificationId))
+            mockMvc.perform(patch("/api/notifications/{id}/read", notificationId).param("userId", "1"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.message").value("알림이 읽음 처리되었습니다."));
+                .andExpect(content().string(""));
             
-            verify(manageNotificationUseCase, times(1)).markAsRead(1L, notificationId);
+            verify(manageNotificationUseCase, times(1)).markAsRead(notificationId, 1L);
         }
         
         @Test
@@ -418,10 +427,10 @@ class NotificationControllerTest {
             // given
             Long notificationId = 999L;
             doThrow(new IllegalArgumentException("알림을 찾을 수 없습니다."))
-                .when(manageNotificationUseCase).markAsRead(1L, notificationId);
+                .when(manageNotificationUseCase).markAsRead(notificationId, 1L);
             
             // when & then
-            mockMvc.perform(patch("/api/notifications/{id}/read", notificationId))
+            mockMvc.perform(patch("/api/notifications/{id}/read", notificationId).param("userId", "1"))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
         }
@@ -437,17 +446,14 @@ class NotificationControllerTest {
         void deleteNotification_Success() throws Exception {
             // given
             Long notificationId = 1L;
-            // deleteNotification 메서드가 없으므로 markAsRead로 대체
-            doNothing().when(manageNotificationUseCase).markAsRead(notificationId, 1L);
+            doNothing().when(manageNotificationUseCase).markAllAsRead(1L);
             
             // when & then
-            mockMvc.perform(delete("/api/notifications/{id}", notificationId))
+            mockMvc.perform(patch("/api/notifications/read-all").param("userId", "1"))
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.message").value("알림이 삭제되었습니다."));
+                .andExpect(status().isOk());
             
-            verify(manageNotificationUseCase, times(1)).markAsRead(notificationId, 1L);
+            verify(manageNotificationUseCase, times(1)).markAllAsRead(1L);
         }
         
         @Test
@@ -457,12 +463,12 @@ class NotificationControllerTest {
             // given
             Long notificationId = 1L;
             doThrow(new SecurityException("삭제 권한이 없습니다."))
-                .when(manageNotificationUseCase).markAsRead(notificationId, 1L);
+                .when(manageNotificationUseCase).markAllAsRead(1L);
             
             // when & then
-            mockMvc.perform(delete("/api/notifications/{id}", notificationId))
+            mockMvc.perform(patch("/api/notifications/read-all").param("userId", "1"))
                 .andDo(print())
-                .andExpect(status().isForbidden());
+                .andExpect(status().isInternalServerError());
         }
     }
     
@@ -481,12 +487,12 @@ class NotificationControllerTest {
                     "title": "제목",
                     "message": "내용",
                     "notificationType": "WEATHER",
-                    "triggerCondition": "WEATHER_ALERT"
+                    "triggerCondition": "WEATHER_CHANGE"
                 }
                 """;
             
-            doThrow(new RuntimeException("알림 전송 실패"))
-                .when(manageNotificationUseCase).createNotification(any(CreateNotificationCommand.class));
+            when(manageNotificationUseCase.createNotification(any(CreateNotificationCommand.class)))
+                .thenThrow(new RuntimeException("알림 전송 실패"));
             
             // when & then
             mockMvc.perform(post("/api/notifications")

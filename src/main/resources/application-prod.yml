@@ -1,0 +1,71 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+  h2:
+    console:
+      enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: ${KAKAO_CLIENT_ID}
+            client-secret: ${KAKAO_CLIENT_SECRET}
+            redirect-uri: ${KAKAO_REDIRECT_URI}
+            authorization-grant-type: authorization_code
+            scope: profile_nickname,profile_image,account_email
+            client-name: Kakao
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            redirect-uri: ${GOOGLE_REDIRECT_URI}
+            scope: profile,email
+          naver:
+            client-id: ${NAVER_CLIENT_ID}
+            client-secret: ${NAVER_CLIENT_SECRET}
+            redirect-uri: ${NAVER_REDIRECT_URI}
+            authorization-grant-type: authorization_code
+            scope: name,email,profile_image
+            client-name: Naver
+
+seoul-api:
+  base-url: http://openapi.seoul.go.kr:8088/${SEOUL_API_KEY}/json
+  v1:
+    environment:
+      api-key: ${SEOUL_API_KEY}
+seoulfit:
+  api:
+    seoul:
+      api-key: ${SEOUL_API_KEY}
+google:
+  api-key: ${GOOGLE_API_KEY}
+jwt:
+  secret: ${JWT_SECRET}
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS}
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: never

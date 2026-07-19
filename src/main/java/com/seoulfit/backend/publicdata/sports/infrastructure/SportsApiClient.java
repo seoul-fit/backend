@@ -27,10 +27,10 @@ public class SportsApiClient {
     private final RestClient restClient;
     private final ObjectMapper objectMapper;
 
-    @Value("${seoul.api.key:666e634468776c7339314668766844}")
+    @Value("${seoulfit.api.seoul.api-key}")
     private String apiKey;
 
-    @Value("${seoul.api.base-url:http://openapi.seoul.go.kr:8088}")
+    @Value("${seoulfit.api.seoul.base-url}")
     private String baseUrl;
 
     private static final String SPORTS_ENDPOINT = "ListPublicReservationSport";

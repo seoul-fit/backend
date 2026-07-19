@@ -1,6 +1,6 @@
 {
   "info": {
-    "name": "UrbanPing API Collection",
+    "name": "Seoul Fit API Collection",
     "description": "서울시 공공 데이터를 활용한 실시간 도시 정보 알림 시스템 API",
     "version": "1.0.0",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"

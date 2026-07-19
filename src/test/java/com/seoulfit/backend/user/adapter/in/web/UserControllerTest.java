@@ -8,13 +8,16 @@ import com.seoulfit.backend.user.application.port.in.dto.UserResult;
 import com.seoulfit.backend.user.domain.AuthProvider;
 import com.seoulfit.backend.user.domain.InterestCategory;
 import com.seoulfit.backend.user.domain.UserStatus;
+import com.seoulfit.backend.config.TestSecurityConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -29,11 +32,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(value = UserController.class, excludeAutoConfiguration = {
-    org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
-    org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration.class
-})
+@WebMvcTest(UserController.class)
+@AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
+@Import(TestSecurityConfig.class)
 @DisplayName("UserController 테스트")
 class UserControllerTest {
 

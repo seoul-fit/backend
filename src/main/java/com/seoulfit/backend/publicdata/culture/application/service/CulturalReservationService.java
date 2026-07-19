@@ -18,10 +18,11 @@ import java.util.List;
 @Slf4j
 public class CulturalReservationService {
 
-    @Value("${seoul-fit.culture-api-key:666e634468776c7339314668766844}")
+    @Value("${seoulfit.api.seoul.api-key}")
     private String apiKey;
 
-    private static final String BASE_URL = "http://openapi.seoul.go.kr:8088";
+    @Value("${seoulfit.api.seoul.base-url}")
+    private String baseUrl;
     private static final String SERVICE_NAME = "ListPublicReservationCulture";
 
     private final RestClientUtils<SeoulReservationApiResponse> restClientUtils;
@@ -79,7 +80,7 @@ public class CulturalReservationService {
 
     private String buildApiUrlWithArea(int startIndex, int endIndex, String areaName) {
         StringBuilder urlBuilder = new StringBuilder();
-        urlBuilder.append(BASE_URL)
+        urlBuilder.append(baseUrl)
                 .append("/").append(apiKey)
                 .append("/json")
                 .append("/").append(SERVICE_NAME)
@@ -94,7 +95,7 @@ public class CulturalReservationService {
     }
 
     private String buildApiUrl(int startIndex, int endIndex) {
-        return BASE_URL +
+        return baseUrl +
                 "/" + apiKey +
                 "/json" +
                 "/" + SERVICE_NAME +

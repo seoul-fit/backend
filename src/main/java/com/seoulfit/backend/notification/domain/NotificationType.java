@@ -5,7 +5,7 @@ import lombok.Getter;
 /**
  * 알림 타입
  * <p>
- * UrbanPing 시스템에서 사용되는 알림 분류
+ * Seoul Fit 시스템에서 사용되는 알림 분류
  * 우선순위와 긴급도를 포함한 도메인 값 객체
  * 
  * @author Seoul Fit

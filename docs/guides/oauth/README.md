@@ -1,10 +1,10 @@
 # OAuth 인증 시스템 가이드
 
-> UrbanPing의 OAuth 2.0 기반 소셜 로그인 시스템 구현 및 설정 가이드
+> Seoul Fit의 OAuth 2.0 기반 소셜 로그인 시스템 구현 및 설정 가이드
 
 ## 📋 OAuth 시스템 개요
 
-UrbanPing은 **OAuth 2.0 Authorization Code Flow**를 사용하여 안전하고 표준적인 소셜 로그인을 제공합니다.
+Seoul Fit은 **OAuth 2.0 Authorization Code Flow**를 사용하여 안전하고 표준적인 소셜 로그인을 제공합니다.
 
 ### 🎯 지원하는 OAuth 제공자
 - **카카오 (Kakao)**: 주요 OAuth 제공자
@@ -50,7 +50,7 @@ UrbanPing은 **OAuth 2.0 Authorization Code Flow**를 사용하여 안전하고 
 sequenceDiagram
     participant User as 사용자
     participant Client as 클라이언트
-    participant Auth as UrbanPing
+    participant Auth as Seoul Fit
     participant Kakao as 카카오
 
     User->>Client: 1. 로그인 버튼 클릭
@@ -69,7 +69,7 @@ sequenceDiagram
 1. **인가코드 획득**: 카카오에서 사용자 동의 후 인가코드 발급
 2. **토큰 교환**: 인가코드를 액세스 토큰으로 교환
 3. **사용자 정보 조회**: 액세스 토큰으로 사용자 정보 획득
-4. **JWT 발급**: UrbanPing 자체 JWT 토큰 생성 및 반환
+4. **JWT 발급**: Seoul Fit 자체 JWT 토큰 생성 및 반환
 
 ## 🛠️ 구현 예제
 

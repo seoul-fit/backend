@@ -21,6 +21,7 @@ public class InputSanitizer {
     // SQL Injection 패턴
     private static final Pattern SQL_PATTERN = Pattern.compile(
         "('.+--)|(--)|(\\|\\|)|(;)|(\\*)|(<>)|(!=)|" +
+        "(\\b(OR|AND)\\b\\s+['\"]?[^\\s=]+['\"]?\\s*=\\s*['\"]?[^\\s]+)|" +
         "(\\b(ALTER|CREATE|DELETE|DROP|EXEC(UTE)?|INSERT( +INTO)?|MERGE|SELECT|UPDATE|UNION( +ALL)?)\\b)",
         Pattern.CASE_INSENSITIVE
     );

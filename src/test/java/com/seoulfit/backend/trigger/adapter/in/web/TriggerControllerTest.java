@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -42,6 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(TriggerController.class)
 @AutoConfigureMockMvc(addFilters = false) // Security 필터 비활성화
 @Import(TestSecurityConfig.class)
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 @DisplayName("TriggerController 단위 테스트")
 class TriggerControllerTest {

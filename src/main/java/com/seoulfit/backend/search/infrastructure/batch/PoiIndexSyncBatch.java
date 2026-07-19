@@ -17,7 +17,7 @@ public class PoiIndexSyncBatch {
         this.searchIndexBatchUseCase = searchIndexBatchUseCase;
     }
     
-    @Scheduled(cron = "${seoul-fit.scheduler.search.poi-index.cron:0 0 8 * * *}")
+    @Scheduled(cron = "${seoulfit.scheduler.search.poi-index.cron:0 0 8 * * *}")
     public void syncPoiIndexBatch() {
         log.info("Starting POI index sync batch job");
         
@@ -29,7 +29,7 @@ public class PoiIndexSyncBatch {
         }
     }
     
-    @Scheduled(cron = "${seoul-fit.scheduler.search.cooling-centers.cron:0 10 8 * * *}")
+    @Scheduled(cron = "${seoulfit.scheduler.search.cooling-centers.cron:0 10 8 * * *}")
     public void syncCoolingCentersBatch() {
         log.info("Starting cooling centers sync to POI index");
         
@@ -41,7 +41,7 @@ public class PoiIndexSyncBatch {
         }
     }
     
-    @Scheduled(cron = "${seoul-fit.scheduler.search.cultural-events.cron:0 15 8 * * *}")
+    @Scheduled(cron = "${seoulfit.scheduler.search.cultural-events.cron:0 15 8 * * *}")
     public void syncCulturalEventsBatch() {
         log.info("Starting cultural events sync to POI index");
         
@@ -53,7 +53,7 @@ public class PoiIndexSyncBatch {
         }
     }
     
-    @Scheduled(cron = "${seoul-fit.scheduler.search.libraries.cron:0 20 8 * * *}")
+    @Scheduled(cron = "${seoulfit.scheduler.search.libraries.cron:0 20 8 * * *}")
     public void syncLibrariesBatch() {
         log.info("Starting libraries sync to POI index");
         
@@ -65,7 +65,7 @@ public class PoiIndexSyncBatch {
         }
     }
     
-    @Scheduled(cron = "${seoul-fit.scheduler.search.parks.cron:0 25 8 * * *}")
+    @Scheduled(cron = "${seoulfit.scheduler.search.parks.cron:0 25 8 * * *}")
     public void syncParksBatch() {
         log.info("Starting parks sync to POI index");
         
@@ -77,7 +77,7 @@ public class PoiIndexSyncBatch {
         }
     }
     
-    @Scheduled(cron = "${seoul-fit.scheduler.search.restaurants.cron:0 30 8 * * *}")
+    @Scheduled(cron = "${seoulfit.scheduler.search.restaurants.cron:0 30 8 * * *}")
     public void syncRestaurantsBatch() {
         log.info("Starting restaurants sync to POI index");
         

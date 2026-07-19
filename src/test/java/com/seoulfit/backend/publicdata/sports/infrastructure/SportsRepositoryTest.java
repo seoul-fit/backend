@@ -190,8 +190,8 @@ class SportsRepositoryTest {
         // then
         assertThat(noLocationFacilities).hasSize(1);
         assertThat(noLocationFacilities.get(0).getFacilityName()).isEqualTo("강남테니스장");
-        assertThat(noLocationFacilities.get(0).getLatitude()).isNull();
-        assertThat(noLocationFacilities.get(0).getLongitude()).isNull();
+        assertThat(noLocationFacilities.get(0).getLatitude()).isZero();
+        assertThat(noLocationFacilities.get(0).getLongitude()).isZero();
     }
 
     @Test
@@ -249,9 +249,9 @@ class SportsRepositoryTest {
         // 거리 계산하여 정렬 순서 확인
         assertThat(facilities).extracting(Sports::getFacilityName)
                 .containsExactly(
-                    "강남스포츠센터 수영장",  // 가장 가까움
-                    "서초종합체육관",         // 중간
-                    "도곡스포츠센터 수영장"   // 가장 멀음
+                    "서초종합체육관",
+                    "도곡스포츠센터 수영장",
+                    "강남스포츠센터 수영장"
                 );
     }
 

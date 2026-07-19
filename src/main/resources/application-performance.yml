@@ -28,7 +28,7 @@ spring:
             pooled:
               preferred: pooled-lo
     # 데이터베이스 플랫폼별 최적화
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     # OSIV 비활성화 (성능 향상)
     open-in-view: false
 

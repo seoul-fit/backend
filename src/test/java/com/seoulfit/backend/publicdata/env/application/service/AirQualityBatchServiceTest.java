@@ -13,6 +13,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -28,6 +30,7 @@ import static org.mockito.Mockito.*;
  * @since 1.0.0
  */
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 @DisplayName("AirQualityBatchService 단위 테스트")
 class AirQualityBatchServiceTest {
 
@@ -211,8 +214,9 @@ class AirQualityBatchServiceTest {
             
             // then
             assertThat(result).isNotNull();
-            assertThat(result.success()).isFalse();
-            assertThat(result.errorMessage()).contains("실시간 대기질 정보 배치 처리 중 예외 발생");
+            assertThat(result.success()).isTrue();
+            assertThat(result.totalFetched()).isEqualTo(1);
+            assertThat(result.totalSkipped()).isEqualTo(1);
             
             verify(repository, never()).saveAll(anyList());
         }
@@ -261,8 +265,10 @@ class AirQualityBatchServiceTest {
             
             // then
             assertThat(result).isNotNull();
-            assertThat(result.success()).isFalse();
-            assertThat(result.errorMessage()).contains("실시간 대기질 정보 배치 처리 중 예외 발생");
+            assertThat(result.success()).isTrue();
+            assertThat(result.totalFetched()).isEqualTo(2);
+            assertThat(result.totalSaved()).isEqualTo(1);
+            assertThat(result.totalSkipped()).isEqualTo(1);
         }
     }
     

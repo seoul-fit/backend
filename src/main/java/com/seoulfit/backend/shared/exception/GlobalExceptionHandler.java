@@ -15,6 +15,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -56,6 +57,16 @@ public class GlobalExceptionHandler {
         response.put("message", ex.getMessage());
 
         log.warn("IllegalArgumentException: {}", ex.getMessage());
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(ServletRequestBindingException.class)
+    public ResponseEntity<Map<String, Object>> handleRequestBindingException(
+            ServletRequestBindingException ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+
+        log.warn("Request binding failed: {}", ex.getMessage());
         return ResponseEntity.badRequest().body(response);
     }
 

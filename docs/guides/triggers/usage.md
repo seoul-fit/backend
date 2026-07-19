@@ -1,8 +1,8 @@
-# 🎯 UrbanPing 트리거 사용 가이드
+# 🎯 Seoul Fit 트리거 사용 가이드
 
 ## 📋 개요
 
-UrbanPing의 트리거 시스템은 두 가지 방식으로 동작합니다:
+Seoul Fit의 트리거 시스템은 두 가지 방식으로 동작합니다:
 
 1. **시간 기반 트리거**: 스케줄러가 주기적으로 모든 사용자에 대해 트리거 조건을 평가
 2. **위치 기반 실시간 트리거**: 사용자가 앱에 접속하여 위치 정보를 전달할 때 즉시 평가
@@ -22,7 +22,7 @@ UrbanPing의 트리거 시스템은 두 가지 방식으로 동작합니다:
 ### 설정
 
 ```yaml
-urbanping:
+seoulfit:
   scheduler:
     enabled: true
     realtime-interval: 300000  # 5분 (밀리초)
@@ -197,7 +197,7 @@ class TriggerManager {
 ### 성능 최적화
 
 ```yaml
-urbanping:
+seoulfit:
   trigger:
     # 배치 처리 설정
     batch:
@@ -218,7 +218,7 @@ urbanping:
 ### 사용자 경험 최적화
 
 ```yaml
-urbanping:
+seoulfit:
   trigger:
     # 우선순위 기반 제한
     max-notifications-per-session: 3
@@ -317,4 +317,4 @@ const TriggerService = {
 3. **소셜 기능**: 친구들과 트리거 정보 공유
 4. **IoT 연동**: 스마트 기기와의 연동
 
-이 가이드를 통해 UrbanPing의 트리거 시스템을 효과적으로 활용하시기 바랍니다!
+이 가이드를 통해 Seoul Fit의 트리거 시스템을 효과적으로 활용하시기 바랍니다!

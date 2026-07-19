@@ -28,7 +28,7 @@ public class CongestionTriggerStrategy implements TriggerStrategy {
     
     private static final List<String> CROWDED_LEVELS = Arrays.asList("혼잡", "매우혼잡");
     
-    @Value("${urbanping.trigger.congestion.location-radius:1000}")
+    @Value("${seoulfit.trigger.congestion.location-radius:1000}")
     private double locationRadius; // 미터 단위
     
     @Override

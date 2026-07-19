@@ -27,13 +27,13 @@ import java.util.Map;
 @Component
 public class BikeShareTriggerStrategy implements TriggerStrategy {
     
-    @Value("${urbanping.trigger.bike.shortage-threshold:3}")
+    @Value("${seoulfit.trigger.bike.shortage-threshold:3}")
     private int shortageThreshold; // 자전거가 3대 이하일 때 부족 알림
     
-    @Value("${urbanping.trigger.bike.full-threshold:90}")
+    @Value("${seoulfit.trigger.bike.full-threshold:90}")
     private int fullThreshold; // 거치율이 90% 이상일 때 포화 알림
     
-    @Value("${urbanping.trigger.bike.location-radius:2000}")
+    @Value("${seoulfit.trigger.bike.location-radius:2000}")
     private double locationRadius; // 미터 단위 (기본값: 2km)
     
     @Override

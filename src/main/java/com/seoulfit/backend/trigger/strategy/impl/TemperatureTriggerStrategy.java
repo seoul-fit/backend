@@ -26,8 +26,8 @@ import org.springframework.stereotype.Component;
  * 
  * <p>임계값 설정:</p>
  * <ul>
- *   <li>고온 임계값: urbanping.trigger.temperature.high-threshold (기본값: 35.0°C)</li>
- *   <li>저온 임계값: urbanping.trigger.temperature.low-threshold (기본값: 0.0°C)</li>
+ *   <li>고온 임계값: seoulfit.trigger.temperature.high-threshold (기본값: 35.0°C)</li>
+ *   <li>저온 임계값: seoulfit.trigger.temperature.low-threshold (기본값: 0.0°C)</li>
  * </ul>
  * 
  * @author Seoul Fit
@@ -45,14 +45,14 @@ public class TemperatureTriggerStrategy implements TriggerStrategy {
      * 고온 알림을 발송할 온도 임계값입니다.
      * 이 값 이상의 온도에서 폭염 주의보가 발송됩니다.
      */
-    @Value("${urbanping.trigger.temperature.high-threshold:35.0}")
+    @Value("${seoulfit.trigger.temperature.high-threshold:35.0}")
     private double highTemperatureThreshold;
     
     /**
      * 저온 알림을 발송할 온도 임계값입니다.
      * 이 값 이하의 온도에서 한파 주의보가 발송됩니다.
      */
-    @Value("${urbanping.trigger.temperature.low-threshold:0.0}")
+    @Value("${seoulfit.trigger.temperature.low-threshold:0.0}")
     private double lowTemperatureThreshold;
     
     /**

@@ -28,13 +28,13 @@ import java.util.Map;
 @Component
 public class LocationBasedBikeShareTriggerStrategy implements TriggerStrategy {
 
-    @Value("${urbanping.trigger.bike-share.shortage-threshold:3}")
+    @Value("${seoulfit.trigger.bike-share.shortage-threshold:3}")
     private int shortageThreshold; // 자전거가 3대 이하일 때 부족 알림
 
-    @Value("${urbanping.trigger.bike-share.full-threshold:2}")
+    @Value("${seoulfit.trigger.bike-share.full-threshold:2}")
     private int fullThreshold; // 빈 슬롯이 2개 이하일 때 포화 알림
 
-    @Value("${urbanping.trigger.bike-share.search-radius:500}")
+    @Value("${seoulfit.trigger.bike-share.search-radius:500}")
     private int searchRadius; // 500m
 
     @Override

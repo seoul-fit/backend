@@ -1,6 +1,6 @@
 # 카카오 OAuth 2.0 로그인 가이드
 
-UrbanPing 프로젝트에서 카카오 공식 문서 기준으로 구현된 OAuth 2.0 Authorization Code Flow 사용법을 안내합니다.
+Seoul Fit 프로젝트에서 카카오 공식 문서 기준으로 구현된 OAuth 2.0 Authorization Code Flow 사용법을 안내합니다.
 
 ## 🔄 카카오 OAuth 인증 플로우
 

@@ -1,6 +1,6 @@
 # OAuth 2.0 Authorization Code Flow 가이드
 
-UrbanPing 프로젝트에서 OAuth 2.0 Authorization Code Flow를 사용한 인증 시스템 사용법을 안내합니다.
+Seoul Fit 프로젝트에서 OAuth 2.0 Authorization Code Flow를 사용한 인증 시스템 사용법을 안내합니다.
 
 ## 🔄 OAuth 인증 플로우
 
@@ -278,4 +278,4 @@ function OAuthCallback() {
 
 ---
 
-이 가이드를 통해 UrbanPing의 OAuth 2.0 Authorization Code Flow를 안전하고 효율적으로 사용할 수 있습니다. 추가 질문이나 문제가 있으면 GitHub Issues에 등록해주세요.
+이 가이드를 통해 Seoul Fit의 OAuth 2.0 Authorization Code Flow를 안전하고 효율적으로 사용할 수 있습니다. 추가 질문이나 문제가 있으면 GitHub Issues에 등록해주세요.

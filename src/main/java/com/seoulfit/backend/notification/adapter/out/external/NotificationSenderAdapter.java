@@ -34,19 +34,19 @@ public class NotificationSenderAdapter implements NotificationSenderPort {
     private final WebClient webClient;
     private final ObjectMapper objectMapper;
 
-    @Value("${urbanping.notification.fcm.server-key:}")
+    @Value("${seoulfit.notification.fcm.server-key:}")
     private String fcmServerKey;
     
-    @Value("${urbanping.notification.fcm.url:https://fcm.googleapis.com/fcm/send}")
+    @Value("${seoulfit.notification.fcm.url:https://fcm.googleapis.com/fcm/send}")
     private String fcmUrl;
     
-    @Value("${urbanping.notification.webhook.timeout:10}")
+    @Value("${seoulfit.notification.webhook.timeout:10}")
     private int webhookTimeoutSeconds;
     
-    @Value("${urbanping.notification.email.enabled:false}")
+    @Value("${seoulfit.notification.email.enabled:false}")
     private boolean emailEnabled;
     
-    @Value("${urbanping.notification.sms.enabled:false}")
+    @Value("${seoulfit.notification.sms.enabled:false}")
     private boolean smsEnabled;
 
     // 발송 상태 캐시 (실제 구현에서는 Redis 등을 사용)

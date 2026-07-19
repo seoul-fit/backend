@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class WebClientConfig {
     
-    @Value("${urbanping.api.seoul.timeout:10}")
+    @Value("${seoulfit.api.seoul.timeout:10}")
     private int timeoutSeconds;
     
     /**

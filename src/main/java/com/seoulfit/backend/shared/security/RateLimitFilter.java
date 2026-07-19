@@ -12,6 +12,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
@@ -37,9 +38,10 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class RateLimitFilter implements Filter {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
     
     // IP별 요청 카운터 캐시 (1분 TTL)
     private final Cache<String, AtomicInteger> requestCountCache = Caffeine.newBuilder()

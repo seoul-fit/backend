@@ -63,25 +63,25 @@ public class PublicDataApiClient {
     /**
      * 서울시 공공 데이터 API의 기본 URL입니다.
      */
-    @Value("${urbanping.api.seoul.base-url:http://openapi.seoul.go.kr:8088}")
+    @Value("${seoulfit.api.seoul.base-url}")
     private String baseUrl;
 
     /**
      * 서울시 공공 데이터 API 인증 키입니다.
      */
-    @Value("${urbanping.api.seoul.api-key:sample}")
+    @Value("${seoulfit.api.seoul.api-key}")
     private String apiKey;
 
     /**
      * API 호출 타임아웃 시간(초)입니다.
      */
-    @Value("${urbanping.api.seoul.timeout:10}")
+    @Value("${seoulfit.api.seoul.timeout:10}")
     private int timeoutSeconds;
 
     /**
      * API 호출 실패 시 재시도 횟수입니다.
      */
-    @Value("${urbanping.api.seoul.retry-attempts:3}")
+    @Value("${seoulfit.api.seoul.retry-attempts:3}")
     private int retryAttempts;
 
     /**

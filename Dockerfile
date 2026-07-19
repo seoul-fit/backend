@@ -26,7 +26,7 @@ RUN addgroup -g 1000 appgroup && \
 WORKDIR /app
 
 # 빌드된 JAR 파일 복사
-COPY --from=builder /app/build/libs/backend-1.0.0.jar app.jar
+COPY --from=builder /app/build/libs/*.jar app.jar
 
 # 로그 디렉토리 생성
 RUN mkdir -p /app/logs && \

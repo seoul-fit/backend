@@ -1,4 +1,4 @@
-# UrbanPing 테스트 환경 설정
+# Seoul Fit 테스트 환경 설정
 # Seoul Fit 팀에서 관리하는 테스트 전용 설정 파일입니다.
 
 server:
@@ -13,7 +13,10 @@ spring:
     driverClassName: org.h2.Driver
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: sa
-    password: 
+    password:
+
+  flyway:
+    enabled: false
   
   # JPA 설정
   jpa:
@@ -32,6 +35,12 @@ spring:
     console:
       enabled: false
       path: /h2-console
+
+  springdoc:
+    api-docs:
+      enabled: false
+    swagger-ui:
+      enabled: false
   
   # OAuth 설정 (테스트용)
   security:
@@ -103,8 +112,8 @@ seoul-api:
       batch-size: 100
       retention-days: 1
 
-# UrbanPing 애플리케이션 설정 (테스트용)
-urbanping:
+# Seoul Fit 애플리케이션 설정 (테스트용)
+seoulfit:
   # API 설정
   api:
     seoul:
@@ -175,3 +184,6 @@ management:
   endpoint:
     health:
       show-details: never
+
+cors:
+  allowed-origins: http://localhost:3000

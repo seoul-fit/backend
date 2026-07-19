@@ -1,7 +1,7 @@
-# UrbanPing 알림 시스템 설정
+# Seoul Fit 알림 시스템 설정
 # 이 파일을 main application.yml에 포함하거나 별도 프로파일로 사용하세요
 
-urbanping:
+seoulfit:
   # 서울시 공공데이터 API 설정
   api:
     seoul:
@@ -97,7 +97,7 @@ spring:
     properties:
       hibernate:
         # 알림 히스토리 테이블 인덱스 최적화
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
         jdbc:
           batch_size: 20
@@ -133,7 +133,7 @@ management:
       prometheus:
         enabled: true
     tags:
-      application: urbanping
+      application: seoulfit
       service: notification
 
 # 환경변수 예시 (실제 배포시 설정 필요)

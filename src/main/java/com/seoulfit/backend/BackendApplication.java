@@ -2,11 +2,10 @@ package com.seoulfit.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * UrbanPing 백엔드 애플리케이션의 메인 클래스입니다.
+ * Seoul Fit 백엔드 애플리케이션의 메인 클래스입니다.
  * 
  * <p>서울시 공공 데이터를 활용한 실시간 도시 정보 알림 시스템의 Spring Boot 애플리케이션을 시작합니다.
  * JPA Auditing과 스케줄링 기능을 활성화하여 데이터 추적 및 정기적인 작업 실행을 지원합니다.</p>
@@ -25,7 +24,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @since 2025-01-01
  */
 @SpringBootApplication
-@EnableJpaAuditing
 @EnableScheduling
 public class BackendApplication {
 

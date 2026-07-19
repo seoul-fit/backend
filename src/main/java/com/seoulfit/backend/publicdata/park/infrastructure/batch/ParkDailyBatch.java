@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class ParkDailyBatch {
    private final ParkBatchUseCase parkBatchUseCase;
 
-    @Scheduled(cron = "${urbanping.scheduler.park.daily-cron[0]}")
+    @Scheduled(cron = "${seoulfit.scheduler.park.daily-cron[0]}")
     public void parkDailyBatch() {
         parkBatchUseCase.processDailyBatch();
     }

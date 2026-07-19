@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seoulfit.backend.search.adapter.in.web.dto.SearchResultResponse;
 import com.seoulfit.backend.search.adapter.in.web.dto.SearchIndexResponse;
 import com.seoulfit.backend.search.application.port.in.SearchUseCase;
+import com.seoulfit.backend.config.TestSecurityConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,10 +14,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -32,6 +36,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @WebMvcTest(controllers = SearchController.class)
 @AutoConfigureMockMvc(addFilters = false)
+@Import(TestSecurityConfig.class)
+@ActiveProfiles("test")
 @DisplayName("SearchController 단위 테스트")
 class SearchControllerTest {
 
@@ -65,15 +71,14 @@ class SearchControllerTest {
             .thenReturn(mockResponse);
         
         // when & then
-        mockMvc.perform(get("/api/search")
+        mockMvc.perform(get("/api/search/index")
                 .param("keyword", keyword)
                 .param("page", "0")
                 .param("size", "10"))
             .andDo(print())
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.success").value(true))
-            .andExpect(jsonPath("$.data.content").isArray())
-            .andExpect(jsonPath("$.data.content[0].name").value("서울도서관"));
+            .andExpect(jsonPath("$.content").isArray())
+            .andExpect(jsonPath("$.content[0].name").value("서울도서관"));
         
         verify(searchUseCase, times(1)).searchIndex(keyword, 0, 10);
     }
@@ -95,13 +100,12 @@ class SearchControllerTest {
             .thenReturn(mockResponse);
         
         // when & then
-        mockMvc.perform(get("/api/search")
+        mockMvc.perform(get("/api/search/index")
                 .param("keyword", keyword))
             .andDo(print())
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.success").value(true))
-            .andExpect(jsonPath("$.data.content").isArray())
-            .andExpect(jsonPath("$.data.content").isEmpty());
+            .andExpect(jsonPath("$.content").isArray())
+            .andExpect(jsonPath("$.content").isEmpty());
     }
     
     @Test
@@ -110,16 +114,15 @@ class SearchControllerTest {
     void getPublicDataByIndex_Success() throws Exception {
         // given
         Long indexId = 1L;
-        Object mockData = new Object();
+        Object mockData = Map.of("id", indexId);
         
         when(searchUseCase.getPublicDataByIndex(indexId))
             .thenReturn(mockData);
         
         // when & then
-        mockMvc.perform(get("/api/search/index/{id}", indexId))
+        mockMvc.perform(get("/api/search/data/{id}", indexId))
             .andDo(print())
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.success").value(true));
+            .andExpect(status().isOk());
         
         verify(searchUseCase, times(1)).getPublicDataByIndex(indexId);
     }

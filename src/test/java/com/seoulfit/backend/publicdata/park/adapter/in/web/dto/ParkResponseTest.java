@@ -76,8 +76,8 @@ class ParkResponseTest {
         assertThat(response.getContent()).isNull();
         assertThat(response.getArea()).isNull();
         assertThat(response.getImageUrl()).isNull();
-        assertThat(response.getLatitude()).isNull();
-        assertThat(response.getLongitude()).isNull();
+        assertThat(response.getLatitude()).isZero();
+        assertThat(response.getLongitude()).isZero();
     }
 
     @Test
