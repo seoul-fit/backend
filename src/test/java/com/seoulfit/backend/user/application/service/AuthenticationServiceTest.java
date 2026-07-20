@@ -170,6 +170,32 @@ class AuthenticationServiceTest {
     }
 
     @Test
+    @DisplayName("OAuth 회원가입 - 이메일 없이 성공")
+    void oauthSignUp_WithoutEmail_Success() {
+        OAuthSignUpCommand command = OAuthSignUpCommand.builder()
+                .provider(AuthProvider.KAKAO)
+                .oauthUserId("kakao-no-email")
+                .nickname("no-email-user")
+                .build();
+        User savedUser = User.createOAuthUser(
+                AuthProvider.KAKAO, "kakao-no-email", "no-email-user", null, null);
+        setUserId(savedUser, 2L);
+
+        when(userPort.existsByProviderAndOauthUserId(AuthProvider.KAKAO, "kakao-no-email"))
+                .thenReturn(false);
+        when(userPort.save(any(User.class))).thenReturn(savedUser);
+        when(jwtTokenProvider.createAccessToken(2L, null)).thenReturn("access_token");
+        when(jwtTokenProvider.createRefreshToken(2L)).thenReturn("refresh_token");
+
+        TokenResult result = authenticationService.oauthSignUp(command);
+
+        assertThat(result.getUserId()).isEqualTo(2L);
+        assertThat(savedUser.getEmail()).isNull();
+        verify(userPort, never()).existsByEmail(any());
+        verify(userPort).save(argThat(user -> user.getEmail() == null));
+    }
+
+    @Test
     @DisplayName("OAuth 회원가입 - 미지원 제공자 거부")
     void oauthSignUp_UnsupportedProvider() {
         OAuthSignUpCommand command = OAuthSignUpCommand.builder()

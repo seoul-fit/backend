@@ -38,6 +38,23 @@ class UserTest {
             assertThat(user.getProfileImageUrl()).isEqualTo("https://example.com/profile.jpg");
             assertThat(user.getStatus()).isEqualTo(UserStatus.ACTIVE);
         }
+
+        @Test
+        @DisplayName("이메일 없이 OAuth 사용자 생성 성공")
+        void createOAuthUser_WithoutEmail_Success() {
+            User user = User.createOAuthUser(
+                AuthProvider.KAKAO,
+                "12345",
+                "테스트사용자",
+                null,
+                "https://example.com/profile.jpg"
+            );
+
+            assertThat(user).isNotNull();
+            assertThat(user.getEmail()).isNull();
+            assertThat(user.getOauthUserId()).isEqualTo("12345");
+            assertThat(user.getStatus()).isEqualTo(UserStatus.ACTIVE);
+        }
     }
 
     @Nested
