@@ -23,9 +23,6 @@ public class AirQualityApiClientAdapter implements AirQualityApiClient {
     @Value("${seoul-api.v1.environment.service-name[0]}")
     private String serviceName;
 
-    @Value("${seoul-api.v1.environment.api-key}")
-    private String apiKey;
-
     private final RestClientUtils<AirQualityApiResponse> restClientUtils;
 
     private static final int DEFAULT_START_INDEX = 1;
@@ -86,8 +83,8 @@ public class AirQualityApiClientAdapter implements AirQualityApiClient {
      * API URL 생성
      */
     private String buildApiUrl(int startIndex, int endIndex) {
-        return String.format("%s/%s/%s/%d/%d/",
-            baseUrl, apiKey, serviceName, startIndex, endIndex);
+        return String.format("%s/%s/%d/%d/",
+            baseUrl, serviceName, startIndex, endIndex);
     }
 
 }
