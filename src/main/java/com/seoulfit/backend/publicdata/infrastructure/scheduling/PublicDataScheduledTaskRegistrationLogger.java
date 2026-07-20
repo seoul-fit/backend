@@ -5,11 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.config.CronTask;
-import org.springframework.scheduling.config.ScheduledTask;
 import org.springframework.scheduling.config.ScheduledTaskHolder;
-import org.springframework.scheduling.support.ScheduledMethodRunnable;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ClassUtils;
 
 import java.util.Set;
 
@@ -31,20 +28,17 @@ public class PublicDataScheduledTaskRegistrationLogger {
     @EventListener(ApplicationReadyEvent.class)
     public void logRegisteredPublicDataTasks() {
         scheduledTaskHolder.getScheduledTasks().stream()
-                .map(ScheduledTask::getTask)
+                .map(scheduledTask -> scheduledTask.getTask())
                 .filter(CronTask.class::isInstance)
                 .map(CronTask.class::cast)
-                .filter(task -> task.getRunnable() instanceof ScheduledMethodRunnable)
                 .forEach(this::logIfObservedTarget);
     }
 
     private void logIfObservedTarget(CronTask task) {
-        ScheduledMethodRunnable runnable = (ScheduledMethodRunnable) task.getRunnable();
-        String targetClassName = ClassUtils.getUserClass(runnable.getTarget()).getName();
+        String target = task.getRunnable().toString();
 
-        if (OBSERVED_TARGETS.contains(targetClassName)) {
-            log.info("정기 작업 등록 확인 - 대상: {}#{}, 크론: {}",
-                    targetClassName, runnable.getMethod().getName(), task.getExpression());
+        if (OBSERVED_TARGETS.stream().anyMatch(target::startsWith)) {
+            log.info("정기 작업 등록 확인 - 대상: {}, 크론: {}", target, task.getExpression());
         }
     }
 }
