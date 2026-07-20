@@ -60,7 +60,7 @@ public class Restaurant implements GeoUtils.GeoPoint {
     @Column(name = "subway_info", length = 300)
     private String subwayInfo; // 교통정보
 
-    @Column(name = "homepage_lang", length = 50)
+    @Column(name = "homepage_lang", length = 200)
     private String homepageLang; // 홈페이지 언어
 
     @Column(name = "representative_menu", length = 500)
