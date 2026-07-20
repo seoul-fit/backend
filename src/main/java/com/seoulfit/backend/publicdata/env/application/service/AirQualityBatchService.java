@@ -31,7 +31,7 @@ public class AirQualityBatchService implements AirQualityBatchUseCase {
 
     @Override
     public AirQualityBatchResult processRealTimeBatch() {
-        log.info("실시간 대기질 정보 배치 처리 시작");
+        log.info("대기질 정보 매시 배치 처리 시작");
 
         try {
             // 1. API에서 실시간 대기질 정보 조회
@@ -103,16 +103,26 @@ public class AirQualityBatchService implements AirQualityBatchUseCase {
             if (!airQualitiesToSave.isEmpty())
                 repository.saveAll(airQualitiesToSave);
 
-            log.info("실시간 대기질 정보 배치 처리 완료 - 조회: {}, 저장: {}, 업데이트: {}, 스킵: {}",
+            log.info("대기질 정보 매시 배치 처리 완료 - 조회: {}, 저장: {}, 업데이트: {}, 스킵: {}",
                     totalFetched, totalSaved, totalUpdated, totalSkipped);
 
             return AirQualityBatchResult.success(totalFetched, totalSaved, totalUpdated, totalSkipped);
 
         } catch (Exception e) {
-            String errorMessage = "실시간 대기질 정보 배치 처리 중 예외 발생: " + e.getMessage();
+            String errorMessage = "대기질 정보 매시 배치 처리 중 예외 발생: " + e.getMessage();
             log.error(errorMessage, e);
             return AirQualityBatchResult.failure(errorMessage);
         }
+    }
+
+    @Override
+    public int cleanupOldData(int retentionDays) {
+        LocalDateTime cutoffDateTime = LocalDateTime.now().minusDays(retentionDays);
+        int deletedCount = repository.deleteOldData(cutoffDateTime);
+
+        log.info("대기질 보관 정리 완료 - 보관 기간: {}일, 삭제: {}건, 기준 시각: {}",
+                retentionDays, deletedCount, cutoffDateTime);
+        return deletedCount;
     }
 
     @Override

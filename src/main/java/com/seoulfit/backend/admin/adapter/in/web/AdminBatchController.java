@@ -11,7 +11,7 @@ import com.seoulfit.backend.publicdata.facilities.application.port.in.SportsFaci
 import com.seoulfit.backend.publicdata.park.application.port.in.ParkBatchUseCase;
 import com.seoulfit.backend.publicdata.restaurant.application.port.in.RestaurantBatchUseCase;
 import com.seoulfit.backend.search.application.port.in.SearchIndexBatchUseCase;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +22,6 @@ import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("/api/admin/batch")
-@RequiredArgsConstructor
 public class AdminBatchController {
 
     private static final DateTimeFormatter DATA_DATE_FORMAT = DateTimeFormatter.BASIC_ISO_DATE;
@@ -37,12 +36,39 @@ public class AdminBatchController {
     private final SportsFacilityProgramBatchUseCase sportsProgramBatchUseCase;
     private final RestaurantBatchUseCase restaurantBatchUseCase;
     private final SearchIndexBatchUseCase searchIndexBatchUseCase;
+    private final int airQualityRetentionDays;
+
+    public AdminBatchController(
+            ParkBatchUseCase parkBatchUseCase,
+            AirQualityBatchUseCase airQualityBatchUseCase,
+            CulturalEventService culturalEventService,
+            CulturalSpaceService culturalSpaceService,
+            CulturalReservationService culturalReservationService,
+            CommandCoolingShelterUseCase coolingShelterUseCase,
+            CommandPublicLibraryUseCase libraryUseCase,
+            SportsFacilityProgramBatchUseCase sportsProgramBatchUseCase,
+            RestaurantBatchUseCase restaurantBatchUseCase,
+            SearchIndexBatchUseCase searchIndexBatchUseCase,
+            @Value("${seoul-api.v1.environment.retention-days}") int airQualityRetentionDays) {
+        this.parkBatchUseCase = parkBatchUseCase;
+        this.airQualityBatchUseCase = airQualityBatchUseCase;
+        this.culturalEventService = culturalEventService;
+        this.culturalSpaceService = culturalSpaceService;
+        this.culturalReservationService = culturalReservationService;
+        this.coolingShelterUseCase = coolingShelterUseCase;
+        this.libraryUseCase = libraryUseCase;
+        this.sportsProgramBatchUseCase = sportsProgramBatchUseCase;
+        this.restaurantBatchUseCase = restaurantBatchUseCase;
+        this.searchIndexBatchUseCase = searchIndexBatchUseCase;
+        this.airQualityRetentionDays = airQualityRetentionDays;
+    }
 
     @PostMapping("/{dataset}/run")
     public BatchRunResponse run(@PathVariable String dataset) {
         int processedCount = switch (dataset) {
             case "park" -> parkBatchUseCase.processDailyBatch();
             case "air-quality" -> runAirQuality();
+            case "air-quality-cleanup" -> airQualityBatchUseCase.cleanupOldData(airQualityRetentionDays);
             case "culture" -> runCulture();
             case "cooling-shelter" -> coolingShelterUseCase.saveCoolingShelter(
                     new CommandCoolingShelterUseCase.GetAmenitiesQuery(1, 1000, "", "")).size();

@@ -12,9 +12,9 @@ import com.seoulfit.backend.publicdata.facilities.domain.CoolingCenter;
 import com.seoulfit.backend.publicdata.park.application.port.in.ParkBatchUseCase;
 import com.seoulfit.backend.publicdata.restaurant.application.port.in.RestaurantBatchUseCase;
 import com.seoulfit.backend.search.application.port.in.SearchIndexBatchUseCase;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -41,7 +41,23 @@ class AdminBatchControllerTest {
     @Mock private RestaurantBatchUseCase restaurantBatchUseCase;
     @Mock private SearchIndexBatchUseCase searchIndexBatchUseCase;
 
-    @InjectMocks private AdminBatchController controller;
+    private AdminBatchController controller;
+
+    @BeforeEach
+    void setUp() {
+        controller = new AdminBatchController(
+                parkBatchUseCase,
+                airQualityBatchUseCase,
+                culturalEventService,
+                culturalSpaceService,
+                culturalReservationService,
+                coolingShelterUseCase,
+                libraryUseCase,
+                sportsProgramBatchUseCase,
+                restaurantBatchUseCase,
+                searchIndexBatchUseCase,
+                30);
+    }
 
     @Test
     void delegatesEverySupportedDatasetAndReturnsProcessedCount() {
@@ -97,6 +113,17 @@ class AdminBatchControllerTest {
         assertThatThrownBy(() -> controller.run("air-quality"))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("upstream failed");
+    }
+
+    @Test
+    void delegatesAirQualityCleanupUsingConfiguredRetentionDays() {
+        when(airQualityBatchUseCase.cleanupOldData(30)).thenReturn(2);
+
+        AdminBatchController.BatchRunResponse response = controller.run("air-quality-cleanup");
+
+        assertThat(response.dataset()).isEqualTo("air-quality-cleanup");
+        assertThat(response.processedCount()).isEqualTo(2);
+        verify(airQualityBatchUseCase).cleanupOldData(30);
     }
 
     private void assertCount(String dataset, int expectedCount) {

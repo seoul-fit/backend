@@ -56,7 +56,9 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,prometheus
+        include: health,info,prometheus,scheduledtasks
   endpoint:
     health:
       show-details: when_authorized
+    scheduledtasks:
+      enabled: true

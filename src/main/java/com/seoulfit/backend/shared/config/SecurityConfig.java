@@ -75,7 +75,8 @@ public class SecurityConfig {
                                     "/actuator/prometheus").permitAll();
 
                     if (environment.acceptsProfiles(Profiles.of("local", "dev"))) {
-                        auth.requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll();
+                        auth.requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**",
+                                "/actuator/scheduledtasks").permitAll();
                     }
                     if (environment.acceptsProfiles(Profiles.of("local"))) {
                         auth.requestMatchers("/h2-console/**").permitAll();

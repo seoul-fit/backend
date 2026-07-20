@@ -60,3 +60,5 @@ management:
   endpoint:
     health:
       show-details: never
+    scheduledtasks:
+      enabled: false

@@ -126,8 +126,8 @@ seoulfit:
     enabled: false
     realtime-interval: 60000
     cultural-interval: 300000
-    env-realtime-interval: 60000
-    env-daily-cron: "0 0 3 * * ?"
+    env-realtime-cron: "0 5 * * * ?"
+    env-daily-cron: "0 30 3 * * ?"
     env-weekly-cron: "0 0 2 * * SUN"
     culture:
       daily-cron:

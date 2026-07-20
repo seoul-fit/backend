@@ -3,28 +3,30 @@ package com.seoulfit.backend.publicdata.env.infrastructure.batch;
 import com.seoulfit.backend.publicdata.env.application.port.in.AirQualityBatchUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * 서울시 대기질 정보 실시간 배치 작업
- * 5분마다 실행되어 최신 대기질 정보를 수집하고 저장
+ * 서울시 원천의 정시 갱신에 맞춰 매시 실행되는 대기질 정보 배치 작업
  */
 @Slf4j
 @Component
 @RequiredArgsConstructor
+@ConditionalOnProperty(name = "seoulfit.scheduler.enabled", havingValue = "true", matchIfMissing = true)
 public class AirQualityRealTimeBatch {
 
     private final AirQualityBatchUseCase airQualityBatchUseCase;
 
-    //@Scheduled(cron = "0 */5 * * * ?")
+    @Scheduled(cron = "${seoulfit.scheduler.env-realtime-cron}")
     public void executeRealTimeBatch() {
         LocalDateTime now = LocalDateTime.now();
         String currentTime = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         
-        log.info("=== 서울시 대기질 정보 실시간 배치 시작 ===");
+        log.info("=== 서울시 대기질 정보 매시 배치 시작 ===");
         log.info("배치 실행 시간: {}", currentTime);
 
         try {
@@ -32,7 +34,7 @@ public class AirQualityRealTimeBatch {
                 airQualityBatchUseCase.processRealTimeBatch();
 
             if (result.success()) {
-                log.info("=== 서울시 대기질 정보 실시간 배치 성공 ===");
+                log.info("=== 서울시 대기질 정보 매시 배치 성공 ===");
                 log.info("처리 결과 - 조회: {}, 저장: {}, 업데이트: {}, 스킵: {}", 
                     result.totalFetched(), result.totalSaved(), 
                     result.totalUpdated(), result.totalSkipped());
@@ -43,20 +45,20 @@ public class AirQualityRealTimeBatch {
                     // TODO: 이벤트 발행하여 알림 시스템에 전달
                 }
             } else {
-                log.error("=== 서울시 대기질 정보 실시간 배치 실패 ===");
+                log.error("=== 서울시 대기질 정보 매시 배치 실패 ===");
                 log.error("실패 사유: {}", result.errorMessage());
             }
 
         } catch (Exception e) {
-            log.error("=== 서울시 대기질 정보 실시간 배치 예외 발생 ===", e);
+            log.error("=== 서울시 대기질 정보 매시 배치 예외 발생 ===", e);
         }
     }
 
     /**
-     * 수동 실시간 배치 실행 (테스트용)
+     * 수동 대기질 배치 실행 (테스트용)
      */
     public AirQualityBatchUseCase.AirQualityBatchResult executeManualRealTimeBatch() {
-        log.info("=== 서울시 대기질 정보 수동 실시간 배치 시작 ===");
+        log.info("=== 서울시 대기질 정보 수동 매시 배치 시작 ===");
         return airQualityBatchUseCase.processRealTimeBatch();
     }
 
