@@ -29,18 +29,6 @@ spring:
             authorization-grant-type: authorization_code
             scope: profile_nickname,profile_image,account_email
             client-name: Kakao
-          google:
-            client-id: ${GOOGLE_CLIENT_ID:local-google-client-id}
-            client-secret: ${GOOGLE_CLIENT_SECRET:local-google-client-secret}
-            redirect-uri: ${GOOGLE_REDIRECT_URI:http://localhost:8080/login/oauth2/code/google}
-            scope: profile,email
-          naver:
-            client-id: ${NAVER_CLIENT_ID:local-naver-client-id}
-            client-secret: ${NAVER_CLIENT_SECRET:local-naver-client-secret}
-            redirect-uri: ${NAVER_REDIRECT_URI:http://localhost:8080/login/oauth2/code/naver}
-            authorization-grant-type: authorization_code
-            scope: name,email,profile_image
-            client-name: Naver
 
 seoul-api:
   base-url: http://openapi.seoul.go.kr:8088/${SEOUL_API_KEY:local-seoul-api-key}/json
@@ -52,9 +40,6 @@ seoulfit:
   api:
     seoul:
       api-key: ${SEOUL_API_KEY:local-seoul-api-key}
-
-google:
-  api-key: ${GOOGLE_API_KEY:local-google-api-key}
 
 jwt:
   secret: ${JWT_SECRET:local-jwt-secret-key-for-development-only-at-least-256-bits-long}

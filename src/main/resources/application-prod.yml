@@ -33,18 +33,6 @@ spring:
             authorization-grant-type: authorization_code
             scope: profile_nickname,profile_image,account_email
             client-name: Kakao
-          google:
-            client-id: ${GOOGLE_CLIENT_ID}
-            client-secret: ${GOOGLE_CLIENT_SECRET}
-            redirect-uri: ${GOOGLE_REDIRECT_URI}
-            scope: profile,email
-          naver:
-            client-id: ${NAVER_CLIENT_ID}
-            client-secret: ${NAVER_CLIENT_SECRET}
-            redirect-uri: ${NAVER_REDIRECT_URI}
-            authorization-grant-type: authorization_code
-            scope: name,email,profile_image
-            client-name: Naver
 
 seoul-api:
   base-url: http://openapi.seoul.go.kr:8088/${SEOUL_API_KEY}/json
@@ -55,8 +43,6 @@ seoulfit:
   api:
     seoul:
       api-key: ${SEOUL_API_KEY}
-google:
-  api-key: ${GOOGLE_API_KEY}
 jwt:
   secret: ${JWT_SECRET}
 cors:

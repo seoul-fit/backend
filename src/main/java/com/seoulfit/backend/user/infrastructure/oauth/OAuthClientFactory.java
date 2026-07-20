@@ -27,6 +27,10 @@ public class OAuthClientFactory {
      * @throws IllegalArgumentException 지원하지 않는 제공자인 경우
      */
     public OAuthClient getClient(AuthProvider provider) {
+        if (provider != AuthProvider.KAKAO) {
+            throw new IllegalArgumentException("지원하지 않는 OAuth 제공자입니다: " + provider);
+        }
+
         return oAuthClients.stream()
                 .filter(client -> client.supports(provider))
                 .findFirst()

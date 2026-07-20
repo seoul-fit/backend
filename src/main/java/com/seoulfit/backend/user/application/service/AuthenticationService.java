@@ -10,6 +10,7 @@ import com.seoulfit.backend.user.application.port.in.dto.OAuthUserCheckCommand;
 import com.seoulfit.backend.user.application.port.in.dto.OAuthUserCheckResult;
 import com.seoulfit.backend.user.application.port.in.dto.TokenResult;
 import com.seoulfit.backend.user.application.port.out.UserPort;
+import com.seoulfit.backend.user.domain.AuthProvider;
 import com.seoulfit.backend.user.domain.User;
 import com.seoulfit.backend.user.domain.UserStatus;
 import com.seoulfit.backend.user.domain.exception.OAuthUserAlreadyExistsException;
@@ -46,6 +47,7 @@ public class AuthenticationService implements AuthenticateUserUseCase {
     @Override
     @Transactional
     public TokenResult oauthSignUp(OAuthSignUpCommand command) {
+        validateSupportedProvider(command.getProvider());
         log.info("OAuth 회원가입 시작: provider={}, oauthUserId={}",
                 command.getProvider(), command.getOauthUserId());
 
@@ -84,6 +86,7 @@ public class AuthenticationService implements AuthenticateUserUseCase {
 
     @Override
     public TokenResult oauthLogin(OAuthLoginCommand command) {
+        validateSupportedProvider(command.getProvider());
         // 새로운 Authorization Code Flow 방식 우선 처리
         if (command.getAuthorizationCode() != null && command.getRedirectUri() != null) {
             return oauthLoginWithAuthorizationCode(
@@ -98,6 +101,7 @@ public class AuthenticationService implements AuthenticateUserUseCase {
     @Override
     @Transactional
     public TokenResult oauthLoginWithAuthorizationCode(OAuthAuthorizationCommand command) {
+        validateSupportedProvider(command.getProvider());
         log.info("OAuth Authorization Code 로그인 시작: provider={}", command.getProvider());
 
         try {
@@ -121,6 +125,8 @@ public class AuthenticationService implements AuthenticateUserUseCase {
 
             return createTokenResult(user);
 
+        } catch (IllegalArgumentException e) {
+            throw e;
         } catch (Exception e) {
             log.error("OAuth Authorization Code 로그인 실패: provider={}", command.getProvider(), e);
             throw new RuntimeException("OAuth 로그인에 실패했습니다.", e);
@@ -241,6 +247,7 @@ public class AuthenticationService implements AuthenticateUserUseCase {
 
     @Override
     public OAuthUserCheckResult checkOAuthUser(OAuthUserCheckCommand command) {
+        validateSupportedProvider(command.getProvider());
         log.info("OAuth 사용자 확인: provider={}, oauthUserId={}",
                 command.getProvider(), command.getOauthUserId());
 
@@ -260,6 +267,7 @@ public class AuthenticationService implements AuthenticateUserUseCase {
 
     @Override
     public OAuthAuthorizeCheckResult checkAuthorizationCode(OAuthAuthorizeCheckCommand command) {
+        validateSupportedProvider(command.getProvider());
         log.info("OAuth 인가코드 검증 시작: provider={}", command.getProvider());
 
         try {
@@ -286,10 +294,18 @@ public class AuthenticationService implements AuthenticateUserUseCase {
                     userInfo.getProfileImageUrl()
             );
 
+        } catch (IllegalArgumentException e) {
+            throw e;
         } catch (Exception e) {
             log.error("OAuth 인가코드 검증 실패: provider={}, error={}",
                     command.getProvider(), e.getMessage(), e);
             throw new RuntimeException("OAuth 인가코드 검증에 실패했습니다: " + e.getMessage(), e);
+        }
+    }
+
+    private void validateSupportedProvider(AuthProvider provider) {
+        if (provider != AuthProvider.KAKAO) {
+            throw new IllegalArgumentException("지원하지 않는 OAuth 제공자입니다: " + provider);
         }
     }
 

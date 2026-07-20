@@ -192,6 +192,8 @@ public class AuthController {
             result.put("message", "로그아웃이 완료되었습니다.");
             return ResponseEntity.ok(result);
 
+        } catch (IllegalArgumentException e) {
+            throw e;
         } catch (Exception e) {
             log.error("OAuth 로그아웃 실패: {}", e.getMessage(), e);
             return ResponseEntity.ok(Map.of("result", "로그아웃 처리 중 오류가 발생했습니다."));
@@ -287,6 +289,8 @@ public class AuthController {
             result.put("message", "연결 해제가 완료되었습니다.");
             return ResponseEntity.ok(result);
 
+        } catch (IllegalArgumentException e) {
+            throw e;
         } catch (Exception e) {
             log.error("OAuth 연결 해제 실패: {}", e.getMessage(), e);
             return ResponseEntity.ok(Map.of("result", "연결 해제 처리 중 오류가 발생했습니다."));

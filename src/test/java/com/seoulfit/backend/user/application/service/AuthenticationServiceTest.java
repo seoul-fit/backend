@@ -170,6 +170,22 @@ class AuthenticationServiceTest {
     }
 
     @Test
+    @DisplayName("OAuth 회원가입 - 미지원 제공자 거부")
+    void oauthSignUp_UnsupportedProvider() {
+        OAuthSignUpCommand command = OAuthSignUpCommand.builder()
+                .provider(AuthProvider.NAVER)
+                .oauthUserId("naver123")
+                .nickname("testuser")
+                .build();
+
+        assertThatThrownBy(() -> authenticationService.oauthSignUp(command))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("지원하지 않는 OAuth 제공자입니다: NAVER");
+
+        verifyNoInteractions(userPort);
+    }
+
+    @Test
     @DisplayName("OAuth 회원가입 - 이미 존재하는 사용자")
     void oauthSignUp_AlreadyExists() {
         // given
@@ -455,6 +471,22 @@ class AuthenticationServiceTest {
         assertThat(result.getOauthUserId()).isEqualTo("kakao123");
         assertThat(result.getNickname()).isEqualTo("testuser");
         assertThat(result.getEmail()).isEqualTo("test@example.com");
+    }
+
+    @Test
+    @DisplayName("OAuth 인가코드 검증 - 미지원 제공자 거부")
+    void checkAuthorizationCode_UnsupportedProvider() {
+        OAuthAuthorizeCheckCommand command = OAuthAuthorizeCheckCommand.builder()
+                .provider(AuthProvider.GOOGLE)
+                .authorizationCode("auth_code_123")
+                .redirectUri("http://localhost:8080/callback")
+                .build();
+
+        assertThatThrownBy(() -> authenticationService.checkAuthorizationCode(command))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("지원하지 않는 OAuth 제공자입니다: GOOGLE");
+
+        verifyNoInteractions(oAuthClientFactory);
     }
 
     @Test
