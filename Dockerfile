@@ -19,8 +19,9 @@ RUN ./gradlew clean build -x test --no-daemon
 # Stage 2: 실행 단계
 FROM eclipse-temurin:21-jre-alpine
 
-# 보안을 위한 non-root 사용자 생성
-RUN addgroup -g 1000 appgroup && \
+# 클러스터 내부 수동 배치 트리거용 curl과 non-root 사용자
+RUN apk add --no-cache curl && \
+    addgroup -g 1000 appgroup && \
     adduser -D -u 1000 -G appgroup appuser
 
 WORKDIR /app
