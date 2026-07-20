@@ -9,7 +9,7 @@ resources:
 images:
   - name: registry.damecasol.com/seoul-fit/backend
     newName: registry.damecasol.com/seoul-fit/backend
-    digest: sha256:7421026fcca38edd719a72bc5484a8dcfa8cc3b938b8ba4463cbc1ad359406c6
+    digest: sha256:41c82b2445f0487fa288f713dc0856567f2053ffa9646bc6aa69bac8aa1f6484
 patches:
   - target:
       kind: Deployment
