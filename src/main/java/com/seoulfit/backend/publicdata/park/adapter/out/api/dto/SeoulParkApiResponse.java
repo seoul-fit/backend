@@ -39,64 +39,64 @@ public class SeoulParkApiResponse {
     @Data
     public static class ParkInfo {
         
-        @JsonProperty("P_IDX")
+        @JsonProperty("SN")
         private Integer pIdx;
 
-        @JsonProperty("P_PARK")
+        @JsonProperty("PARK_NM")
         private String pPark;
 
-        @JsonProperty("P_LIST_CONTENT")
+        @JsonProperty("PARK_OTLN")
         private String pListContent;
 
         @JsonProperty("AREA")
         private String area;
 
-        @JsonProperty("OPEN_DT")
+        @JsonProperty("OPEN_YMD")
         private String openDt;
 
-        @JsonProperty("MAIN_EQUIP")
+        @JsonProperty("MAIN_FCLT")
         private String mainEquip;
 
-        @JsonProperty("MAIN_PLANTS")
+        @JsonProperty("MAIN_PLNT")
         private String mainPlants;
 
-        @JsonProperty("GUIDANCE")
+        @JsonProperty("GD_DOC")
         private String guidance;
 
-        @JsonProperty("VISIT_ROAD")
+        @JsonProperty("VST_ROAD")
         private String visitRoad;
 
-        @JsonProperty("USE_REFER")
+        @JsonProperty("UTZTN_REF")
         private String useRefer;
 
-        @JsonProperty("P_IMG")
+        @JsonProperty("IMG")
         private String pImg;
 
-        @JsonProperty("P_ZONE")
+        @JsonProperty("RGN")
         private String pZone;
 
-        @JsonProperty("P_ADDR")
+        @JsonProperty("PARK_ADDR")
         private String pAddr;
 
-        @JsonProperty("P_NAME")
+        @JsonProperty("MNG_DEPT")
         private String pName;
 
-        @JsonProperty("P_ADMINTEL")
+        @JsonProperty("TELNO")
         private String pAdmintel;
 
-        @JsonProperty("G_LONGITUDE")
+        @JsonProperty("XCRD_G")
         private String gLongitude;
 
-        @JsonProperty("G_LATITUDE")
+        @JsonProperty("YCRD_G")
         private String gLatitude;
 
-        @JsonProperty("LONGITUDE")
+        @JsonProperty("XCRD")
         private String longitude;
 
-        @JsonProperty("LATITUDE")
+        @JsonProperty("YCRD")
         private String latitude;
 
-        @JsonProperty("TEMPLATE_URL")
+        @JsonProperty("URL")
         private String templateUrl;
     }
 

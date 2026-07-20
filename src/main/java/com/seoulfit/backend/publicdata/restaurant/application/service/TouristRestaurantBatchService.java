@@ -28,7 +28,7 @@ public class TouristRestaurantBatchService implements RestaurantBatchUseCase {
     private final RestaurantMapper restaurantMapper;
 
     @Override
-    public void processDailyBatch() {
+    public int processDailyBatch() {
         log.info("서울시 관광 음식점 정보 일일 배치 처리 시작");
         try {
             TouristRestaurantApiResponse apiResponse1 = apiClient.fetchRestaurantInfo(1, 1000);
@@ -70,6 +70,10 @@ public class TouristRestaurantBatchService implements RestaurantBatchUseCase {
             restaurantCommandPort.saveRestaurantList(restaurants5);
             restaurantCommandPort.saveRestaurantList(restaurants6);
             restaurantCommandPort.saveRestaurantList(restaurants7);
+
+            return restaurants1.size() + restaurants2.size() + restaurants3.size()
+                    + restaurants4.size() + restaurants5.size() + restaurants6.size()
+                    + restaurants7.size();
 
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);

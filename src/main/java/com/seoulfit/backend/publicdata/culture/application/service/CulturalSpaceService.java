@@ -68,7 +68,7 @@ public class CulturalSpaceService {
     public SeoulCulturalSpaceApiResponse fetchCulturalSpaceInfo(int startIndex, int endIndex) {
         String url = buildApiUrl(startIndex, endIndex, "", "", "");
 
-        log.info("Calling Seoul Cultural Space API: {}", url);
+        log.info("Calling Seoul Cultural Space API: start={}, end={}", startIndex, endIndex);
 
         SeoulCulturalSpaceApiResponse response = restClientUtils.callGetApi(url, SeoulCulturalSpaceApiResponse.class);
 

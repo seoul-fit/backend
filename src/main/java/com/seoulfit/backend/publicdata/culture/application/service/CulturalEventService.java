@@ -95,7 +95,8 @@ public class CulturalEventService {
             culturalEventRepository.saveAll(culturalEvents3);
             culturalEventRepository.saveAll(culturalEvents4);
 
-            return response.getCulturalEventInfo().getRow().size();
+            return culturalEvents.size() + culturalEvents2.size()
+                    + culturalEvents3.size() + culturalEvents4.size();
 
         } catch (Exception e) {
             log.error("Error during cultural events synchronization", e);

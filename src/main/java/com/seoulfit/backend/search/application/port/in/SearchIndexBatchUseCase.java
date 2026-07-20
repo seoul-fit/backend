@@ -2,7 +2,7 @@ package com.seoulfit.backend.search.application.port.in;
 
 public interface SearchIndexBatchUseCase {
     
-    void syncAllPublicDataToIndex();
+    int syncAllPublicDataToIndex();
     
     void syncCoolingCentersToIndex();
     

@@ -120,7 +120,7 @@ class CulturalEventServiceTest {
             int savedCount = culturalEventService.saveCultureEvents();
             
             // then
-            assertThat(savedCount).isEqualTo(3);
+            assertThat(savedCount).isEqualTo(12);
             verify(entityManager).createNativeQuery("TRUNCATE TABLE cultural_events");
             verify(seoulCulturalApiService, times(4)).fetchAllCulturalEvents(anyInt(), anyInt());
             verify(culturalEventMapper, times(4)).mapToEntity(anyList());
@@ -147,7 +147,7 @@ class CulturalEventServiceTest {
             int savedCount = culturalEventService.saveCultureEvents();
             
             // then
-            assertThat(savedCount).isEqualTo(3);
+            assertThat(savedCount).isEqualTo(12);
             verify(seoulCulturalApiService).isApiHealthy();
         }
         

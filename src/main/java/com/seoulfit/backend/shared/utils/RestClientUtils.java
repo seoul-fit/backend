@@ -22,13 +22,13 @@ public class RestClientUtils<T> {
                     .uri(url)
                     .retrieve()
                     .onStatus(HttpStatusCode::is4xxClientError, (request, clientResponse) -> {
-                        log.error("Client error calling Seoul API: {} - {} for URL: {}", 
-                                clientResponse.getStatusCode(), clientResponse.getStatusText(), url);
+                        log.error("Client error calling Seoul API: {} - {}",
+                                clientResponse.getStatusCode(), clientResponse.getStatusText());
                         throw new RestClientException("Seoul API client error: " + clientResponse.getStatusCode());
                     })
                     .onStatus(HttpStatusCode::is5xxServerError, (request, serverResponse) -> {
-                        log.error("Server error calling Seoul API: {} - {} for URL: {}", 
-                                serverResponse.getStatusCode(), serverResponse.getStatusText(), url);
+                        log.error("Server error calling Seoul API: {} - {}",
+                                serverResponse.getStatusCode(), serverResponse.getStatusText());
                         throw new RestClientException("Seoul API server error: " + serverResponse.getStatusCode());
                     })
                     .body(responseClass);
@@ -36,7 +36,7 @@ public class RestClientUtils<T> {
             return response;
 
         } catch (RestClientException e) {
-            log.error("RestClient error fetching data from Seoul API for URL: {}", url, e);
+            log.error("RestClient error fetching data from Seoul API", e);
             
             // HttpMessageConverter 오류인 경우 더 상세한 로그
             if (e.getMessage() != null && e.getMessage().contains("HttpMessageConverter")) {
@@ -46,39 +46,39 @@ public class RestClientUtils<T> {
             
             throw new RuntimeException("Failed to fetch data from Seoul API: " + e.getMessage(), e);
         } catch (Exception e) {
-            log.error("Unexpected error fetching data from Seoul API for URL: {}", url, e);
+            log.error("Unexpected error fetching data from Seoul API", e);
             throw new RuntimeException("Failed to fetch data from Seoul API", e);
         }
     }
 
     public T callPostApi(String url, Object request, Class<T> responseClass) {
         try {
-            log.info("Calling POST API: {}", url);
+            log.info("Calling Seoul POST API");
             
             T response = restClient.post()
                     .uri(url)
                     .body(request)
                     .retrieve()
                     .onStatus(HttpStatusCode::is4xxClientError, (req, clientResponse) -> {
-                        log.error("Client error calling Seoul POST API: {} - {} for URL: {}", 
-                                clientResponse.getStatusCode(), clientResponse.getStatusText(), url);
+                        log.error("Client error calling Seoul POST API: {} - {}",
+                                clientResponse.getStatusCode(), clientResponse.getStatusText());
                         throw new RestClientException("Seoul API client error: " + clientResponse.getStatusCode());
                     })
                     .onStatus(HttpStatusCode::is5xxServerError, (req, serverResponse) -> {
-                        log.error("Server error calling Seoul POST API: {} - {} for URL: {}", 
-                                serverResponse.getStatusCode(), serverResponse.getStatusText(), url);
+                        log.error("Server error calling Seoul POST API: {} - {}",
+                                serverResponse.getStatusCode(), serverResponse.getStatusText());
                         throw new RestClientException("Seoul API server error: " + serverResponse.getStatusCode());
                     })
                     .body(responseClass);
 
-            log.info("POST API call successful for URL: {}", url);
+            log.info("Seoul POST API call successful");
             return response;
 
         } catch (RestClientException e) {
-            log.error("RestClient error in POST request to Seoul API for URL: {}", url, e);
+            log.error("RestClient error in POST request to Seoul API", e);
             throw new RuntimeException("Failed to post data to Seoul API: " + e.getMessage(), e);
         } catch (Exception e) {
-            log.error("Unexpected error in POST request to Seoul API for URL: {}", url, e);
+            log.error("Unexpected error in POST request to Seoul API", e);
             throw new RuntimeException("Failed to post data to Seoul API", e);
         }
     }

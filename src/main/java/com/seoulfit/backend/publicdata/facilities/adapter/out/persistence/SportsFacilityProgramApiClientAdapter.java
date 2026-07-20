@@ -32,7 +32,6 @@ public class SportsFacilityProgramApiClientAdapter implements SportsFacilityProg
 
         try {
             String url = buildApiUrl(startIndex, endIndex, subjectName);
-            log.debug("API URL: {}", url);
 
             SportsFacilityProgramApiResponse response = restTemplate.getForObject(url, SportsFacilityProgramApiResponse.class);
             

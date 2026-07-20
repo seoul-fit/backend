@@ -32,7 +32,7 @@ public class CulturalReservationService {
     public SeoulReservationApiResponse fetchCulturalReservations(int startIndex, int endIndex) {
         String url = buildApiUrl(startIndex, endIndex);
 
-        log.info("Calling Seoul Cultural Reservation API: {}", url);
+        log.info("Calling Seoul Cultural Reservation API: start={}, end={}", startIndex, endIndex);
 
         SeoulReservationApiResponse response = restClientUtils.callGetApi(url, SeoulReservationApiResponse.class);
 
@@ -63,7 +63,7 @@ public class CulturalReservationService {
      */
     public SeoulReservationApiResponse fetchReservationsByArea(String areaName) {
         String url = buildApiUrlWithArea(1, 1000, areaName);
-        log.info("Calling Seoul API with area filter: {}", url);
+        log.info("Calling Seoul Cultural Reservation API with area filter");
         return restClientUtils.callGetApi(url, SeoulReservationApiResponse.class);
     }
 

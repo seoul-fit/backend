@@ -58,7 +58,7 @@ public class SportsApiClient {
         String url = String.format("%s/%s/json/%s/%d/%d/", 
                 baseUrl, apiKey, SPORTS_ENDPOINT, startIndex, endIndex);
 
-        log.info("체육시설 정보 API 호출: {}", url);
+        log.info("체육시설 정보 API 호출: start={}, end={}", startIndex, endIndex);
 
         try {
             // API 호출

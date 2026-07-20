@@ -5,6 +5,7 @@ import com.seoulfit.backend.publicdata.env.application.port.in.AirQualityBatchUs
 import com.seoulfit.backend.publicdata.env.application.port.out.AirQualityApiClient;
 import com.seoulfit.backend.publicdata.env.application.port.out.AirQualityRepository;
 import com.seoulfit.backend.publicdata.env.domain.AirQuality;
+import com.seoulfit.backend.publicdata.env.infrastructure.mapper.AirQualityMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,7 @@ public class AirQualityBatchService implements AirQualityBatchUseCase {
             for (AirQualityApiResponse.AirQualityRow apiData : row) {
                 try {
                     // 기존 데이터 확인
-                    LocalDateTime measureTime = LocalDateTime.parse(apiData.getMSRDT());
+                    LocalDateTime measureTime = AirQualityMapper.parseMeasureTime(apiData.getMSRDT());
 
                     Optional<AirQuality> existingData = repository.findByStationAndDateTime(
                             apiData.getMSRSTENNM(), measureTime);
@@ -58,16 +59,16 @@ public class AirQualityBatchService implements AirQualityBatchUseCase {
                         // 기존 데이터 업데이트
                         AirQuality airQuality = existingData.get();
                         airQuality.updateData(
-                                Integer.parseInt(apiData.getPM10()),
-                                Integer.parseInt(apiData.getPM25()),
-                                Double.parseDouble(apiData.getO3()),
-                                Double.parseDouble(apiData.getNO2()),
-                                Double.parseDouble(apiData.getCO()),
-                                Double.parseDouble(apiData.getSO2()),
-                                Integer.parseInt(apiData.getKHAI()),
+                                AirQualityMapper.parseInteger(apiData.getPM10()),
+                                AirQualityMapper.parseInteger(apiData.getPM25()),
+                                AirQualityMapper.parseDouble(apiData.getO3()),
+                                AirQualityMapper.parseDouble(apiData.getNO2()),
+                                AirQualityMapper.parseDouble(apiData.getCO()),
+                                AirQualityMapper.parseDouble(apiData.getSO2()),
+                                AirQualityMapper.parseInteger(apiData.getKHAI()),
                                 apiData.getKHAIGRADE(),
-                                Integer.parseInt(apiData.getPM10_24H()),
-                                Integer.parseInt(apiData.getPM25_24H())
+                                AirQualityMapper.parseInteger(apiData.getPM10_24H()),
+                                AirQualityMapper.parseInteger(apiData.getPM25_24H())
                         );
                         airQualitiesToSave.add(airQuality);
                         totalUpdated++;
@@ -77,16 +78,16 @@ public class AirQualityBatchService implements AirQualityBatchUseCase {
                                 .msrDt(measureTime)
                                 .msrRgnNm(apiData.getMSRRGNNM())
                                 .msrSteNm(apiData.getMSRSTENNM())
-                                .pm10Value(Integer.parseInt(apiData.getPM10()))
-                                .pm25Value(Integer.parseInt(apiData.getPM25()))
-                                .o3Value(Double.parseDouble(apiData.getO3()))
-                                .no2Value(Double.parseDouble(apiData.getNO2()))
-                                .coValue(Double.parseDouble(apiData.getCO()))
-                                .so2Value(Double.parseDouble(apiData.getSO2()))
-                                .khaiValue(Integer.parseInt(apiData.getKHAI()))
+                                .pm10Value(AirQualityMapper.parseInteger(apiData.getPM10()))
+                                .pm25Value(AirQualityMapper.parseInteger(apiData.getPM25()))
+                                .o3Value(AirQualityMapper.parseDouble(apiData.getO3()))
+                                .no2Value(AirQualityMapper.parseDouble(apiData.getNO2()))
+                                .coValue(AirQualityMapper.parseDouble(apiData.getCO()))
+                                .so2Value(AirQualityMapper.parseDouble(apiData.getSO2()))
+                                .khaiValue(AirQualityMapper.parseInteger(apiData.getKHAI()))
                                 .khaiGrade(apiData.getKHAIGRADE())
-                                .pm1024hAvg(Integer.parseInt(apiData.getPM10_24H()))
-                                .pm2524hAvg(Integer.parseInt(apiData.getPM25_24H()))
+                                .pm1024hAvg(AirQualityMapper.parseInteger(apiData.getPM10_24H()))
+                                .pm2524hAvg(AirQualityMapper.parseInteger(apiData.getPM25_24H()))
                                 .build();
 
                         airQualitiesToSave.add(newAirQuality);

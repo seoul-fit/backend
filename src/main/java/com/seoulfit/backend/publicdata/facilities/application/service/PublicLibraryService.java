@@ -21,12 +21,13 @@ public class PublicLibraryService implements CommandPublicLibraryUseCase {
 
     @Transactional
     @Override
-    public void savePublicLibraryList() {
+    public int savePublicLibraryList() {
         try{
             List<Library> publicLibraryList = loadPublicLibraryPort.loadPublicLibrary(1, 1000);
 
             commandPublicLibraryPort.truncate();
             commandPublicLibraryPort.save(publicLibraryList);
+            return publicLibraryList == null ? 0 : publicLibraryList.size();
 
         } catch (Exception e) {
             log.error("Error fetching Public Library API : {}", e.getMessage(), e);

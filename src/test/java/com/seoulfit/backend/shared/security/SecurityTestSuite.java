@@ -82,6 +82,13 @@ class SecurityTestSuite {
         mockMvc.perform(get("/actuator/info"))
                 .andExpect(status().isUnauthorized());
     }
+
+    @Test
+    @DisplayName("클러스터 내부 관리자 배치 경로는 인증 없이 라우팅")
+    void testInternalAdminBatchPathPermitted() throws Exception {
+        mockMvc.perform(post("/api/admin/batch/not-supported/run"))
+                .andExpect(status().isBadRequest());
+    }
     
     @Test
     @DisplayName("일반 사용자의 관리자 리소스 접근 차단")

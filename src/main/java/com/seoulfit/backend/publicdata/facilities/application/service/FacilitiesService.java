@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,7 +48,13 @@ public class FacilitiesService implements CommandCoolingShelterUseCase {
             commandCoolingShelterPort.save(coolingShelterListV4);
             commandCoolingShelterPort.save(coolingShelterListV5);
 
-            return coolingShelterList;
+            List<CoolingCenter> allCoolingShelters = new ArrayList<>();
+            allCoolingShelters.addAll(coolingShelterList);
+            allCoolingShelters.addAll(coolingShelterListV2);
+            allCoolingShelters.addAll(coolingShelterListV3);
+            allCoolingShelters.addAll(coolingShelterListV4);
+            allCoolingShelters.addAll(coolingShelterListV5);
+            return allCoolingShelters;
             
         } catch (Exception e) {
             log.error("Error fetching Cooling-Shelter: {}", e.getMessage(), e);

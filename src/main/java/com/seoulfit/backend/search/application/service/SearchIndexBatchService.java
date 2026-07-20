@@ -31,21 +31,22 @@ public class SearchIndexBatchService implements SearchIndexBatchUseCase {
     
     @Override
     @Transactional
-    public void syncAllPublicDataToIndex() {
+    public int syncAllPublicDataToIndex() {
         log.info("Starting full POI index synchronization");
         
         // Clear existing data first
         clearAllIndexDataInternal();
         
         // Sync each data type
-        syncCoolingCentersInternal();
-        syncCulturalEventsInternal();
-        syncCulturalReservationsInternal();
-        syncLibrariesInternal();
-        syncParksInternal();
-        syncRestaurantsInternal();
-        
-        log.info("Completed full POI index synchronization");
+        int processedCount = syncCoolingCentersInternal()
+                + syncCulturalEventsInternal()
+                + syncCulturalReservationsInternal()
+                + syncLibrariesInternal()
+                + syncParksInternal()
+                + syncRestaurantsInternal();
+
+        log.info("Completed full POI index synchronization: {} entries", processedCount);
+        return processedCount;
     }
     
     @Override
@@ -54,7 +55,7 @@ public class SearchIndexBatchService implements SearchIndexBatchUseCase {
         syncCoolingCentersInternal();
     }
     
-    private void syncCoolingCentersInternal() {
+    private int syncCoolingCentersInternal() {
         log.info("Syncing cooling centers to POI index");
         
         List<com.seoulfit.backend.publicdata.facilities.domain.CoolingCenter> coolingCenters = publicDataQueryPort.findAllCoolingCenters();
@@ -72,6 +73,7 @@ public class SearchIndexBatchService implements SearchIndexBatchUseCase {
             searchIndexRepository.save(index);
         });
         log.info("Synced {} cooling centers to POI index", indexList.size());
+        return indexList.size();
     }
     
     @Override
@@ -80,7 +82,7 @@ public class SearchIndexBatchService implements SearchIndexBatchUseCase {
         syncCulturalEventsInternal();
     }
     
-    private void syncCulturalEventsInternal() {
+    private int syncCulturalEventsInternal() {
         log.info("Syncing cultural events to POI index");
         
         List<CulturalEvent> culturalEvents = publicDataQueryPort.findAllCulturalEvents();
@@ -94,6 +96,7 @@ public class SearchIndexBatchService implements SearchIndexBatchUseCase {
         log.info("Mapped {} cultural events to index entries", indexList.size());
         indexList.forEach(searchIndexRepository::save);
         log.info("Synced {} cultural events to POI index", indexList.size());
+        return indexList.size();
     }
     
     @Override
@@ -102,7 +105,7 @@ public class SearchIndexBatchService implements SearchIndexBatchUseCase {
         syncCulturalReservationsInternal();
     }
     
-    private void syncCulturalReservationsInternal() {
+    private int syncCulturalReservationsInternal() {
         log.info("Syncing cultural reservations to POI index");
         
         List<CulturalReservation> culturalReservations = publicDataQueryPort.findAllCulturalReservations();
@@ -116,6 +119,7 @@ public class SearchIndexBatchService implements SearchIndexBatchUseCase {
         log.info("Mapped {} cultural reservations to index entries", indexList.size());
         indexList.forEach(searchIndexRepository::save);
         log.info("Synced {} cultural reservations to POI index", indexList.size());
+        return indexList.size();
     }
     
     @Override
@@ -124,7 +128,7 @@ public class SearchIndexBatchService implements SearchIndexBatchUseCase {
         syncLibrariesInternal();
     }
     
-    private void syncLibrariesInternal() {
+    private int syncLibrariesInternal() {
         log.info("Syncing libraries to POI index");
         
         List<com.seoulfit.backend.publicdata.facilities.domain.Library> libraries = publicDataQueryPort.findAllLibraries();
@@ -138,6 +142,7 @@ public class SearchIndexBatchService implements SearchIndexBatchUseCase {
         log.info("Mapped {} libraries to index entries", indexList.size());
         indexList.forEach(searchIndexRepository::save);
         log.info("Synced {} libraries to POI index", indexList.size());
+        return indexList.size();
     }
     
     @Override
@@ -146,7 +151,7 @@ public class SearchIndexBatchService implements SearchIndexBatchUseCase {
         syncParksInternal();
     }
     
-    private void syncParksInternal() {
+    private int syncParksInternal() {
         log.info("Syncing parks to POI index");
         
         List<com.seoulfit.backend.publicdata.park.domain.Park> parks = publicDataQueryPort.findAllParks();
@@ -160,6 +165,7 @@ public class SearchIndexBatchService implements SearchIndexBatchUseCase {
         log.info("Mapped {} parks to index entries", indexList.size());
         indexList.forEach(searchIndexRepository::save);
         log.info("Synced {} parks to POI index", indexList.size());
+        return indexList.size();
     }
     
     @Override
@@ -168,7 +174,7 @@ public class SearchIndexBatchService implements SearchIndexBatchUseCase {
         syncRestaurantsInternal();
     }
     
-    private void syncRestaurantsInternal() {
+    private int syncRestaurantsInternal() {
         log.info("Syncing restaurants to POI index");
         
         List<com.seoulfit.backend.publicdata.restaurant.domain.Restaurant> restaurants = publicDataQueryPort.findAllRestaurants();
@@ -182,6 +188,7 @@ public class SearchIndexBatchService implements SearchIndexBatchUseCase {
         log.info("Mapped {} restaurants to index entries", indexList.size());
         indexList.forEach(searchIndexRepository::save);
         log.info("Synced {} restaurants to POI index", indexList.size());
+        return indexList.size();
     }
     
     @Override

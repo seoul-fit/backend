@@ -6,6 +6,6 @@ package com.seoulfit.backend.publicdata.restaurant.application.port.in;
  */
 public interface RestaurantBatchUseCase {
 
-    void processDailyBatch();
+    int processDailyBatch();
 
 }

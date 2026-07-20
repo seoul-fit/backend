@@ -121,8 +121,7 @@ class FacilitiesServiceTest {
             List<CoolingCenter> result = facilitiesService.saveCoolingShelter(query);
             
             // then
-            assertThat(result).hasSize(1);
-            assertThat(result.get(0)).isEqualTo(coolingCenter1);
+            assertThat(result).containsExactly(coolingCenter1, coolingCenter2, coolingCenter3);
             
             verify(commandCoolingShelterPort).truncate();
             verify(commandCoolingShelterPort).save(page1);

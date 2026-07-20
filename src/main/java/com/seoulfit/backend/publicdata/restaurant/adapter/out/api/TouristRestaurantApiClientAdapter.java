@@ -30,7 +30,6 @@ public class TouristRestaurantApiClientAdapter implements TouristRestaurantApiCl
 
         try {
             String url = buildApiUrl(startIndex, endIndex);
-            log.debug("API URL: {}", url);
 
             TouristRestaurantApiResponse response = restTemplate.getForObject(url, TouristRestaurantApiResponse.class);
             

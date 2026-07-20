@@ -28,7 +28,7 @@ public class ParkBatchService implements ParkBatchUseCase {
 
 
     @Override
-    public void processDailyBatch() {
+    public int processDailyBatch() {
         log.info("서울시 공원 정보 일일 배치 처리 시작 - 날짜: {}", LocalDate.now());
 
         try {
@@ -48,6 +48,7 @@ public class ParkBatchService implements ParkBatchUseCase {
             // 새 데이터 save
             List<Park> saveAllPark = parkCommandPort.saveAllPark(parks);
             log.info("공원 정보 저장 개수 Count : {}", saveAllPark.size());
+            return saveAllPark.size();
 
         } catch (Exception e){
             throw new RuntimeException(e.getMessage(), e);

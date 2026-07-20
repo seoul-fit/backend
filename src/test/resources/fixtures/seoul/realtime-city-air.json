@@ -1,0 +1,39 @@
+{
+  "RealtimeCityAir": {
+    "list_total_count": 25,
+    "RESULT": {
+      "CODE": "INFO-000",
+      "MESSAGE": "정상 처리되었습니다"
+    },
+    "row": [
+      {
+        "MSRMT_DT": "202607201300",
+        "SAREA_NM": "도심권",
+        "MSRSTN_NM": "중구",
+        "PM": 0.0,
+        "FPM": 0.0,
+        "OZON": 0.0,
+        "NTDX": 0.0,
+        "CBMX": 0.0,
+        "SPDX": 0.0,
+        "CAI_GRD": "",
+        "CAI_IDX": 0.0,
+        "CRST_SBSTN": ""
+      },
+      {
+        "MSRMT_DT": "202607201300",
+        "SAREA_NM": "도심권",
+        "MSRSTN_NM": "종로구",
+        "PM": 11.0,
+        "FPM": 10.0,
+        "OZON": 0.033,
+        "NTDX": 0.014,
+        "CBMX": 0.4,
+        "SPDX": 0.003,
+        "CAI_GRD": "보통",
+        "CAI_IDX": 53.0,
+        "CRST_SBSTN": "O3"
+      }
+    ]
+  }
+}

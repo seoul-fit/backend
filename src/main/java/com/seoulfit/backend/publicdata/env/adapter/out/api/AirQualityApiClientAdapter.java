@@ -61,7 +61,6 @@ public class AirQualityApiClientAdapter implements AirQualityApiClient {
 
         try {
             String url = buildApiUrl(startIndex, endIndex);
-            log.debug("API URL: {}", url);
 
             AirQualityApiResponse response = restClientUtils.callGetApi(url, AirQualityApiResponse.class);
             AirQualityApiResponse.RealtimeCityAir realtimeCityAir = response.getRealtimeCityAir();

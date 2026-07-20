@@ -31,7 +31,6 @@ public class ParkApiClientAdapter implements SeoulParkApiClient {
 
         try {
             String url = buildApiUrl(startIndex, endIndex);
-            log.debug("API URL: {}", url);
 
             SeoulParkApiResponse response = restTemplate.getForObject(url, SeoulParkApiResponse.class);
             

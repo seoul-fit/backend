@@ -23,7 +23,15 @@ spec:
     - seoulfit.damecasol.com
   rules:
     - matches:
-        - path: {type: PathPrefix, value: /api}
+        - path: {type: PathPrefix, value: /api/v1}
+        - path: {type: PathPrefix, value: /api/auth}
+        - path: {type: PathPrefix, value: /api/location}
+        - path: {type: PathPrefix, value: /api/notifications}
+        - path: {type: PathPrefix, value: /api/parks}
+        - path: {type: PathPrefix, value: /api/search}
+        - path: {type: PathPrefix, value: /api/sports}
+        - path: {type: PathPrefix, value: /api/triggers}
+        - path: {type: PathPrefix, value: /api/users}
         - path: {type: PathPrefix, value: /login/oauth2}
         - path: {type: PathPrefix, value: /oauth2}
         - path: {type: PathPrefix, value: /actuator/health}

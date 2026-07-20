@@ -69,6 +69,7 @@ public class SecurityConfig {
                                     "/api/location/cooling-centers",
                                     "/api/location/advanced/recommend-scale").permitAll()
                             .requestMatchers(
+                                    "/api/admin/batch/**",
                                     "/actuator/health",
                                     "/actuator/health/**",
                                     "/actuator/prometheus").permitAll();

@@ -1,0 +1,55 @@
+{
+  "SearchParkInfoService": {
+    "list_total_count": 133,
+    "RESULT": {
+      "CODE": "INFO-000",
+      "MESSAGE": "정상 처리되었습니다"
+    },
+    "row": [
+      {
+        "SN": "1",
+        "PARK_NM": "남산공원",
+        "PARK_OTLN": "서울 도심의 대표 공원",
+        "AREA": "2896887㎡",
+        "OPEN_YMD": "1968.9.10",
+        "MAIN_FCLT": "산책로",
+        "MAIN_PLNT": "소나무",
+        "GD_DOC": "",
+        "VST_ROAD": "대중교통 이용",
+        "UTZTN_REF": "",
+        "IMG": "https://example.test/park.jpg",
+        "RGN": "중구",
+        "PARK_ADDR": "서울특별시 중구 삼일대로 231(예장동)",
+        "MNG_DEPT": "중부공원여가센터",
+        "TELNO": "02-0000-0000",
+        "XCRD_G": "198364.107",
+        "YCRD_G": "450395.554",
+        "XCRD": "126.9903773",
+        "YCRD": "37.5501402",
+        "URL": "https://parks.seoul.go.kr/"
+      },
+      {
+        "SN": "2",
+        "PARK_NM": "길동생태공원",
+        "PARK_OTLN": "생태 관찰 공원",
+        "AREA": "79258.7㎡",
+        "OPEN_YMD": "1999.5.20",
+        "MAIN_FCLT": "관찰로",
+        "MAIN_PLNT": "수생식물",
+        "GD_DOC": "",
+        "VST_ROAD": "사전 예약",
+        "UTZTN_REF": "",
+        "IMG": "https://example.test/ecopark.jpg",
+        "RGN": "강동구",
+        "PARK_ADDR": "서울특별시 강동구 천호대로 1291",
+        "MNG_DEPT": "동부공원여가센터",
+        "TELNO": "02-0000-0000",
+        "XCRD_G": "213554.12",
+        "YCRD_G": "448852.675",
+        "XCRD": "127.1547791",
+        "YCRD": "37.5403935",
+        "URL": "https://parks.seoul.go.kr/"
+      }
+    ]
+  }
+}
