@@ -126,10 +126,10 @@ public class SeoulApiResponse {
         @JsonProperty("THEMECODE")
         private String themeCode;
 
-        @JsonProperty("LOT")
+        @JsonProperty("LAT")
         private String latitude;
 
-        @JsonProperty("LAT")
+        @JsonProperty("LOT")
         private String longitude;
 
         @JsonProperty("IS_FREE")

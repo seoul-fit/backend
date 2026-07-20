@@ -1,0 +1,24 @@
+{
+  "culturalEventInfo": {
+    "list_total_count": 19429,
+    "RESULT": {
+      "CODE": "INFO-000",
+      "MESSAGE": "정상 처리되었습니다"
+    },
+    "row": [
+      {
+        "CODENAME": "클래식",
+        "GUNAME": "강북구",
+        "TITLE": "꿈의숲 마티네 콘서트",
+        "DATE": "2026-07-20",
+        "PLACE": "꿈의숲아트센터",
+        "ORG_NAME": "꿈의숲아트센터",
+        "USE_TRGT": "시민",
+        "USE_FEE": "유료",
+        "LOT": "127.044324732036",
+        "LAT": "37.6202544613023",
+        "IS_FREE": "유료"
+      }
+    ]
+  }
+}
