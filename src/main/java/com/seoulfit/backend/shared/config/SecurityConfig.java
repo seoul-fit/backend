@@ -68,7 +68,10 @@ public class SecurityConfig {
                                     "/api/location/sports-facilities",
                                     "/api/location/cooling-centers",
                                     "/api/location/advanced/recommend-scale").permitAll()
-                            .requestMatchers("/actuator/health", "/actuator/health/**").permitAll();
+                            .requestMatchers(
+                                    "/actuator/health",
+                                    "/actuator/health/**",
+                                    "/actuator/prometheus").permitAll();
 
                     if (environment.acceptsProfiles(Profiles.of("local", "dev"))) {
                         auth.requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll();

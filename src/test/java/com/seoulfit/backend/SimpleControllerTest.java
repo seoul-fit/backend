@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.actuate.observability.AutoConfigureObservability;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -14,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@AutoConfigureObservability
 @ActiveProfiles("test")
 @DisplayName("간단한 통합 테스트")
 class SimpleControllerTest {
@@ -26,6 +28,13 @@ class SimpleControllerTest {
     @DisplayName("헬스체크 엔드포인트 테스트")
     void healthCheck() throws Exception {
         mockMvc.perform(get("/actuator/health"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("Prometheus 메트릭 엔드포인트 익명 접근 테스트")
+    void prometheusMetricsPermitAnonymousAccess() throws Exception {
+        mockMvc.perform(get("/actuator/prometheus"))
                 .andExpect(status().isOk());
     }
 }
